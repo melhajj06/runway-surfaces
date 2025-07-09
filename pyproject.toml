@@ -1,0 +1,13 @@
+[project]
+name = "runway_surfaces"
+version = "0.0.1"
+authors = [
+	{name = "melhajj06"},
+]
+readme = "README.md"
+license-files = ["LICENSE.txt"]
+dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
