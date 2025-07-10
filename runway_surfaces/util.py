@@ -7,7 +7,7 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	t2 = get_lower_point(p1, p2)
 
 	p0a = np.array([0, 0])
-	p0b = np.subtract(t2, t2)  #np.array([t2[0] - t1[0], t2[1] - t1[1]])
+	p0b = np.subtract(t2, t1)
 
 	# rotate the points to align with the x axis
 	theta = -np.acos(p0b[0] / np.linalg.norm(p0b))
@@ -17,7 +17,8 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	]
 	p1a = p0a
 	p1b = np.matmul(p0b, rotation_matrix)
-	# p1b[1] = 0  # set to 0 to avoid
+	p1b[1] = 0  # mathematically should be 0
+				# set to 0 to avoid floating precision weirdness
 
 	# add the distance
 	p1b[0] = p1b[0] + amount
