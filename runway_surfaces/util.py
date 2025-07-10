@@ -33,10 +33,10 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	# translate it back to original position
 	return ((p2a[0] + t1[0], p2a[1] + t1[1]), (p2b[0] + t1[0], p2b[1] + t1[1]))
 
-def calc_perp_intersection(p1, p2, radius, flip=False):
+def calc_perp_intersection(p1, p2, radius):
 	delta_x = p2[0] - p1[0]
 	delta_y = p2[1] - p1[1]
-	x = (((-1 if flip else 1) * (radius * delta_y)) / np.linalg.norm(np.subtract(p1, p2))) + p1[0]
+	x = ((radius * delta_y) / np.linalg.norm(np.subtract(p1, p2))) + p1[0]
 	y = (-delta_x / delta_y) * (x - p1[0]) + p1[1]
 
 	return (x, y)
