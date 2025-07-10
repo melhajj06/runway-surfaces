@@ -1,1 +1,0 @@
-from polygon import get_polygon_vertices
