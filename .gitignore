@@ -1,3 +1,5 @@
 dist/
 .venv/
 *.egg-info/
+tests/
+**/__pycache__/
