@@ -9,6 +9,14 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	p0a = np.array([0, 0])
 	p0b = np.subtract(t2, t1)
 
+	# if the line is horizontal (0 slope) (small optimization)
+	if p0b[0] == 0 and p0b[1] == 0:
+		if p1[0] < p2[0]:
+			return (np.subtract(p1, (amount, 0), np.add(p2, (amount, 0))))
+		else:
+			return (np.add(p1, (amount, 0)), np.subtract(p2, (amount, 0)))
+
+
 	# rotate the points to align with the x axis
 	theta = -np.acos(p0b[0] / np.linalg.norm(p0b))
 	rotation_matrix = [
@@ -39,6 +47,15 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 def calc_perp_intersection(p1, p2, radius):
 	delta_x = p2[0] - p1[0]
 	delta_y = p2[1] - p1[1]
+
+	# if the radius is 0, then it's the same point as the input
+	if radius == 0:
+		return (p1[0], p1[1])
+	
+	# avoid NaN if 0 slope
+	if delta_y == 0:
+		return (p1[0], sign(radius) * (p1[1] + radius))
+
 	x = ((radius * delta_y) / np.linalg.norm(np.subtract(p1, p2))) + p1[0]
 	y = (-delta_x / delta_y) * (x - p1[0]) + p1[1]
 
@@ -58,3 +75,7 @@ def get_higher_point(a, b):
 
 def get_lower_point(a, b):
 	return b if b[1] < a[1] else a
+
+
+def sign(x):
+	return -1 if x < 0 else 1
