@@ -98,13 +98,6 @@ def cet2cr(c1, r1, c2, r2):
 			return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
 
 
-def segments_intersect(p1, p2, q1, q2):
-	l1 = LineString([p1, p2])
-	l2 = LineString([q1, q2])
-	
-	return l1.intersects(l2)
-
-
 # gets the point with a greater y-value
 #
 # param a: a 2D coordinate point
@@ -114,6 +107,7 @@ def segments_intersect(p1, p2, q1, q2):
 def get_higher_point(a, b):
 	return b if b[1] > a[1] else a
 
+
 # gets the point with a lesser y-value
 #
 # param a: a 2D coordinate point
@@ -122,7 +116,3 @@ def get_higher_point(a, b):
 # return: the coordinate point with the lesser y-value
 def get_lower_point(a, b):
 	return b if b[1] < a[1] else a
-
-
-def sign(x):
-	return -1 if x < 0 else 1
