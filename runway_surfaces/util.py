@@ -41,25 +41,43 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	p2b = np.matmul(p1b, reverse_rotation_matrix)
 
 	# translate it back to original position
-	return (np.add(p2a, t1), np.add(p2b, t1))  #(p2a[0] + t1[0], p2a[1] + t1[1]), (p2b[0] + t1[0], p2b[1] + t1[1]))
+	return (np.add(p2a, t1), np.add(p2b, t1))
 
 
-def calc_perp_intersection(p1, p2, radius):
-	delta_x = p2[0] - p1[0]
-	delta_y = p2[1] - p1[1]
+# cet2cr -> right-side common external tangent of two circles
+def cet2cr(c1, r1, c2, r2):
+	a = c2[1] - c1[1]
+	b = c1[0] - c2[0]
+	c = r2 - r1
+	m = np.linalg.norm(np.array([a, b]))
+	theta = -np.arctan(a/b) - np.arcsin(c/m)
 
-	# if the radius is 0, then it's the same point as the input
-	if radius == 0:
-		return (p1[0], p1[1])
-	
-	# avoid NaN if 0 slope
-	if delta_y == 0:
-		return (p1[0], sign(radius) * (p1[1] + radius))
+	f = 1
+	if r2 > r1:
+		f = -1
 
-	x = ((radius * delta_y) / np.linalg.norm(np.subtract(p1, p2))) + p1[0]
-	y = (-delta_x / delta_y) * (x - p1[0]) + p1[1]
-
-	return (x, y)
+	if c1[1] >= c2[1]:
+		if c1[0] >= c2[0]:
+			if c1[0] < c2[0] - (f * r2) + (f * r1):
+				# blue
+				return ((c1[0] - r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+			else:
+				# green
+				return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+		else:
+			# orange
+			return ((c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+	else:
+		if c1[0] < c2[0]:
+			if c1[0] > c2[0] + (f * r2) - (f * r1):
+				# red
+				return ((c1[0] + r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+			else:
+				# orange
+				return ((c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+		else:
+			# green
+			return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
 
 
 def segments_intersect(p1, p2, q1, q2):
