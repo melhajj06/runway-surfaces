@@ -1,7 +1,13 @@
 import numpy as np
 from shapely.geometry import LineString
 
-
+# extends a line segment defined by {p1} and {p2} by {amount} in both directions
+#
+# param p1: a 2D coordinate point of a line segment's endpoint
+# param p2: a 2D coordinate point of a line segment's other endpoint
+# param amount: the amount to extend the line segment by
+#
+# return: two tuples representing the extended line segment's endpoints 
 def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	t1 = get_higher_point(p1, p2)
 	t2 = get_lower_point(p1, p2)
@@ -9,7 +15,7 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	p0a = np.array([0, 0])
 	p0b = np.subtract(t2, t1)
 
-	# if the line is horizontal (0 slope) (small optimization)
+	# if the line is horizontal (0 slope), no need to do complex math
 	if p0b[0] == 0 and p0b[1] == 0:
 		if p1[0] < p2[0]:
 			return (np.subtract(p1, (amount, 0), np.add(p2, (amount, 0))))
@@ -45,6 +51,18 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 
 
 # cet2cr -> right-side common external tangent of two circles
+
+# gets the common external tangent line of two circles of radii {r1} and {r2} 
+# respectively where each circle is centered on {c1} and {c2} respectively.
+# the external tangent line returned will be on the right hand side 
+# of the line defined by {c1} and {c2} in that order.
+#
+# param c1: a 2D coordinate point representing the centerpoint of a circle
+# param r1: the radius of the first circle
+# param c2: a 2D coordinate point representing the centerpoint of a circle
+# param r2: the radius of the second circle
+#
+# return: the two points on either circle defining the right-sided common external tangent line
 def cet2cr(c1, r1, c2, r2):
 	a = c2[1] - c1[1]
 	b = c1[0] - c2[0]
@@ -87,10 +105,21 @@ def segments_intersect(p1, p2, q1, q2):
 	return l1.intersects(l2)
 
 
+# gets the point with a greater y-value
+#
+# param a: a 2D coordinate point
+# param b: a 2D coordinate point
+#
+# return: the coordinate point with the greater y-value
 def get_higher_point(a, b):
 	return b if b[1] > a[1] else a
 
-
+# gets the point with a lesser y-value
+#
+# param a: a 2D coordinate point
+# param b: a 2D coordinate point
+#
+# return: the coordinate point with the lesser y-value
 def get_lower_point(a, b):
 	return b if b[1] < a[1] else a
 
