@@ -64,7 +64,3 @@ class Runway:
 			return 5000
 		
 		return 10000
-		
-			
-
-
