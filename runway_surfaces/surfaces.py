@@ -88,7 +88,10 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 			cleaned_vertices.append(c1)
 			cleaned_radii.append(r1)
 
+	# handle len = 2 edge-case
+
 	# calculate edges
+	#
 	# TODO:
 	# - check if endpoint is unnecessary
 	#	i.e. if the common tangent point on the endpoint's circle is to the left (cross product check) of the previous edge
@@ -103,14 +106,57 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 		tangent_line = cet2cr(c1, r1, c2, r2)
 		t1 = None
 		t2 = None
-		if tangent_line:
-			t1 = (tangent_line[0][0], tangent_line[0][1])
-			t2 = (tangent_line[1][0], tangent_line[1][1])
+
+		# after the cleaning step, there shouldn't be any undefined common tangent points
+		# this is to make python happy
+		if not tangent_line:
+			raise Exception('common tangent points are NoneType')
+
+		t1 = tangent_line[0]
+		t2 = tangent_line[1]
 
 		if prev_edge:
-			edges.append(Edge(prev_edge.p2, t1, c1))
+			# test points
+			p1 = t1
+			p2 = prev_edge.p2
+
+			tangent_line2 = cet2cr(cleaned_vertices[i - 1], cleaned_radii[i - 1], c2, r2)
+			if not tangent_line2:
+				raise Exception('common tangent points are NoneType')
+
+			l1 = tangent_line2[0]
+			l2 = tangent_line2[1]
+			det1 = np.linalg.det(np.array([[l2[0] - l1[0], p1[0] - l1[0]], [l2[1] - l1[1], p1[1] - l1[1]]]))
+			det2 = np.linalg.det(np.array([[l2[0] - l1[0], p2[0] - l1[0]], [l2[1] - l1[1], p2[1] - l1[1]]]))
+			if det1 >= 0 and det2 >= 0:  # not really necessary to test both, but performance isn't at the forefront of development right now
+				prev_edge.p1 = l1
+				prev_edge.p2 = l2
+				continue
+			else:
+				edges.append(Edge(prev_edge.p2, t1, c1))
 
 		edges.append(Edge(t1, t2))
+
+	p1 = edges[-1].p2
+	p2 = edges[0].p1
+	c1 = cleaned_vertices[-1]
+	r1 = cleaned_radii[-1]
+	c2 = cleaned_vertices[1]
+	r2 = cleaned_radii[1]
+	tangent_line = cet2cr(c1, r1, c2, r2)
+
+	if not tangent_line:
+		raise Exception('common tangent points are NoneType')
+	
+	l1 = tangent_line[0]
+	l2 = tangent_line[1]
+
+	det1 = np.linalg.det(np.array([[l2[0] - l1[0], p1[0] - l1[0]], [l2[1] - l1[1], p1[1] - l1[1]]]))
+	det2 = np.linalg.det(np.array([[l2[0] - l1[0], p2[0] - l1[0]], [l2[1] - l1[1], p2[1] - l1[1]]]))
+	if det1 >= 0 and det2 >= 0:  # not really necessary to test both, but performance isn't at the forefront of development right now
+		edges[-1].p1 = l1
+		edges[-1].p2 = l2
+		edges.pop(0)
 
 	edges.append(Edge(edges[-1].p2, edges[0].p1, cleaned_vertices[0]))
 
