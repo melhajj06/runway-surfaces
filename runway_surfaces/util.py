@@ -1,5 +1,4 @@
 import numpy as np
-from shapely.geometry import LineString
 
 
 # extends a line segment defined by {p1} and {p2} by {amount} in both directions
@@ -67,7 +66,7 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 def cet2cr(c1, r1, c2, r2):
 	# if the centers of each circle are identical, then there are no possible common tangents
 	# or, if one circle is completely inside of another, then there are also no possible common tangents
-	if c1 == c2:
+	if (c1 == c2).all():
 		return None
 	elif circle_in_circle(c1, r1, c2, r2):
 		return None
@@ -159,3 +158,52 @@ def circle_in_circle(c1, r1, c2, r2):
 	d = np.linalg.norm(np.subtract(c1, c2))
 	if r1 >= (d + r2) or r2 >= (d + r1):
 		return True
+
+
+# gets the side of the line defined by {a} and {b} in that order that {c} is on
+# 
+# param a {tuple}: a 2D coordinate point
+# param b {tuple}: a 2D coordinate point
+# param c {tuple}: a 2D coordinate point
+#
+# return {float}: a signed value indicating the side of the line that {c} is on
+def get_side_of_line(a, b, c):
+	# result < 0 -> right
+	# result = 0 -> colinear
+	# result > 0 -> left
+	return np.linalg.det([[b[0] - a[0], c[0] - a[0]], [b[1] - a[1], c[1] - a[1]]])
+
+
+# gets the orientation (clockwise/counter-clockwise) of a polygon defined by {vertices}
+# only works with simple polygons (i.e. non self-intersecting)
+#
+# param vertices {list[tuple]}: vertices of a polygon in CW or CCW direction
+#
+# return {float}: a signed value indicating the direction of the polygon defined by {vertices}
+def get_polygon_direction(vertices: list[tuple]):
+	# solution thanks to lhf on Stack Overflow
+	# https://stackoverflow.com/a/1180256
+	# i opted for this solution since it involved no arithmetic
+	# 
+	# result < 0 -> counter-clockwise
+	# result = 0 -> not determinable (this shouldn't happen)
+	# result > 0 -> clockwise
+	if len(vertices) == 0:
+		return None
+	
+	index = 0
+	bottom_rightmost_vertex = vertices[0]
+	for i in range(len(vertices)):
+		vertex = vertices[i]
+		if vertex[1] < bottom_rightmost_vertex[1]:
+			bottom_rightmost_vertex = vertex
+		elif vertex[1] == bottom_rightmost_vertex[1] and vertex[0] > bottom_rightmost_vertex[0]:
+			bottom_rightmost_vertex = vertex
+		else:
+			continue
+
+		index = i
+
+	a = vertices[(index - 1) % len(vertices)]
+	b = vertices[(index + 1) % len(vertices)]
+	return get_side_of_line(a, b, bottom_rightmost_vertex)
