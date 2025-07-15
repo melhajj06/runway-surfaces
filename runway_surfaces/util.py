@@ -156,6 +156,6 @@ def get_lower_point(a, b):
 #
 # return {bool}: a boolean of whether either circle is entirely within the other
 def circle_in_circle(c1, r1, c2, r2):
-	d = np.linalg.norm(np.array([c1, c2]))
+	d = np.linalg.norm(np.subtract(c1, c2))
 	if r1 >= (d + r2) or r2 >= (d + r1):
 		return True
