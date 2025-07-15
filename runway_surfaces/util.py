@@ -8,8 +8,8 @@ from shapely.geometry import LineString
 # param p2: a 2D coordinate point of a line segment's other endpoint
 # param amount: the amount to extend the line segment by
 #
-# return: two tuples representing the extended line segment's endpoints 
-def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
+# return: a tuple containing two tuples representing the extended line segment's endpoints
+def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 	t1 = get_higher_point(p1, p2)
 	t2 = get_lower_point(p1, p2)
 
@@ -19,7 +19,7 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount):
 	# if the line is horizontal (0 slope), no need to do complex math
 	if p0b[0] == 0 and p0b[1] == 0:
 		if p1[0] < p2[0]:
-			return (np.subtract(p1, (amount, 0), np.add(p2, (amount, 0))))
+			return (np.subtract(p1, (amount, 0)), np.add(p2, (amount, 0)))
 		else:
 			return (np.add(p1, (amount, 0)), np.subtract(p2, (amount, 0)))
 
