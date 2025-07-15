@@ -53,10 +53,6 @@ class Runway:
 					return 1000
 			elif self.visiblity_minimums > 0.75:
 				return 500
-			if self.visiblity_minimums > 0.75:
-				return 500
-			elif has_npia and self.visiblity_minimums == 0.75:
-				return 1000
 		elif self.runway_type == RunwayTypes.PRECISION_INSTRUMENT:
 			return 1000
 		
