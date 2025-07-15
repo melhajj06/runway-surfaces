@@ -4,9 +4,9 @@ from shapely.geometry import LineString
 
 # extends a line segment defined by {p1} and {p2} by {amount} in both directions
 #
-# param p1: a 2D coordinate point of a line segment's endpoint
-# param p2: a 2D coordinate point of a line segment's other endpoint
-# param amount: the amount to extend the line segment by
+# param p1 {tuple}: a 2D coordinate point of a line segment's endpoint
+# param p2 {tuple}: a 2D coordinate point of a line segment's other endpoint
+# param amount {float}: the amount to extend the line segment by
 #
 # return: a tuple containing two tuples representing the extended line segment's endpoints
 def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
@@ -58,12 +58,12 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 # the external tangent line returned will be on the right hand side 
 # of the line defined by {c1} and {c2} in that order.
 #
-# param c1: a 2D coordinate point representing the centerpoint of a circle
-# param r1: the radius of the circle centered at {c1}
-# param c2: a 2D coordinate point representing the centerpoint of a circle
-# param r2: the radius of the circle centered at {c2}
+# param c1 {tuple}: a 2D coordinate point representing the centerpoint of a circle
+# param r1 {float}: the radius of the circle centered at {c1}
+# param c2 {tuple}: a 2D coordinate point representing the centerpoint of a circle
+# param r2 {float}: the radius of the circle centered at {c2}
 #
-# return: the two points on either circle defining the right-sided common external tangent line
+# return {tuple[tuple]}: the two points on either circle defining the right-sided common external tangent line
 def cet2cr(c1, r1, c2, r2):
 	# if the centers of each circle are identical, then there are no possible common tangents
 	# or, if one circle is completely inside of another, then there are also no possible common tangents
@@ -85,22 +85,24 @@ def cet2cr(c1, r1, c2, r2):
 	# switching the sign of $$ r $$ switches the direction the tangent line travels around the circle when increasing $$ \theta $$.
 	#
 	#
-	# solving the equation $$ -y_0cos(\theta) + x_0sin(\theta) \pm r_1 = -y_1cos(\theta) + x_1sin(\theta) \pm r_2 $$ where $$ r1, r2 $$ yields the formula
-	# $$ (y_1 - y_0)cos(\theta) + (x_0 - x_1)sin(\theta) = \pm r2 \mp r1 $$ of which theta can be solved using the identity $$ acos(\theta) + bsin(\theta) = Rsin(\theta + \alpha) $$
+	# solving the equation $$ -y_0cos(\theta) + x_0sin(\theta) \pm r_1 = -y_1cos(\theta) + x_1sin(\theta) \pm r_2 $$ yields the formula
+	# $$ (y_1 - y_0)cos(\theta) + (x_0 - x_1)sin(\theta) = \pm r2 \mp r1 $$ where theta can be solved using the identity $$ acos(\theta) + bsin(\theta) = Rsin(\theta + \alpha) $$
 	# where $$ R = \sqrt{a^2 + b^2} $$ and $$ \alpha = \arctan{(\frac{a}{b})} $$
 	
 	a = c2[1] - c1[1]
 	b = c1[0] - c2[0]
 	c = r2 - r1
 	m = np.linalg.norm(np.array([a, b]))
+	# arcsin is odd, so negating it is equivalent to negating c which just changes the side of the circles the common tangent line is on
 	theta = -np.arctan(a/b) - np.arcsin(c/m)
 
+	# signs on conditionals need to be flipped if r2 is greater than r1
 	f = 1
 	if r2 > r1:
 		f = -1
 
 	# the comments with colors correspond to color coded lines on desmos when i was constructing these points
-
+	# see: https://desmos.com/calculator
 	if c1[1] >= c2[1]:
 		if c1[0] >= c2[0]:
 			if c1[0] < c2[0] - (f * r2) + (f * r1):
@@ -127,32 +129,32 @@ def cet2cr(c1, r1, c2, r2):
 
 # gets the point with a greater y-value
 #
-# param a: a 2D coordinate point
-# param b: a 2D coordinate point
+# param a {tuple}: a 2D coordinate point
+# param b {tuple}: a 2D coordinate point
 #
-# return: the coordinate point with the greater y-value
+# return {tuple}: the coordinate point with the greater y-value
 def get_higher_point(a, b):
 	return b if b[1] > a[1] else a
 
 
 # gets the point with a lesser y-value
 #
-# param a: a 2D coordinate point
-# param b: a 2D coordinate point
+# param a {tuple}: a 2D coordinate point
+# param b {tuple}: a 2D coordinate point
 #
-# return: the coordinate point with the lesser y-value
+# return {tuple}: the coordinate point with the lesser y-value
 def get_lower_point(a, b):
 	return b if b[1] < a[1] else a
 
 
 # checks if the circle defined by {c1} and {r1} is entirely within the circle defined by {c2} and {r2} or vice versa
 # 
-# param c1: a 2D coordinate representing the centerpoint of a circle
-# param r1: the radius of the circle centered at {c1}
-# param c2: a 2D coordinate representing the centerpoint of a circle
-# param r2: the radius of the circle centered at {c2}
+# param c1 {tuple}: a 2D coordinate representing the centerpoint of a circle
+# param r1 {float}: the radius of the circle centered at {c1}
+# param c2 {tuple}: a 2D coordinate representing the centerpoint of a circle
+# param r2 {float}: the radius of the circle centered at {c2}
 #
-# return: a boolean of whether either circle is entirely within the other
+# return {bool}: a boolean of whether either circle is entirely within the other
 def circle_in_circle(c1, r1, c2, r2):
 	d = np.linalg.norm(np.array([c1, c2]))
 	if r1 >= (d + r2) or r2 >= (d + r1):
