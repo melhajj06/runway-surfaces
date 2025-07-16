@@ -13,7 +13,7 @@ class Edge():
 		self.p1 = p1
 		self.p2 = p2
 
-		# used for the curved bits of the horizontal surface outline
+		# centerpoint of arc/circle for curved edges
 		self.center = center
 
 def get_horizontal_surface_edges(runways: list[Runway]):
@@ -38,12 +38,16 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 		radii.append(r)
 		radii.append(r)
 	
+	arcs = {}
+
 	for i in range(len(psurface_vertices)):
 		p1 = None
 		p2 = None
 		
 		for j in range(len(psurface_vertices)):
-			if j == i:
+			# avoid trying to connect a circle to itself
+			# avoid trying to connect circles inside of circles
+			if j == i or circle_in_circle(psurface_vertices[i], radii[i], psurface_vertices[j], radii[j]):
 				continue
 
 			tangent_line = cet2cr(psurface_vertices[i], radii[i], psurface_vertices[j], radii[j])
@@ -85,9 +89,28 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 						break
 
 			if p1 != None and p2 != None:
+				if not arcs[i]:
+					arcs[i] = []
+					arcs[i][0] = p1
+				else:
+					arcs[i][1] = p1
+
+				if not arcs[j]:
+					arcs[j] = []
+					arcs[j][0] = p2
+				else:
+					arcs[j][1] = p2
 				break
 
 		if p1 != None and p2 != None:
 			edges.append(Edge(p1, p2))
+
+	for i in range(len(psurface_vertices)):
+		t = arcs[i]
+
+		if not t:
+			continue
+
+		edges.append(Edge(t[0], t[1], psurface_vertices[i]))
 
 	return edges
