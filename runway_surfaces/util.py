@@ -229,8 +229,8 @@ def line_intersects_circle(a, b, c, p: tuple, r):
 		return p[1] - r <= (-c/b) and (-c/b) <= p[1] + r
 	
 	alpha = a**2 + b**2
-	beta = a * c + a * b * c[1] - c[0] * b**2
-	gamma = (b**2) * ((c[0])**2 + (c[1])**2 - r**2) + 2 * c * b * c[1] + c**2
+	beta = a * c + a * b * p[1] - p[0] * b**2
+	gamma = (b**2) * ((p[0])**2 + (p[1])**2 - r**2) + 2 * c * b * p[1] + c**2
 	disc = beta**2 - alpha * gamma
 
 	if disc >= 0:
