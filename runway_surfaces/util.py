@@ -1,5 +1,6 @@
 import numpy as np
-
+from shapely.geometry import Point
+from shapely.geometry import LineString
 
 # extends a line segment defined by {p1} and {p2} by {amount} in both directions
 #
@@ -66,7 +67,7 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 def cet2cr(c1, r1, c2, r2):
 	# if the centers of each circle are identical, then there are no possible common tangents
 	# or, if one circle is completely inside of another, then there are also no possible common tangents
-	if (c1 == c2).all():
+	if np.array_equal(c1, c2):
 		return None
 	elif circle_in_circle(c1, r1, c2, r2):
 		return None
@@ -207,3 +208,32 @@ def get_polygon_direction(vertices: list[tuple]):
 	a = vertices[(index - 1) % len(vertices)]
 	b = vertices[(index + 1) % len(vertices)]
 	return get_side_of_line(a, b, bottom_rightmost_vertex)
+
+
+def segments_intersect(a: tuple, b: tuple, c: tuple, d: tuple):
+	seg1 = LineString((a, b))
+	seg2 = LineString((c, d))
+	return seg1.intersects(seg2)
+
+# line in standard form ax + by + c = 0
+# circle centered at p with radius r
+def line_intersects_circle(a, b, c, p: tuple, r):
+	# if a and b are 0, then it isn't a line
+	if a == 0 and b == 0:
+		return False
+	# vertical line
+	elif b == 0:
+		return p[0] - r <= (-c/a) and (-c/a) <= p[0] + r
+	# horizontal line
+	elif a == 0:
+		return p[1] - r <= (-c/b) and (-c/b) <= p[1] + r
+	
+	alpha = a**2 + b**2
+	beta = a * c + a * b * c[1] - c[0] * b**2
+	gamma = (b**2) * ((c[0])**2 + (c[1])**2 - r**2) + 2 * c * b * c[1] + c**2
+	disc = beta**2 - alpha * gamma
+
+	if disc >= 0:
+		return True
+	
+	return False
