@@ -1,6 +1,7 @@
 import numpy as np
-from shapely.geometry import Point
-from shapely.geometry import LineString
+from sympy.geometry import Point2D, Line2D, Segment2D
+from functools import cmp_to_key
+
 
 # extends a line segment defined by {p1} and {p2} by {amount} in both directions
 #
@@ -175,48 +176,106 @@ def get_side_of_line(a, b, c):
 	return np.linalg.det([[b[0] - a[0], c[0] - a[0]], [b[1] - a[1], c[1] - a[1]]])
 
 
-# gets the orientation (clockwise/counter-clockwise) of a polygon defined by {vertices}
-# only works with simple polygons (i.e. non self-intersecting)
+# computes the average point of all the points in {points}
 #
-# param vertices {list[tuple]}: vertices of a polygon in CW or CCW direction
+# param points {list[tuple]}: a list of 2D coordinate points
 #
-# return {float}: a signed value indicating the direction of the polygon defined by {vertices}
-def get_polygon_direction(vertices: list[tuple]):
-	# solution thanks to lhf on Stack Overflow
-	# https://stackoverflow.com/a/1180256
-	# i opted for this solution since it involved no arithmetic
-	# 
-	# result < 0 -> counter-clockwise
-	# result = 0 -> not determinable (this shouldn't happen)
-	# result > 0 -> clockwise
-	if len(vertices) == 0:
+# return {tuple}: the "centerpoint"
+def compute_centerpoint(points: list[tuple]):
+	if len(points) == 0:
 		return None
 	
-	index = 0
-	bottom_rightmost_vertex = vertices[0]
-	for i in range(len(vertices)):
-		vertex = vertices[i]
-		if vertex[1] < bottom_rightmost_vertex[1]:
-			bottom_rightmost_vertex = vertex
-		elif vertex[1] == bottom_rightmost_vertex[1] and vertex[0] > bottom_rightmost_vertex[0]:
-			bottom_rightmost_vertex = vertex
-		else:
-			continue
+	xsum = 0
+	ysum = 0
 
-		index = i
+	for point in points:
+		xsum += point[0]
+		ysum += point[1]
 
-	a = vertices[(index - 1) % len(vertices)]
-	b = vertices[(index + 1) % len(vertices)]
-	return get_side_of_line(a, b, bottom_rightmost_vertex)
+	return (xsum / len(points), ysum / len(points))
 
 
+# sorts {points} either clockwise (default) or counterclockwise about their centerpoint depending on {ccw}
+#
+# param points {list[tuple]}: a list of 2D coordinate points
+# param ccw {bool}: option to sort counterclockwise
+def sort_directional(points: list[tuple], ccw=True):
+	if len(points) == 0:
+		return None
+	
+	center = compute_centerpoint(points)
+	assert center
+
+	# comparison function thanks to ciamej and arghavan on Stack Overflow
+	# https://stackoverflow.com/a/6989383
+	def compare_points(a, b):
+		if a[0] - center[0] >= 0 and b[0] - center[0] < 0:
+			return -1
+		elif a[0] - center[0] < 0 and b[0] - center[0] >= 0:
+			return 1
+		elif a[0] - center[0] == 0 and b[0] - center[0] == 0:
+			if a[1] - center[1] >= 0 or b[1] - center[1] >= 0:
+				return -1 if a[1] > b[1] else 1
+			return -1 if b[1] > a[1] else 1
+		
+		det = np.linalg.det([np.subtract(a, center), np.subtract(b, center)])
+		if det < 0:
+			return -1
+		elif det > 0:
+			return 1
+		
+		d1 = np.linalg.norm(np.subtract(a, center))
+		d2 = np.linalg.norm(np.subtract(b, center))
+		if d1 > d2:
+			return -1
+		elif d1 < d2:
+			return 1
+		
+		return 0
+	
+	points.sort(key=cmp_to_key(compare_points), reverse=ccw)
+
+
+# checks if segment {a} to {b} intersects with the segment {c} to {d}
+#
+# param a {tuple}: a 2D coordinate point
+# param b {tuple}: a 2D coordinate point
+# param d {tuple}: a 2D coordinate point
+# param d {tuple}: a 2D coordinate point
+#
+# return {list[Point2D]}: a list of all the intersection points
 def segments_intersect(a: tuple, b: tuple, c: tuple, d: tuple):
-	seg1 = LineString((a, b))
-	seg2 = LineString((c, d))
-	return seg1.intersects(seg2)
+	segment1 = Segment2D(Point2D(a), Point2D(b))
+	segment2 = Segment2D(Point2D(c), Point2D(d))
+	return len(segment1.intersection(segment2)) > 0
+
+
+# checks if the line passing through {a} and {b} intersects with the segment {c} to {d}
+#
+# param a {tuple}: a 2D coordinate point
+# param b {tuple}: a 2D coordinate point
+# param d {tuple}: a 2D coordinate point
+# param d {tuple}: a 2D coordinate point
+#
+# return {list[Point2D]}: a list of all the intersection points
+def line_intersects_segment(a: tuple, b: tuple, c: tuple, d: tuple):
+	line = Line2D(Point2D(a), Point2D(b))
+	segment = Segment2D(Point2D(c), Point2D(d))
+	return len(line.intersection(segment)) > 0
+
 
 # line in standard form ax + by + c = 0
 # circle centered at p with radius r
+
+# checks if a line given in standard form ($$ ax + by + c = 0 $$) intersects the circle centered at {c} with radius {r}
+#
+# param a {float}: the "a" term in a standard-form line equation
+# param a {float}: the "b" term in a standard-form line equation
+# param a {float}: the "c" term in a standard-form line equation
+# param c {tuple}: a 2D coordinate point representing the centerpoint of a circle
+# param r {float}: the radius of the circle centered at {c}
+#
+# return {bool}: whether the line and circle intersect or not
 def line_intersects_circle(a, b, c, p: tuple, r):
 	# if a and b are 0, then it isn't a line
 	if a == 0 and b == 0:
