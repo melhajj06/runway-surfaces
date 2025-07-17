@@ -8,13 +8,9 @@ class Edge():
 	#
 	# param p1 {tuple}: a 2D coordinate point
 	# param p2 {tuple}: a 2D coordinate point
-	# param center {tuple}: the center of the circle the arc from {p1} to {p2} lies on if this edge is curved
-	def __init__(self, p1, p2, center=None):
+	def __init__(self, p1, p2):
 		self.p1 = p1
 		self.p2 = p2
-
-		# centerpoint of arc/circle for curved edges
-		self.center = center
 
 def get_horizontal_surface_edges(runways: list[Runway]):
 	edges = []
@@ -38,8 +34,6 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 		radii.append(r)
 		radii.append(r)
 	
-	arcs = {}
-
 	for i in range(len(psurface_vertices)):
 		p1 = None
 		p2 = None
@@ -89,28 +83,9 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 						break
 
 			if p1 != None and p2 != None:
-				if not arcs[i]:
-					arcs[i] = []
-					arcs[i][0] = p1
-				else:
-					arcs[i][1] = p1
-
-				if not arcs[j]:
-					arcs[j] = []
-					arcs[j][0] = p2
-				else:
-					arcs[j][1] = p2
 				break
 
 		if p1 != None and p2 != None:
 			edges.append(Edge(p1, p2))
-
-	for i in range(len(psurface_vertices)):
-		t = arcs[i]
-
-		if not t:
-			continue
-
-		edges.append(Edge(t[0], t[1], psurface_vertices[i]))
 
 	return edges
