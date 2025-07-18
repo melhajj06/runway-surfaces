@@ -81,7 +81,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 
 				# if the tangent line intersects any perimeter segment,
 				# then it isn't valid
-				if line_intersects_segment(p1, p2, t1, t2):
+				if len(line_intersects_segment(p1, p2, t1, t2)) > 0:
 					p1 = None
 					p2 = None
 					break
@@ -100,7 +100,15 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 						a = -m
 						b = 1
 						c = m * p1[0] - p1[1]
-					if line_intersects_circle(a, b, c, t1, psurface_vertices[t1]):
+					
+					# if the line is a common external tangent to 3 circles then it still counts
+					#
+					# no need to check the side of the 3rd circle's tangent point since,
+					# if it's on the wrong side, it will intersect a line segment as well
+					l = len(line_intersects_circle(a, b, c, t1, psurface_vertices[t1]))
+					if l == 0 or l == 1:
+						continue
+					else:
 						p1 = None
 						p2 = None
 						break

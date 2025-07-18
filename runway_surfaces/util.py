@@ -247,22 +247,22 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 	points.sort(key=cmp_to_key(compare_points), reverse=ccw)
 
 
-def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> bool:
+def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
 	"""Checks if the line passing through ``a`` and ``b`` intersects the line segment defined by ``c`` and ``d``
 	
 	:param (tuple[float, float]) a: a 2D coordinate point
 	:param (tuple[float, float]) b: a 2D coordinate point
 	:param (tuple[float, float]) c: a 2D coordinate point
 	:param (tuple[float, float]) d: a 2D coordinate point
-	:return (bool): whether the line and line segment intersect at any point
+	:return (list[Point2D]): a list of every intersection point
 	"""
 
 	line = Line2D(Point2D(a), Point2D(b))
 	segment = Segment2D(Point2D(c), Point2D(d))
-	return len(line.intersection(segment)) > 0
+	return line.intersection(segment)
 
 
-def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float], r: float) -> bool:
+def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float], r: float) -> list[tuple[float, float]]:
 	"""Checks if a line intersects the circle centered at ``c`` with radius ``r``
 	
 	The line in question is a line in standard form :math:`ax + by + c = 0` where a = ``a``, b = ``b``, and c = ``c``.
@@ -275,25 +275,57 @@ def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float],
 	:param (float) c: `c` in the standard-form line equation
 	:param (tuple[float, float]) p: a 2D centerpoint of a circle
 	:param (float) r: the radius of the circle centered at ``p``
-	:return (bool): whether the line and circle intersect or not
+	:return (list[tuple[float, float]]): a list of every intersection point
 	"""
 
 	# if a and b are 0, then it isn't a line
 	if a == 0 and b == 0:
-		return False
+		return []
 	# vertical line
 	elif b == 0:
-		return p[0] - r <= (-c/a) and (-c/a) <= p[0] + r
+		x = -c/a
+		if p[0] - r <= x and x <= p[0] + r:
+			temp = np.sqrt(r**2 - (x - p[0])**2)
+			return [(x, p[1] + temp), (x, p[1] - temp)]
+		return []
 	# horizontal line
 	elif a == 0:
-		return p[1] - r <= (-c/b) and (-c/b) <= p[1] + r
+		y = -c/b
+		if p[1] - r <= y and y <= p[1] + r:
+			temp = np.sqrt(r**2 - (y - p[1])**2)
+			return [(p[0] + temp, y), (p[0] - temp, y)]
+		return []
+	
+	# solving the system:
+	#
+	# $$ \left\{\begin{array}{l} ax + by = 0\\ (x - x_{0})^2 + (y - y_0)^2 = r^2 \end{array}\right. $$
+	#
+	# gives the following solution
+	#
+	#
+	# $$ \large\begin{array}{l} x = \frac{-\beta \pm \sqrt{\beta^2 - \alpha\gamma}}{\alpha}\\ y = \frac{-\alpha c - a(-\beta \pm \sqrt{\beta^2 - \alpha\gamma})}{\alpha b}\\ \end{array} $$
+	#
+	#
+	# where
+	#
+	#
+	# $$ \begin{array}{l} \alpha = a^2 + b^2\\ \beta = ac + aby_{0} - b^2x_{0}\\ \gamma = b^2(x_{0}^2+y_{0}^2-r^2) + 2bcy_{0} + c^2 \end{array} $$
+	#
+	#
 	
 	alpha = a**2 + b**2
 	beta = a * c + a * b * p[1] - p[0] * b**2
 	gamma = (b**2) * ((p[0])**2 + (p[1])**2 - r**2) + 2 * c * b * p[1] + c**2
 	disc = beta**2 - alpha * gamma
 
-	if disc >= 0:
-		return True
+	if disc < 0:
+		return []
 	
-	return False
+	temp = np.sqrt(disc)
+	x1, y1 = (-beta + temp) / alpha, (-alpha * c - a * (-beta + temp)) / (alpha * b)
+	x2, y2 = (-beta - temp) / alpha, (-alpha * c - a * (-beta - temp)) / (alpha * b)
+	
+	if x1 == x2 and y1 == y2:
+		return [(x1, y1)]
+	
+	return [(x1, y1), (x2, y2)]
