@@ -3,14 +3,18 @@ from sympy.geometry import Point2D, Line2D, Segment2D
 from functools import cmp_to_key
 
 
-# extends a line segment defined by {p1} and {p2} by {amount} in both directions
-#
-# param p1 {tuple}: a 2D coordinate point of a line segment's endpoint
-# param p2 {tuple}: a 2D coordinate point of a line segment's other endpoint
-# param amount {float}: the amount to extend the line segment by
-#
-# return: a tuple containing two tuples representing the extended line segment's endpoints
-def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
+def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> tuple:
+	"""Extends a line segment
+	
+	Extends a line segment defined by ``p1`` and ``p2`` by ``amount`` (i.e. away from each other).
+	Consider a vector, v, going from ``p1`` to the returned extension of p1. Then, the magnitude/length of v is ``amount``.
+	
+	:param (tuple[float, float]) p1: a 2D coordinate point
+	:param (tuple[float, float]) p2: a 2D coordinate point
+	:param (float) amount: the amount to extend the line segment by
+	:return (tuple[float, float]): the endpoints of the extended line segment 
+	"""
+
 	t1 = get_higher_point(p1, p2)
 	t2 = get_lower_point(p1, p2)
 
@@ -33,8 +37,10 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 	]
 	p1a = p0a
 	p1b = np.matmul(p0b, rotation_matrix)
-	p1b[1] = 0  # mathematically should be 0
-				# set to 0 to avoid floating precision weirdness
+
+	# mathematically should be 0
+	# set to 0 to avoid floating precision weirdness
+	p1b[1] = 0
 
 	# add the distance
 	p1b[0] = p1b[0] + amount
@@ -52,26 +58,28 @@ def extend_points_in_both_directions(p1: tuple, p2: tuple, amount) -> tuple:
 	return (np.add(p2a, t1), np.add(p2b, t1))
 
 
-# cet2cr -> right-side common external tangent of two circles
-#
-# gets the common external tangent line of two circles of radii {r1} and {r2} 
-# respectively where each circle is centered on {c1} and {c2} respectively.
-# the external tangent line returned will be on the right hand side 
-# of the line defined by {c1} and {c2} in that order.
-#
-# param c1 {tuple}: a 2D coordinate point representing the centerpoint of a circle
-# param r1 {float}: the radius of the circle centered at {c1}
-# param c2 {tuple}: a 2D coordinate point representing the centerpoint of a circle
-# param r2 {float}: the radius of the circle centered at {c2}
-#
-# return {tuple[tuple]}: the two points on either circle defining the right-sided common external tangent line
-def cet2cr(c1, r1, c2, r2):
+def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> tuple[tuple[float, float], tuple[float, float]]:
+	"""Gets the common external tangent line on the right side of two circles
+
+	Two non-overlapping circles have 4 common tangent lines: 2 external and 2 internal.
+	The external tangent lines do not cross the line passing through each circle's center,
+	while the internal tangent lines does.
+	When creating a vector going from ``c1`` to ``c2``, there is a right side and a left side.
+	``cet2cr`` translates to \"right-side common external tangent of two circles\".
+	
+	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
+	:param (float) r1: the radius of the circle centered at ``c1``
+	:param (tuple[float, float]) c2: a 2D centerpoint of a circle
+	:param (float) r2: the radius of the circle centered at ``c2``
+	:return (tuple[tuple[float, float], tuple[float, float]]): a 2D coordinate point on each circle the common tangent line passes through
+	"""
+
 	# if the centers of each circle are identical, then there are no possible common tangents
 	# or, if one circle is completely inside of another, then there are also no possible common tangents
 	if np.array_equal(c1, c2):
-		return None
+		return tuple()
 	elif circle_in_circle(c1, r1, c2, r2):
-		return None
+		return tuple()
 	
 	# solutions thanks to the help John Alexiou on Math Stack Exchange
 	# https://math.stackexchange.com/a/211854
@@ -128,23 +136,25 @@ def cet2cr(c1, r1, c2, r2):
 			return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
 
 
-# gets the point with a greater y-value
-#
-# param a {tuple}: a 2D coordinate point
-# param b {tuple}: a 2D coordinate point
-#
-# return {tuple}: the coordinate point with the greater y-value
-def get_higher_point(a, b):
+def get_higher_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
+	"""Gets the point with the larger y-value
+	
+	:param (tuple[float, float]) a: a 2D coordinate point
+	:param (tuple[float, float]) b: a 2D coordinate point
+	:return (tuple[float, float]): the higher point
+	"""
+
 	return b if b[1] > a[1] else a
 
 
-# gets the point with a lesser y-value
-#
-# param a {tuple}: a 2D coordinate point
-# param b {tuple}: a 2D coordinate point
-#
-# return {tuple}: the coordinate point with the lesser y-value
-def get_lower_point(a, b):
+def get_lower_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
+	"""Gets the point with the smaller y-value
+	
+	:param (tuple[float, float]) a: a 2D coordinate point
+	:param (tuple[float, float]) b: a 2D coordinate point
+	:return (tuple[float, float]): the lower point
+	"""
+
 	return b if b[1] < a[1] else a
 
 
@@ -156,34 +166,37 @@ def get_lower_point(a, b):
 # param r2 {float}: the radius of the circle centered at {c2}
 #
 # return {bool}: a boolean of whether either circle is entirely within the other
-def circle_in_circle(c1, r1, c2, r2):
+def circle_in_circle(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> bool:
+	"""Checks if either circle is completely inside the other
+	
+	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
+	:param (float) r1: the radius of the circle centered at ``c1``
+	:param (tuple[float, float]) c2: a 2D centerpoint of a circle
+	:param (float) r2: the radius of the circle centered at ``c2``
+	:return (bool): whether either circle is completely inside the other
+	"""
+
+	# if the distance between the centerpoints plus the radius of circle #1 is less than or equal to the radius of the circle #2,
+	# then circle #1 is inside circle #2
 	d = np.linalg.norm(np.subtract(c1, c2))
 	if r1 >= (d + r2) or r2 >= (d + r1):
 		return True
+	
+	return False
 
 
-# gets the side of the line defined by {a} and {b} in that order that {c} is on
-# 
-# param a {tuple}: a 2D coordinate point
-# param b {tuple}: a 2D coordinate point
-# param c {tuple}: a 2D coordinate point
-#
-# return {float}: a signed value indicating the side of the line that {c} is on
-def get_side_of_line(a, b, c):
-	# result < 0 -> right
-	# result = 0 -> colinear
-	# result > 0 -> left
-	return np.linalg.det([[b[0] - a[0], c[0] - a[0]], [b[1] - a[1], c[1] - a[1]]])
+def compute_centerpoint(points: list[tuple[float, float]]) -> tuple[float, float]:
+	"""Gets the center of a list of coordinate points
+	
+	The center or average point of a list of points has an x-value of the average of all the x-values,
+	and a y-value of the average of all the y-values.
+	
+	:param (list[tuple[float, float]]) points: a list of 2D coordinate points
+	:return (tuple[float, float]): the average point
+	"""
 
-
-# computes the average point of all the points in {points}
-#
-# param points {list[tuple]}: a list of 2D coordinate points
-#
-# return {tuple}: the "centerpoint"
-def compute_centerpoint(points: list[tuple]):
 	if len(points) == 0:
-		return None
+		return tuple()
 	
 	xsum = 0
 	ysum = 0
@@ -195,16 +208,21 @@ def compute_centerpoint(points: list[tuple]):
 	return (xsum / len(points), ysum / len(points))
 
 
-# sorts {points} either clockwise (default) or counterclockwise about their centerpoint depending on {ccw}
-#
-# param points {list[tuple]}: a list of 2D coordinate points
-# param ccw {bool}: option to sort counterclockwise
-def sort_directional(points: list[tuple], ccw=True):
+def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> None:
+	"""Sorts a list of 2D coordinate points either clockwise or counter-clockwise
+	
+	A set of 2D coordinate points can be in any order and are usually random.
+	But, they can be ordered so that they're in clockwise or counter-clockwise order about their center or average point.
+	
+	:param (list[tuple[float, float]]) points: _description_
+	:param (bool) ccw: whether to set the direction to counter-clockwise, defaults to True
+	"""
+
 	if len(points) == 0:
-		return None
+		return
 	
 	center = compute_centerpoint(points)
-	assert center
+	assert len(center) != 0
 
 	# comparison function thanks to ciamej and arghavan on Stack Overflow
 	# https://stackoverflow.com/a/6989383
@@ -229,47 +247,37 @@ def sort_directional(points: list[tuple], ccw=True):
 	points.sort(key=cmp_to_key(compare_points), reverse=ccw)
 
 
-# checks if segment {a} to {b} intersects with the segment {c} to {d}
-#
-# param a {tuple}: a 2D coordinate point
-# param b {tuple}: a 2D coordinate point
-# param d {tuple}: a 2D coordinate point
-# param d {tuple}: a 2D coordinate point
-#
-# return {list[Point2D]}: a list of all the intersection points
-def segments_intersect(a: tuple, b: tuple, c: tuple, d: tuple):
-	segment1 = Segment2D(Point2D(a), Point2D(b))
-	segment2 = Segment2D(Point2D(c), Point2D(d))
-	return len(segment1.intersection(segment2)) > 0
+def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> bool:
+	"""Checks if the line passing through ``a`` and ``b`` intersects the line segment defined by ``c`` and ``d``
+	
+	:param (tuple[float, float]) a: a 2D coordinate point
+	:param (tuple[float, float]) b: a 2D coordinate point
+	:param (tuple[float, float]) c: a 2D coordinate point
+	:param (tuple[float, float]) d: a 2D coordinate point
+	:return (bool): whether the line and line segment intersect at any point
+	"""
 
-
-# checks if the line passing through {a} and {b} intersects with the segment {c} to {d}
-#
-# param a {tuple}: a 2D coordinate point
-# param b {tuple}: a 2D coordinate point
-# param d {tuple}: a 2D coordinate point
-# param d {tuple}: a 2D coordinate point
-#
-# return {list[Point2D]}: a list of all the intersection points
-def line_intersects_segment(a: tuple, b: tuple, c: tuple, d: tuple):
 	line = Line2D(Point2D(a), Point2D(b))
 	segment = Segment2D(Point2D(c), Point2D(d))
 	return len(line.intersection(segment)) > 0
 
 
-# line in standard form ax + by + c = 0
-# circle centered at p with radius r
+def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float], r: float) -> bool:
+	"""Checks if a line intersects the circle centered at ``c`` with radius ``r``
+	
+	The line in question is a line in standard form :math:`ax + by + c = 0` where a = ``a``, b = ``b``, and c = ``c``.
+	When solving the system of equations, a quadratic is solved using the quadratic formula.
+	If the determinant is greater than or equal to 0, then the result will be a real number.
+	Subsequently, the line and circle will intersect (ignoring edge cases).
+	
+	:param (float) a: `a` in the standard-form line equation
+	:param (float) b: `b` in the standard-form line equation
+	:param (float) c: `c` in the standard-form line equation
+	:param (tuple[float, float]) p: a 2D centerpoint of a circle
+	:param (float) r: the radius of the circle centered at ``p``
+	:return (bool): whether the line and circle intersect or not
+	"""
 
-# checks if a line given in standard form ($$ ax + by + c = 0 $$) intersects the circle centered at {c} with radius {r}
-#
-# param a {float}: the "a" term in a standard-form line equation
-# param a {float}: the "b" term in a standard-form line equation
-# param a {float}: the "c" term in a standard-form line equation
-# param c {tuple}: a 2D coordinate point representing the centerpoint of a circle
-# param r {float}: the radius of the circle centered at {c}
-#
-# return {bool}: whether the line and circle intersect or not
-def line_intersects_circle(a, b, c, p: tuple, r):
 	# if a and b are 0, then it isn't a line
 	if a == 0 and b == 0:
 		return False

@@ -2,21 +2,35 @@ from .runway import *
 from .util import *
 
 
-# represents a straight or curved edge of the horizontal surface around a series of runways
 class Edge():
-	# ctor
-	#
-	# param p1 {tuple}: a 2D coordinate point
-	# param p2 {tuple}: a 2D coordinate point
-	# param center {tuple}: the center of a circle with {p1} and {p2} defining an arc on that circle
-	def __init__(self, p1, p2, center=None):
+	"""Represents a straight or curved edge of a horizontal surface around a series of runways
+	"""
+
+	def __init__(self, p1: tuple[float, float], p2: tuple[float, float], center: tuple[float, float] = tuple()):
+		"""Creates a new ``Edge`` object
+
+		If ``center`` is not empty, then this edge is to be interpreted as an arc from ``p1`` to ``p2`` centered at ``center``.
+		Otherwise, this edge is a straight line segment from ``p1`` to ``p2``
+		
+		:param (_type_) p1: a 2D coordinate point
+		:param (_type_) p2: a 2D coordinate point
+		:param (_type_) center: the centerpoint of the arc from ``p1`` to ``p2``, defaults to tuple()
+		"""
+
 		self.p1 = p1
 		self.p2 = p2
-
-		# used for the curved edges
 		self.center = center
 
-def get_horizontal_surface_edges(runways: list[Runway]):
+
+def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
+	"""Gets the outline of the horizontal surface encompassing every runway in ``runways``
+	
+	See `FAR Part-77 <https://www.ecfr.gov/current/title-14/part-77/section-77.19#p-77.19(a)>`_
+	
+	:param (list[Runway]) runways: a list of ``Runway``s
+	:return (list[Edge]): a list of ``Edge``s defining the outline of the horizontal surface
+	"""
+
 	edges = []
 	psurface_vertices = {}
 
@@ -34,6 +48,7 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 		psurface_vertices[tuple(extended_endpoints[0])] = r
 		psurface_vertices[tuple(extended_endpoints[1])] = r
 
+	# sort points in counter-clockwise order
 	endpoints = list(psurface_vertices.keys())
 	sort_directional(endpoints, ccw=True)
 	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
@@ -54,7 +69,7 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 
 			tangent_line = cet2cr(c1, psurface_vertices[c1], c2, psurface_vertices[c2])
 			
-			if not tangent_line:
+			if len(tangent_line) == 0:
 				continue
 
 			p1 = tangent_line[0]
@@ -64,11 +79,15 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 				t1 = endpoints[u]
 				t2 = endpoints[(u + 1) % len(endpoints)]
 
+				# if the tangent line intersects any perimeter segment,
+				# then it isn't valid
 				if line_intersects_segment(p1, p2, t1, t2):
 					p1 = None
 					p2 = None
 					break
-
+				
+				# if the tangent line intersects any other circle than those that it's tangent to,
+				# then it isn't valid
 				if u != i and u != j:
 					a = 0
 					b = 0
@@ -85,10 +104,14 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 						p1 = None
 						p2 = None
 						break
-
+			
+			# if the tangent line does not intersect any perimeter segments nor any other circles,
+			# it is valid
 			if p1 and p2:
 				break
-
+		
+		# if no tangent line that doesn't have an invalid intersection is found,
+		# then this point would either create a concavity or a self intersection in the final surface
 		if p1 and p2:
 			if prev_edge:
 				edges.append(Edge(prev_edge.p2, p1, center=c1))
