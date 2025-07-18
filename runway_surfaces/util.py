@@ -215,23 +215,16 @@ def sort_directional(points: list[tuple], ccw=True):
 			return 1
 		elif a[0] - center[0] == 0 and b[0] - center[0] == 0:
 			if a[1] - center[1] >= 0 or b[1] - center[1] >= 0:
-				return -1 if a[1] > b[1] else 1
-			return -1 if b[1] > a[1] else 1
+				return np.sign(b[1] - a[1])
+			return np.sign(a[1] - b[1])
 		
 		det = np.linalg.det([np.subtract(a, center), np.subtract(b, center)])
-		if det < 0:
-			return -1
-		elif det > 0:
-			return 1
+		if det != 0:
+			return np.sign(det)
 		
 		d1 = np.linalg.norm(np.subtract(a, center))
 		d2 = np.linalg.norm(np.subtract(b, center))
-		if d1 > d2:
-			return -1
-		elif d1 < d2:
-			return 1
-		
-		return 0
+		return np.sign(d2 - d1)
 	
 	points.sort(key=cmp_to_key(compare_points), reverse=ccw)
 
