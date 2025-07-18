@@ -312,7 +312,7 @@ def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float],
 	# $$ \begin{array}{l} \alpha = a^2 + b^2\\ \beta = ac + aby_{0} - b^2x_{0}\\ \gamma = b^2(x_{0}^2+y_{0}^2-r^2) + 2bcy_{0} + c^2 \end{array} $$
 	#
 	#
-	
+
 	alpha = a**2 + b**2
 	beta = a * c + a * b * p[1] - p[0] * b**2
 	gamma = (b**2) * ((p[0])**2 + (p[1])**2 - r**2) + 2 * c * b * p[1] + c**2
@@ -320,12 +320,11 @@ def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float],
 
 	if disc < 0:
 		return []
+	elif disc == 0:
+		return [(-beta/alpha, (-alpha * c + a * beta) / (alpha * b))]
 	
 	temp = np.sqrt(disc)
 	x1, y1 = (-beta + temp) / alpha, (-alpha * c - a * (-beta + temp)) / (alpha * b)
 	x2, y2 = (-beta - temp) / alpha, (-alpha * c - a * (-beta - temp)) / (alpha * b)
-	
-	if x1 == x2 and y1 == y2:
-		return [(x1, y1)]
-	
+
 	return [(x1, y1), (x2, y2)]
