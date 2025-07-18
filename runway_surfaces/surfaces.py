@@ -2,15 +2,19 @@ from .runway import *
 from .util import *
 
 
-# represents a straight or curved edge of the horizontal surface around a runway
+# represents a straight or curved edge of the horizontal surface around a series of runways
 class Edge():
 	# ctor
 	#
 	# param p1 {tuple}: a 2D coordinate point
 	# param p2 {tuple}: a 2D coordinate point
-	def __init__(self, p1, p2):
+	# param center {tuple}: the center of a circle with {p1} and {p2} defining an arc on that circle
+	def __init__(self, p1, p2, center=None):
 		self.p1 = p1
 		self.p2 = p2
+
+		# used for the curved edges
+		self.center = center
 
 def get_horizontal_surface_edges(runways: list[Runway]):
 	edges = []
@@ -35,6 +39,7 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
 	
 	for i in range(len(endpoints)):
+		prev_edge = edges[-1] if len(edges) > 0 else None
 		c1 = endpoints[i]
 		p1 = None
 		p2 = None
@@ -85,6 +90,10 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 				break
 
 		if p1 and p2:
+			if prev_edge:
+				edges.append(Edge(prev_edge.p2, p1, center=c1))
 			edges.append(Edge(p1, p2))
 
+	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
+	edges.append(Edge(edges[-1].p2, edges[0].p1, center=endpoints[0]))
 	return edges
