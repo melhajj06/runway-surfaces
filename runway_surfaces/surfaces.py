@@ -14,8 +14,7 @@ class Edge():
 
 def get_horizontal_surface_edges(runways: list[Runway]):
 	edges = []
-	psurface_vertices = []
-	radii = []
+	psurface_vertices = {}
 
 	if len(runways) == 0:
 		return edges
@@ -27,24 +26,28 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 		if (runway.special_surface):
 			extended_endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
 
-		psurface_vertices.append(extended_endpoints[0])
-		psurface_vertices.append(extended_endpoints[1])
-
 		r = runway.calc_hsurface_radius()
-		radii.append(r)
-		radii.append(r)
+		psurface_vertices[tuple(extended_endpoints[0])] = r
+		psurface_vertices[tuple(extended_endpoints[1])] = r
+
+	endpoints = list(psurface_vertices.keys())
+	sort_directional(endpoints, ccw=True)
+	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
 	
-	for i in range(len(psurface_vertices)):
+	for i in range(len(endpoints)):
+		c1 = endpoints[i]
 		p1 = None
 		p2 = None
 		
-		for j in range(len(psurface_vertices)):
+		for j in range(len(endpoints)):
+			c2 = endpoints[j]
+
 			# avoid trying to connect a circle to itself
 			# avoid trying to connect circles inside of circles
-			if j == i or circle_in_circle(psurface_vertices[i], radii[i], psurface_vertices[j], radii[j]):
+			if i == j or circle_in_circle(c1, psurface_vertices[c1], c2, psurface_vertices[c2]):
 				continue
 
-			tangent_line = cet2cr(psurface_vertices[i], radii[i], psurface_vertices[j], radii[j])
+			tangent_line = cet2cr(c1, psurface_vertices[c1], c2, psurface_vertices[c2])
 			
 			if not tangent_line:
 				continue
@@ -52,17 +55,13 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 			p1 = tangent_line[0]
 			p2 = tangent_line[1]
 
-			for u in range(len(psurface_vertices)):
-				for v in range(len(psurface_vertices)):
-					if u == v:
-						continue
+			for u in range(len(endpoints)):
+				t1 = endpoints[u]
+				t2 = endpoints[(u + 1) % len(endpoints)]
 
-					if segments_intersect(p1, p2, psurface_vertices[u] ,psurface_vertices[v]):
-						p1 = None
-						p2 = None
-						break
-
-				if p1 == None or p2 == None:
+				if line_intersects_segment(p1, p2, t1, t2):
+					p1 = None
+					p2 = None
 					break
 
 				if u != i and u != j:
@@ -77,15 +76,15 @@ def get_horizontal_surface_edges(runways: list[Runway]):
 						a = -m
 						b = 1
 						c = m * p1[0] - p1[1]
-					if line_intersects_circle(a, b, c, psurface_vertices[u], radii[u]):
+					if line_intersects_circle(a, b, c, t1, psurface_vertices[t1]):
 						p1 = None
 						p2 = None
 						break
 
-			if p1 != None and p2 != None:
+			if p1 and p2:
 				break
 
-		if p1 != None and p2 != None:
+		if p1 and p2:
 			edges.append(Edge(p1, p2))
 
 	return edges
