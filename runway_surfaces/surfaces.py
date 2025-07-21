@@ -128,3 +128,24 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
 	edges.append(Edge(edges[-1].p2, edges[0].p1, center=endpoints[0]))
 	return edges
+
+
+def get_primary_surface_vertices(runway: Runway) -> list[tuple[float, float]]:
+	"""Gets the 2D coordinate points of the vertices of the primary surface for ``runway``
+
+	:param Runway runway: a runway
+	:return list[tuple[float, float]]: the vertices of the primary surface for ``runway``
+	"""
+	
+	endpoints = [runway.end1.point, runway.end2.point]
+	if runway.special_surface:
+		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
+	
+	w = runway.width / 2
+	side1 = create_right_triangle(endpoints[0], endpoints[1], w)
+	side2 = create_right_triangle(endpoints[1], endpoints[0], w)
+
+	if len(side1) == 0 or len(side2) == 0:
+		return []
+	
+	return [*side1, *side2]

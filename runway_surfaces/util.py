@@ -3,8 +3,8 @@ from sympy.geometry import Point2D, Line2D, Segment2D
 from functools import cmp_to_key
 
 
-def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> tuple:
-	"""Extends a line segment
+def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> list[tuple[float, float]]:
+	r"""Extends a line segment
 	
 	Extends a line segment defined by ``p1`` and ``p2`` by ``amount`` (i.e. away from each other).
 	Consider a vector, v, going from ``p1`` to the returned extension of p1. Then, the magnitude/length of v is ``amount``.
@@ -12,7 +12,7 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	:param (tuple[float, float]) p1: a 2D coordinate point
 	:param (tuple[float, float]) p2: a 2D coordinate point
 	:param (float) amount: the amount to extend the line segment by
-	:return (tuple[float, float]): the endpoints of the extended line segment 
+	:return (list[tuple[float, float]]): the endpoints of the extended line segment 
 	"""
 
 	t1 = get_higher_point(p1, p2)
@@ -24,9 +24,9 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	# if the line is horizontal (0 slope), no need to do complex math
 	if p0b[0] == 0 and p0b[1] == 0:
 		if p1[0] < p2[0]:
-			return (np.subtract(p1, (amount, 0)), np.add(p2, (amount, 0)))
+			return [tuple(np.subtract(p1, (amount, 0))), tuple(np.add(p2, (amount, 0)))]
 		else:
-			return (np.add(p1, (amount, 0)), np.subtract(p2, (amount, 0)))
+			return [tuple(np.add(p1, (amount, 0))), tuple(np.subtract(p2, (amount, 0)))]
 
 
 	# rotate the points to align with the x axis
@@ -55,31 +55,31 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	p2b = np.matmul(p1b, reverse_rotation_matrix)
 
 	# translate it back to original position
-	return (np.add(p2a, t1), np.add(p2b, t1))
+	return [tuple(np.add(p2a, t1)), tuple(np.add(p2b, t1))]
 
 
-def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> tuple[tuple[float, float], tuple[float, float]]:
-	"""Gets the common external tangent line on the right side of two circles
+def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> list[tuple[float, float]]:
+	r"""Gets the common external tangent line on the right side of two circles
 
 	Two non-overlapping circles have 4 common tangent lines: 2 external and 2 internal.
 	The external tangent lines do not cross the line passing through each circle's center,
 	while the internal tangent lines does.
 	When creating a vector going from ``c1`` to ``c2``, there is a right side and a left side.
-	``cet2cr`` translates to \"right-side common external tangent of two circles\".
+	``cet2cr`` translates to "right-side common external tangent of two circles".
 	
 	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
 	:param (float) r1: the radius of the circle centered at ``c1``
 	:param (tuple[float, float]) c2: a 2D centerpoint of a circle
 	:param (float) r2: the radius of the circle centered at ``c2``
-	:return (tuple[tuple[float, float], tuple[float, float]]): a 2D coordinate point on each circle the common tangent line passes through
+	:return (list[tuple[float, float]]): a 2D coordinate point on each circle the common tangent line passes through
 	"""
 
 	# if the centers of each circle are identical, then there are no possible common tangents
 	# or, if one circle is completely inside of another, then there are also no possible common tangents
 	if np.array_equal(c1, c2):
-		return tuple()
+		return []
 	elif circle_in_circle(c1, r1, c2, r2):
-		return tuple()
+		return []
 	
 	# solutions thanks to the help John Alexiou on Math Stack Exchange
 	# https://math.stackexchange.com/a/211854
@@ -116,24 +116,24 @@ def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: floa
 		if c1[0] >= c2[0]:
 			if c1[0] < c2[0] - (f * r2) + (f * r1):
 				# blue
-				return ((c1[0] - r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+				return [(c1[0] - r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 			else:
 				# green
-				return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+				return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 		else:
 			# orange
-			return ((c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+			return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 	else:
 		if c1[0] < c2[0]:
 			if c1[0] > c2[0] + (f * r2) - (f * r1):
 				# red
-				return ((c1[0] + r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+				return [(c1[0] + r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 			else:
 				# orange
-				return ((c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+				return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 		else:
 			# green
-			return ((c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1))))
+			return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 
 
 def get_higher_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
@@ -167,7 +167,7 @@ def get_lower_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[flo
 #
 # return {bool}: a boolean of whether either circle is entirely within the other
 def circle_in_circle(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> bool:
-	"""Checks if either circle is completely inside the other
+	r"""Checks if either circle is completely inside the other
 	
 	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
 	:param (float) r1: the radius of the circle centered at ``c1``
@@ -214,7 +214,7 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 	A set of 2D coordinate points can be in any order and are usually random.
 	But, they can be ordered so that they're in clockwise or counter-clockwise order about their center or average point.
 	
-	:param (list[tuple[float, float]]) points: _description_
+	:param (list[tuple[float, float]]) points: a list of 2D coordinate points
 	:param (bool) ccw: whether to set the direction to counter-clockwise, defaults to True
 	"""
 
@@ -248,7 +248,7 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 
 
 def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
-	"""Checks if the line passing through ``a`` and ``b`` intersects the line segment defined by ``c`` and ``d``
+	r"""Checks if the line passing through ``a`` and ``b`` intersects the line segment defined by ``c`` and ``d``
 	
 	:param (tuple[float, float]) a: a 2D coordinate point
 	:param (tuple[float, float]) b: a 2D coordinate point
@@ -263,7 +263,7 @@ def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: t
 
 
 def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float], r: float) -> list[tuple[float, float]]:
-	"""Checks if a line intersects the circle centered at ``c`` with radius ``r``
+	r"""Checks if a line intersects the circle centered at ``c`` with radius ``r``
 	
 	The line in question is a line in standard form :math:`ax + by + c = 0` where a = ``a``, b = ``b``, and c = ``c``.
 	When solving the system of equations, a quadratic is solved using the quadratic formula.
@@ -328,3 +328,32 @@ def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float],
 	x2, y2 = (-beta - temp) / alpha, (-alpha * c - a * (-beta - temp)) / (alpha * b)
 
 	return [(x1, y1), (x2, y2)]
+
+
+def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: float) -> list[tuple[float, float]]:
+	r"""Creates a right triangle given two coordinate points
+
+	Given two coordinate points ``a`` and ``b`` where A = ``a`` and B = ``b``,
+	a right triangle, ABC, is created such that the vector AB is orthogonal to the vector BC,
+	and the magnitude of the vector BC is ``w``.
+	The coordinate point C is returned.
+
+	:param (tuple[float, float]) a: a 2D coordinate point
+	:param (tuple[float, float]) b: a 2D coordinate point
+	:param (float w): the length of the 2nd leg of the desired right triangle
+	:return (list[tuple[float, float]]): a 2D coordinate point that is the third point in the triangle defined by ``a`` and ``b``
+	"""
+
+	# $$ \triangle ABC $$ is created such that $$ \overrightarrow{AB} \perp \overrightarrow{BC} $$ and $$ |\overrightarrow{BC}| = w $$ where w = ``w``.
+
+	dx = a[0] - b[1]
+	dy = a[1] - b[1]
+	l = float(np.linalg.norm(np.subtract(a, b)))
+
+	if l == 0:
+		return []
+	
+	c1 = (b[0] + (w * dy) / l, b[1] - (w * dx) / l)
+	c2 = (b[0] - (w * dy) / l, b[1] + (w * dx) / l)
+
+	return [c1, c2]
