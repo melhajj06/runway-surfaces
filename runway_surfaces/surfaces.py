@@ -53,9 +53,13 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	sort_directional(endpoints, ccw=True)
 	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
 	
-	for i in range(len(endpoints)):
+	# if the order is not preserved
+	next_point = -1
+	i = 0
+
+	while i < len(endpoints):
 		prev_edge = edges[-1] if len(edges) > 0 else None
-		c1 = endpoints[i]
+		c1 = endpoints[i] if next_point < 0 else endpoints[next_point]
 		p1 = None
 		p2 = None
 		
@@ -64,7 +68,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 
 			# avoid trying to connect a circle to itself
 			# avoid trying to connect circles inside of circles
-			if i == j or circle_in_circle(c1, psurface_vertices[c1], c2, psurface_vertices[c2]):
+			if (next_point >= 0 and next_point == j) or i == j or circle_in_circle(c1, psurface_vertices[c1], c2, psurface_vertices[c2]):
 				continue
 
 			tangent_line = cet2cr(c1, psurface_vertices[c1], c2, psurface_vertices[c2])
@@ -116,14 +120,21 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 			# if the tangent line does not intersect any perimeter segments nor any other circles,
 			# it is valid
 			if p1 and p2:
+				if j != (i + 1) % len(endpoints):
+					next_point = j
+					i = i - 1
+				else:
+					next_point = -1
 				break
-		
+
 		# if no tangent line that doesn't have an invalid intersection is found,
 		# then this point would either create a concavity or a self intersection in the final surface
 		if p1 and p2:
 			if prev_edge:
 				edges.append(Edge(prev_edge.p2, p1, center=c1))
 			edges.append(Edge(p1, p2))
+		
+		i += 1
 
 	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
 	edges.append(Edge(edges[-1].p2, edges[0].p1, center=endpoints[0]))
@@ -136,7 +147,7 @@ def get_primary_surface_vertices(runway: Runway) -> list[tuple[float, float]]:
 	:param Runway runway: a runway
 	:return list[tuple[float, float]]: the vertices of the primary surface for ``runway``
 	"""
-	
+
 	endpoints = [runway.end1.point, runway.end2.point]
 	if runway.special_surface:
 		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
