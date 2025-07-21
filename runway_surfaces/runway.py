@@ -64,3 +64,32 @@ class Runway:
 			return 5000
 		
 		return 10000
+	
+	def calc_approach_width(self):
+		visual_only = self.end1.approach_type == ApproachTypes.VISUAL and self.end2.approach_type == ApproachTypes.VISUAL
+		has_npia = self.end1.approach_type == ApproachTypes.NON_PRECISION_INSTRUMENT or self.end2.approach_type == ApproachTypes.NON_PRECISION_INSTRUMENT
+
+		if self.runway_type == RunwayTypes.UTILITY:
+			if visual_only:
+				return 1250
+			else:
+				return 2000
+		elif visual_only:
+			return 1500
+		
+		if self.runway_type == RunwayTypes.NON_PRECISION_INSTRUMENT:
+			if has_npia and self.visiblity_minimums >= 0.75:
+				return 4000
+			elif self.visiblity_minimums > 0.75:
+				return 3500
+		
+		return 16000
+	
+	def calc_approach_distance(self):
+		if self.runway_type == RunwayTypes.VISUAL or self.runway_type == RunwayTypes.UTILITY:
+			return 5000
+		elif self.runway_type == RunwayTypes.NON_PRECISION_INSTRUMENT:
+			return 10000
+		else:
+			return 50000
+		
