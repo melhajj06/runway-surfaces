@@ -2,7 +2,7 @@ import numpy as np
 from sympy.geometry import Point2D, Line2D, Segment2D
 from functools import cmp_to_key
 
-
+# TODO: optimize this. it does too much unnecessary math
 def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> list[tuple[float, float]]:
 	r"""Extends a line segment
 	

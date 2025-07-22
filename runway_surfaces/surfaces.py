@@ -21,7 +21,7 @@ class Edge():
 		self.p2 = p2
 		self.center = center
 
-
+# TODO: optimize this. since it's already in ccw order, no need to check every possible common tangent at first
 def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	"""Gets the outline of the horizontal surface encompassing every runway in ``runways``
 	
@@ -152,7 +152,7 @@ def get_primary_surface_vertices(runway: Runway) -> list[tuple[float, float]]:
 	if runway.special_surface:
 		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
 	
-	w = runway.width / 2
+	w = runway.calc_psurface_width() / 2.0
 	side1 = create_right_triangle(endpoints[0], endpoints[1], w)
 	side2 = create_right_triangle(endpoints[1], endpoints[0], w)
 
