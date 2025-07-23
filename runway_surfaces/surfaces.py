@@ -160,3 +160,7 @@ def get_primary_surface_vertices(runway: Runway) -> list[tuple[float, float]]:
 		return []
 	
 	return [*side1, *side2]
+
+
+def get_approach_surface_lines(psurface_vertices: list[tuple[float, float]]) -> list[Line3D]:
+	return []

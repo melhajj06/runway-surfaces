@@ -8,10 +8,12 @@ class RunwayTypes(Enum):
 	NON_PRECISION_INSTRUMENT = 2
 	PRECISION_INSTRUMENT = 3
 
+
 class ApproachTypes(Enum):
 	VISUAL = 0
 	NON_PRECISION_INSTRUMENT = 1
 	PRECISION_INSTRUMENT = 2
+
 
 class RunwayEnd:
 	def __init__(self, point: tuple, approach_type: ApproachTypes):

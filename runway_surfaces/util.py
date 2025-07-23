@@ -1,8 +1,40 @@
 import numpy as np
-from sympy.geometry import Point2D, Line2D, Segment2D
+from sympy.geometry import Point2D, Line2D, Line3D, Segment2D
 from functools import cmp_to_key
 
-# TODO: optimize this. it does too much unnecessary math
+
+def extend_point_in_one_direction(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> tuple[float, float]:
+	r"""Extends ``p2`` in the direction of ``p1`` to ``p2`` by ``amount``
+
+	Scales a vector going from ``p1`` to ``p2`` such that the scaled vector's magnitude is the magnitude of the original vector
+	plus ``amount`` and is in the same direction of the original vector.
+	The coordinate point at the head of this scaled vector is returned.
+
+	:param tuple[float, float] p1: a 2D coordinate point
+	:param tuple[float, float] p2: a 2D coordinate point
+	:param float amount: the amount to extend ``p2`` by
+	:return tuple[float, float]: a 2D coordinate point that is ``amount`` away from ``p2`` in the direction of ``p1`` to ``p2``
+	"""
+
+	# translate to the origin
+	v = np.subtract(p2, p1)
+	length = np.linalg.norm(v)
+
+	if length == 0:
+		return tuple()
+	
+	# let $$ \vec{v} $$ be the scaled vector
+	# let l be param `amount`
+	# scale the vector such that $$ |\vec{v}| = \overrightarrow{P_{1}P_{2}} + l $$
+	a = amount / length + 1
+	v = a * v
+
+	# translate back
+	v = np.add(v, p1)
+	
+	return tuple(v)
+
+
 def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> list[tuple[float, float]]:
 	r"""Extends a line segment
 	
@@ -15,47 +47,13 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	:return (list[tuple[float, float]]): the endpoints of the extended line segment 
 	"""
 
-	t1 = get_higher_point(p1, p2)
-	t2 = get_lower_point(p1, p2)
+	extended1 = extend_point_in_one_direction(p1, p2, amount)
+	extended2 = extend_point_in_one_direction(p2, p1, amount)
 
-	p0a = np.array([0, 0])
-	p0b = np.subtract(t2, t1)
-
-	# if the line is horizontal (0 slope), no need to do complex math
-	if p0b[0] == 0 and p0b[1] == 0:
-		if p1[0] < p2[0]:
-			return [tuple(np.subtract(p1, (amount, 0))), tuple(np.add(p2, (amount, 0)))]
-		else:
-			return [tuple(np.add(p1, (amount, 0))), tuple(np.subtract(p2, (amount, 0)))]
-
-
-	# rotate the points to align with the x axis
-	theta = -np.acos(p0b[0] / np.linalg.norm(p0b))
-	rotation_matrix = [
-		[np.cos(theta), -np.sin(theta)],
-		[np.sin(theta), np.cos(theta)]
-	]
-	p1a = p0a
-	p1b = np.matmul(p0b, rotation_matrix)
-
-	# mathematically should be 0
-	# set to 0 to avoid floating precision weirdness
-	p1b[1] = 0
-
-	# add the distance
-	p1b[0] = p1b[0] + amount
-	p1a[0] = p1a[0] - amount
-
-	# rotate it back to original orientation
-	reverse_rotation_matrix = [
-		[np.cos(theta), -np.sin(-theta)],
-		[np.sin(-theta), np.cos(theta)]
-	]
-	p2a = np.matmul(p1a, reverse_rotation_matrix)
-	p2b = np.matmul(p1b, reverse_rotation_matrix)
-
-	# translate it back to original position
-	return [tuple(np.add(p2a, t1)), tuple(np.add(p2b, t1))]
+	if len(extended1) == 0 or len(extended2) == 0:
+		return []
+	
+	return [extended1, extended2]
 
 
 def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> list[tuple[float, float]]:
