@@ -66,62 +66,62 @@ class Runway:
 	
 	# regulations on approach surfaces dimensions are all over the fucking place
 	def calc_approach_dimensions(self):
-		dim = {"end1": {}, "end2": {}}
+		dim = {self.end1: {}, self.end2: {}}
 		end1_type = self.end1.approach_type
 		end2_type = self.end2.approach_type
 
-		dim["end1"]["type"] = end1_type
-		dim["end2"]["type"] = end2_type
+		dim[self.end1]["type"] = end1_type
+		dim[self.end2]["type"] = end2_type
 		
 		if end1_type == RunwayTypes.VISUAL:
 			if self.runway_type == RunwayTypes.UTILITY:
-				dim["end1"]["width"] = 1250
+				dim[self.end1]["width"] = 1250
 			else:
-				dim["end1"]["width"] = 1500
-			dim["end1"]["length"] = 5000
-			dim["end1"]["slope"] = 0.05
+				dim[self.end1]["width"] = 1500
+			dim[self.end1]["length"] = 5000
+			dim[self.end1]["slope"] = 0.05
 		elif end1_type == ApproachTypes.NON_PRECISION_INSTRUMENT:
 			if self.runway_type == RunwayTypes.UTILITY:
-				dim["end1"]["width"] = 2000
-				dim["end1"]["length"] = 5000
-				dim["end1"]["slope"] = 0.05
+				dim[self.end1]["width"] = 2000
+				dim[self.end1]["length"] = 5000
+				dim[self.end1]["slope"] = 0.05
 			else:
-				dim["end1"]["length"] = 10000
-				dim["end1"]["slope"] = 1.0 / 34.0
+				dim[self.end1]["length"] = 10000
+				dim[self.end1]["slope"] = 1.0 / 34.0
 				if self.visiblity_minimums > 0.75:
-					dim["end1"]["width"] = 3500
+					dim[self.end1]["width"] = 3500
 				elif self.visiblity_minimums == 0.75:
-					dim["end1"]["width"] = 4000
+					dim[self.end1]["width"] = 4000
 		elif end1_type == ApproachTypes.PRECISION_INSTRUMENT:
-			dim["end1"]["width"] = dim["end2"]["width"] = 16000
-			dim["end1"]["length"] = 60000
-			dim["end1"]["primary_slope"] = 0.02
-			dim["end1"]["secondary_slope"] = 0.025
+			dim[self.end1]["width"] = dim[self.end2]["width"] = 16000
+			dim[self.end1]["length"] = 50000
+			dim[self.end1]["primary_slope"] = 0.02
+			dim[self.end1]["secondary_slope"] = 0.025
 			
 		if end2_type == RunwayTypes.VISUAL:
 			if self.runway_type == RunwayTypes.UTILITY:
-				dim["end2"]["width"] = 1250
+				dim[self.end2]["width"] = 1250
 			else:
-				dim["end2"]["width"] = 1500
-			dim["end2"]["length"] = 5000
-			dim["end2"]["slope"] = 0.05
+				dim[self.end2]["width"] = 1500
+			dim[self.end2]["length"] = 5000
+			dim[self.end2]["slope"] = 0.05
 		elif end2_type == ApproachTypes.NON_PRECISION_INSTRUMENT:
 			if self.runway_type == RunwayTypes.UTILITY:
-				dim["end2"]["width"] = 2000
-				dim["end2"]["length"] = 5000
-				dim["end2"]["slope"] = 0.05
+				dim[self.end2]["width"] = 2000
+				dim[self.end2]["length"] = 5000
+				dim[self.end2]["slope"] = 0.05
 			else:
-				dim["end2"]["length"] = 10000
-				dim["end2"]["slope"] = 1.0 / 34.0
+				dim[self.end2]["length"] = 10000
+				dim[self.end2]["slope"] = 1.0 / 34.0
 				if self.visiblity_minimums > 0.75:
-					dim["end2"]["width"] = 3500
+					dim[self.end2]["width"] = 3500
 				elif self.visiblity_minimums == 0.75:
-					dim["end2"]["width"] = 4000
+					dim[self.end2]["width"] = 4000
 		elif end2_type == ApproachTypes.PRECISION_INSTRUMENT:
-			dim["end2"]["width"] = dim["end2"]["width"] = 16000
-			dim["end2"]["length"] = 50000
-			dim["end2"]["primary_slope"] = 0.02
-			dim["end2"]["secondary_slope"] = 0.025
+			dim[self.end2]["width"] = dim[self.end2]["width"] = 16000
+			dim[self.end2]["length"] = 50000
+			dim[self.end2]["primary_slope"] = 0.02
+			dim[self.end2]["secondary_slope"] = 0.025
 		
 		return dim
 		

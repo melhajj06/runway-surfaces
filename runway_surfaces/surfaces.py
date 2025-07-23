@@ -141,26 +141,115 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	return edges
 
 
-def get_primary_surface_vertices(runway: Runway) -> list[tuple[float, float]]:
+def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[float, float]]]:
 	"""Gets the 2D coordinate points of the vertices of the primary surface for ``runway``
 
 	:param Runway runway: a runway
-	:return list[tuple[float, float]]: the vertices of the primary surface for ``runway``
+	:return dict[RunwayEnd, list[tuple[float, float]]]: the ends of ``runway`` mapped to their respective primary surface vertices
 	"""
+
+	vertices: dict[RunwayEnd, list[tuple[float, float]]] = {}
 
 	endpoints = [runway.end1.point, runway.end2.point]
 	if runway.special_surface:
 		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
 	
 	w = runway.calc_psurface_width() / 2.0
-	side1 = create_right_triangle(endpoints[0], endpoints[1], w)
-	side2 = create_right_triangle(endpoints[1], endpoints[0], w)
+	side2 = create_right_triangle(endpoints[0], endpoints[1], w)
+	side1 = create_right_triangle(endpoints[1], endpoints[0], w)
 
 	if len(side1) == 0 or len(side2) == 0:
-		return []
+		return dict()
 	
-	return [*side1, *side2]
+	vertices[runway.end1] = side1
+	vertices[runway.end2] = side2
+
+	return vertices
 
 
-def get_approach_surface_lines(psurface_vertices: list[tuple[float, float]]) -> list[Line3D]:
-	return []
+def get_approach_surface_lines(end_infos: dict[RunwayEnd, dict[str, float]], psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]]) -> dict[RunwayEnd, list[Line3D]]:
+	"""Generates 3D lines that are the bounds for each approach surface
+
+	For each ``RunwayEnd`` in ``end_infos``,
+	a list of 3 (or 4 if the approach is classified as Precision Instrument) ``Line3D``s is generated that create bounds for the approach surface.
+
+	:param dict[RunwayEnd, dict[str, float]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway#calc_approach_dimensions``
+	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway on the end's respective side
+	:return dict[RunwayEnd, list[Line3D]]: a mapping of each runway end of one runway to a list of ``Line3D``s that are the bounds of the respective approach surface
+	"""
+	
+	lines: dict[RunwayEnd, list[Line3D]] = {}
+	
+	entries = list(end_infos.items())
+	end1_dimensions = entries[0][1]
+	end2_dimensions = entries[1][1]
+	end1_vertices = psurface_vertices.get(entries[0][0])
+	end2_vertices = psurface_vertices.get(entries[1][0])
+
+	lines[entries[0][0]] = []
+	lines[entries[1][0]] = []
+
+	assert end1_vertices
+	assert end2_vertices
+
+	type = end1_dimensions["type"]
+	width = end1_dimensions["width"]
+	length = end1_dimensions["length"]
+	slope = 0
+	primary_slope = 0
+	secondary_slope = 0
+
+	if (type == ApproachTypes.PRECISION_INSTRUMENT):
+		primary_slope = end1_dimensions["primary_slope"]
+		secondary_slope = end1_dimensions["secondary_slope"]
+	else:
+		slope = end1_dimensions["slope"]
+
+	# get midpoints of each end
+	end1_midpoint = ((end1_vertices[0][0] + end1_vertices[1][0]) / 2, (end1_vertices[0][1] + end1_vertices[1][1]) / 2)
+	end2_midpoint = ((end2_vertices[0][0] + end2_vertices[1][0]) / 2, (end2_vertices[0][1] + end2_vertices[1][1]) / 2)
+
+	# extend the center line to the length of the approach surface
+	cl = extend_point_in_one_direction(end2_midpoint, end1_midpoint, length)
+	w =  width / 2
+
+	# create a right triangle so that the hypotenuse is the desired line
+	triangle = create_right_triangle(end1_midpoint, cl, float(w))
+
+	lines[entries[0][0]].append(Line3D((end1_vertices[0][0], end1_vertices[0][1], 0), (triangle[0][0], triangle[0][1], 0)))
+	lines[entries[0][0]].append(Line3D((end1_vertices[1][0], end1_vertices[1][1], 0), (triangle[1][0], triangle[1][1], 0)))
+
+	if slope == 0:
+		p = extend_point_in_one_direction(end2_midpoint, end1_midpoint, 10000)
+		lines[entries[0][0]].append(Line3D((end1_midpoint[0], end1_midpoint[1], 0), (p[0], p[1], primary_slope * 10000)))
+		lines[entries[0][0]].append(Line3D((p[0], p[1], primary_slope * 10000), (cl[0], cl[1], primary_slope * 10000 + secondary_slope * 40000)))
+	else:
+		lines[entries[0][0]].append(Line3D((end1_midpoint[0], end1_midpoint[1], 0), (cl[0], cl[1], slope * length)))
+
+	type = end2_dimensions["type"]
+	width = end2_dimensions["width"]
+	length = end2_dimensions["length"]
+	slope = 0
+	primary_slope = 0
+	secondary_slope = 0
+
+	if (type == ApproachTypes.PRECISION_INSTRUMENT):
+		primary_slope = end2_dimensions["primary_slope"]
+		secondary_slope = end2_dimensions["secondary_slope"]
+	else:
+		slope = end2_dimensions["slope"]
+
+	cl = extend_point_in_one_direction(end1_midpoint, end2_midpoint, length)
+
+	triangle = create_right_triangle(end2_midpoint, cl, float(w))
+	lines[entries[1][0]].append(Line3D((end2_vertices[0][0], end2_vertices[0][1], 0), (triangle[0][0], triangle[0][1], 0)))
+	lines[entries[1][0]].append(Line3D((end2_vertices[1][0], end2_vertices[1][1], 0), (triangle[1][0], triangle[1][1], 0)))
+
+	if slope == 0:
+		p = extend_point_in_one_direction(end1_midpoint, end2_midpoint, 10000)
+		lines[entries[1][0]].append(Line3D((end2_midpoint[0], end2_midpoint[1], 0), (p[0], p[1], primary_slope * 10000)))
+		lines[entries[1][0]].append(Line3D((p[0], p[1], primary_slope * 10000), (cl[0], cl[1], primary_slope * 10000 + secondary_slope * 40000)))
+	else:
+		lines[entries[1][0]].append(Line3D((end2_midpoint[0], end2_midpoint[1], 0), (cl[0], cl[1], slope * length)))
+
+	return lines

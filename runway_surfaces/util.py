@@ -31,7 +31,7 @@ def extend_point_in_one_direction(p1: tuple[float, float], p2: tuple[float, floa
 
 	# translate back
 	v = np.add(v, p1)
-	
+
 	return tuple(v)
 
 
@@ -47,8 +47,8 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	:return (list[tuple[float, float]]): the endpoints of the extended line segment 
 	"""
 
-	extended1 = extend_point_in_one_direction(p1, p2, amount)
-	extended2 = extend_point_in_one_direction(p2, p1, amount)
+	extended2 = extend_point_in_one_direction(p1, p2, amount)
+	extended1 = extend_point_in_one_direction(p2, p1, amount)
 
 	if len(extended1) == 0 or len(extended2) == 0:
 		return []
@@ -339,19 +339,21 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 	:param (tuple[float, float]) a: a 2D coordinate point
 	:param (tuple[float, float]) b: a 2D coordinate point
 	:param (float w): the length of the 2nd leg of the desired right triangle
-	:return (list[tuple[float, float]]): a 2D coordinate point that is the third point in the triangle defined by ``a`` and ``b``
+	:return (list[tuple[float, float]]): a list of 2D coordinates that can be the third point in the triangle defined by ``a`` and ``b``
 	"""
 
 	# $$ \triangle ABC $$ is created such that $$ \overrightarrow{AB} \perp \overrightarrow{BC} $$ and $$ |\overrightarrow{BC}| = w $$ where w = ``w``.
 
-	dx = a[0] - b[1]
-	dy = a[1] - b[1]
+	dx = np.abs(a[0] - b[0])
+	dy = np.abs(a[1] - b[1])
 	l = float(np.linalg.norm(np.subtract(a, b)))
 
 	if l == 0:
 		return []
 	
-	c1 = (b[0] + (w * dy) / l, b[1] - (w * dx) / l)
-	c2 = (b[0] - (w * dy) / l, b[1] + (w * dx) / l)
+	# 90 deg
+	c1 = (b[0] - (w * dy) / l, b[1] + (w * dx) / l)
+	# -90 deg
+	c2 = (b[0] + (w * dy) / l, b[1] - (w * dx) / l)
 
 	return [c1, c2]
