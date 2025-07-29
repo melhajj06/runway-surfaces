@@ -41,10 +41,10 @@ def extend_points_in_both_directions(p1: tuple[float, float], p2: tuple[float, f
 	Extends a line segment defined by ``p1`` and ``p2`` by ``amount`` (i.e. away from each other).
 	Consider a vector, v, going from ``p1`` to the returned extension of p1. Then, the magnitude/length of v is ``amount``.
 	
-	:param (tuple[float, float]) p1: a 2D coordinate point
-	:param (tuple[float, float]) p2: a 2D coordinate point
-	:param (float) amount: the amount to extend the line segment by
-	:return (list[tuple[float, float]]): the endpoints of the extended line segment 
+	:param tuple[float, float] p1: a 2D coordinate point
+	:param tuple[float, float] p2: a 2D coordinate point
+	:param float amount: the amount to extend the line segment by
+	:return list[tuple[float, float]]: the endpoints of the extended line segment 
 	"""
 
 	extended2 = extend_point_in_one_direction(p1, p2, amount)
@@ -65,11 +65,11 @@ def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: floa
 	When creating a vector going from ``c1`` to ``c2``, there is a right side and a left side.
 	``cet2cr`` translates to "right-side common external tangent of two circles".
 	
-	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
-	:param (float) r1: the radius of the circle centered at ``c1``
-	:param (tuple[float, float]) c2: a 2D centerpoint of a circle
-	:param (float) r2: the radius of the circle centered at ``c2``
-	:return (list[tuple[float, float]]): a 2D coordinate point on each circle the common tangent line passes through
+	:param tuple[float, float] c1: a 2D centerpoint of a circle
+	:param float r1: the radius of the circle centered at ``c1``
+	:param tuple[float, float] c2: a 2D centerpoint of a circle
+	:param float r2: the radius of the circle centered at ``c2``
+	:return list[tuple[float, float]]: a 2D coordinate point on each circle the common tangent line passes through
 	"""
 
 	# if the centers of each circle are identical, then there are no possible common tangents
@@ -137,9 +137,9 @@ def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: floa
 def get_higher_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
 	"""Gets the point with the larger y-value
 	
-	:param (tuple[float, float]) a: a 2D coordinate point
-	:param (tuple[float, float]) b: a 2D coordinate point
-	:return (tuple[float, float]): the higher point
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] b: a 2D coordinate point
+	:return tuple[float, float]: the higher point
 	"""
 
 	return b if b[1] > a[1] else a
@@ -148,9 +148,9 @@ def get_higher_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[fl
 def get_lower_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
 	"""Gets the point with the smaller y-value
 	
-	:param (tuple[float, float]) a: a 2D coordinate point
-	:param (tuple[float, float]) b: a 2D coordinate point
-	:return (tuple[float, float]): the lower point
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] b: a 2D coordinate point
+	:return tuple[float, float]: the lower point
 	"""
 
 	return b if b[1] < a[1] else a
@@ -167,11 +167,11 @@ def get_lower_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[flo
 def circle_in_circle(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: float) -> bool:
 	r"""Checks if either circle is completely inside the other
 	
-	:param (tuple[float, float]) c1: a 2D centerpoint of a circle
-	:param (float) r1: the radius of the circle centered at ``c1``
-	:param (tuple[float, float]) c2: a 2D centerpoint of a circle
-	:param (float) r2: the radius of the circle centered at ``c2``
-	:return (bool): whether either circle is completely inside the other
+	:param tuple[float, float] c1: a 2D centerpoint of a circle
+	:param float r1: the radius of the circle centered at ``c1``
+	:param tuple[float, float] c2: a 2D centerpoint of a circle
+	:param float r2: the radius of the circle centered at ``c2``
+	:return bool: whether either circle is completely inside the other
 	"""
 
 	# if the distance between the centerpoints plus the radius of circle #1 is less than or equal to the radius of the circle #2,
@@ -189,8 +189,8 @@ def compute_centerpoint(points: list[tuple[float, float]]) -> tuple[float, float
 	The center or average point of a list of points has an x-value of the average of all the x-values,
 	and a y-value of the average of all the y-values.
 	
-	:param (list[tuple[float, float]]) points: a list of 2D coordinate points
-	:return (tuple[float, float]): the average point
+	:param list[tuple[float, float]] points: a list of 2D coordinate points
+	:return tuple[float, float]: the average point
 	"""
 
 	if len(points) == 0:
@@ -212,8 +212,8 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 	A set of 2D coordinate points can be in any order and are usually random.
 	But, they can be ordered so that they're in clockwise or counter-clockwise order about their center or average point.
 	
-	:param (list[tuple[float, float]]) points: a list of 2D coordinate points
-	:param (bool) ccw: whether to set the direction to counter-clockwise, defaults to True
+	:param list[tuple[float, float]] points: a list of 2D coordinate points
+	:param bool ccw: whether to set the direction to counter-clockwise, defaults to True
 	"""
 
 	if len(points) == 0:
@@ -247,7 +247,6 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 
 def lisl(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
 	r"""Checks if the line passing through ``a`` and ``b`` intersects the line pasing through ``c`` and ``d``
-
 	``lisl`` translates to "line intersects line".
 
 	:param tuple[float, float] a: a 2D coordinate point
@@ -267,11 +266,11 @@ def lis_4p(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float
 
 	``list_4p`` translates to "line intersects segment 4 points".
 	
-	:param (tuple[float, float]) a: a 2D coordinate point
-	:param (tuple[float, float]) b: a 2D coordinate point
-	:param (tuple[float, float]) c: a 2D coordinate point
-	:param (tuple[float, float]) d: a 2D coordinate point
-	:return (list[Point2D]): a list of every intersection point
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] b: a 2D coordinate point
+	:param tuple[float, float] c: a 2D coordinate point
+	:param tuple[float, float] d: a 2D coordinate point
+	:return list[Point2D]: a list of every intersection point
 	"""
 
 	line = Line2D(Point2D(a), Point2D(b))
@@ -284,11 +283,11 @@ def lis_3p(a: tuple[float, float], slope: float, c: tuple[float, float], d: tupl
 
 	``list_3p`` translates to "line intersects segment 3 points".
 	
-	:param (tuple[float, float]) a: a 2D coordinate point
-	:param (tuple[float, float]) slope: the slope of a 2D line
-	:param (tuple[float, float]) c: a 2D coordinate point
-	:param (tuple[float, float]) d: a 2D coordinate point
-	:return (list[Point2D]): a list of every intersection point
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] slope: the slope of a 2D line
+	:param tuple[float, float] c: a 2D coordinate point
+	:param tuple[float, float] d: a 2D coordinate point
+	:return list[Point2D]: a list of every intersection point
 	"""
 
 	line = Line2D(a, slope)
@@ -303,12 +302,12 @@ def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float],
 	If the determinant is greater than or equal to 0, then the result will be a real number.
 	Subsequently, the line and circle will intersect (ignoring edge cases).
 	
-	:param (float) a: `a` in the standard-form line equation
-	:param (float) b: `b` in the standard-form line equation
-	:param (float) c: `c` in the standard-form line equation
-	:param (tuple[float, float]) p: a 2D centerpoint of a circle
-	:param (float) r: the radius of the circle centered at ``p``
-	:return (list[tuple[float, float]]): a list of every intersection point
+	:param float a: `a` in the standard-form line equation
+	:param float b: `b` in the standard-form line equation
+	:param float c: `c` in the standard-form line equation
+	:param tuple[float, float] p: a 2D centerpoint of a circle
+	:param float r: the radius of the circle centered at ``p``
+	:return list[tuple[float, float]]: a list of every intersection point
 	"""
 
 	# if a and b are 0, then it isn't a line
@@ -371,10 +370,10 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 	and the magnitude of the vector BC is ``w``.
 	The coordinate point C is returned.
 
-	:param (tuple[float, float]) a: a 2D coordinate point
-	:param (tuple[float, float]) b: a 2D coordinate point
-	:param (float w): the length of the 2nd leg of the desired right triangle
-	:return (list[tuple[float, float]]): a list of 2D coordinates that can be the third point in the triangle defined by ``a`` and ``b``
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] b: a 2D coordinate point
+	:param float w: the length of the 2nd leg of the desired right triangle
+	:return list[tuple[float, float]]: a list of 2D coordinates that can be the third point in the triangle defined by ``a`` and ``b``
 	"""
 
 	# $$ \triangle ABC $$ is created such that $$ \overrightarrow{AB} \perp \overrightarrow{BC} $$ and $$ |\overrightarrow{BC}| = w $$ where w = ``w``.
@@ -395,7 +394,7 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 
 
 def calc_dist_for_height(slope: float, height: float) -> float:
-	"""Calculates the distance required in the 2D plane to reach a z-value of ``height`` with ``slope``
+	r"""Calculates the distance required in the 2D plane to reach a z-value of ``height`` with ``slope``
 
 	:param float slope: the slope of the line in the xz-plane and yz-plane
 	:param float height: the desired z-value
@@ -409,7 +408,7 @@ def calc_dist_for_height(slope: float, height: float) -> float:
 
 
 def calc_distance(p1: tuple[float, float], p2: tuple[float, float]) -> float:
-	"""Calculates the distance between two 2D coordinate points
+	r"""Calculates the distance between two 2D coordinate points
 
 	:param tuple[float, float] p1: a 2D coordinate point
 	:param tuple[float, float] p2: a 2D coordinate point

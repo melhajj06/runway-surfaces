@@ -7,14 +7,14 @@ class Edge():
 	"""
 
 	def __init__(self, p1: tuple[float, float], p2: tuple[float, float], center: tuple[float, float] = tuple()):
-		"""Creates a new ``Edge`` object
+		r"""Creates a new ``Edge`` object
 
 		If ``center`` is not empty, then this edge is to be interpreted as an arc from ``p1`` to ``p2`` centered at ``center``.
 		Otherwise, this edge is a straight line segment from ``p1`` to ``p2``
 		
-		:param (_type_) p1: a 2D coordinate point
-		:param (_type_) p2: a 2D coordinate point
-		:param (_type_) center: the centerpoint of the arc from ``p1`` to ``p2``, defaults to tuple()
+		:param tuple[float, float] p1: a 2D coordinate point
+		:param tuple[float, float] p2: a 2D coordinate point
+		:param tuple[float, float] center: the centerpoint of the arc from ``p1`` to ``p2``, defaults to tuple()
 		"""
 
 		self.p1 = p1
@@ -23,12 +23,12 @@ class Edge():
 
 # TODO: optimize this. since it's already in ccw order, no need to check every possible common tangent at first
 def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
-	"""Gets the outline of the horizontal surface encompassing every runway in ``runways``
+	r"""Gets the outline of the horizontal surface encompassing every runway in ``runways``
 	
 	See `FAR Part-77 <https://www.ecfr.gov/current/title-14/part-77/section-77.19#p-77.19(a)>`_
 	
-	:param (list[Runway]) runways: a list of ``Runway``s
-	:return (list[Edge]): a list of ``Edge``s defining the outline of the horizontal surface
+	:param list[Runway] runways: a list of ``Runway``s
+	:return list[Edge]: a list of ``Edge``s defining the outline of the horizontal surface
 	"""
 
 	edges = []
@@ -143,7 +143,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 
 
 def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[float, float]]]:
-	"""Gets the 2D coordinate points of the vertices of the primary surface for ``runway``
+	r"""Gets the 2D coordinate points of the vertices of the primary surface for ``runway``
 
 	:param Runway runway: a runway
 	:return dict[RunwayEnd, list[tuple[float, float]]]: the ends of ``runway`` mapped to their respective primary surface vertices
@@ -169,7 +169,7 @@ def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[f
 
 
 def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]]) -> dict[RunwayEnd, list[tuple[float, float]]]:
-	"""Gets the vertices of the 2D projection of the approach surface
+	r"""Gets the vertices of the 2D projection of the approach surface
 
 	For each ``RunwayEnd`` in ``end_infos``,
 	a list of 4 2D coordinate points is generated that create bounds for the approach surface.
