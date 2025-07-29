@@ -1,5 +1,5 @@
 import numpy as np
-from sympy.geometry import Point2D, Line2D, Line3D, Segment2D
+from sympy.geometry import Point2D, Line2D, Line3D, Segment2D, Line
 from functools import cmp_to_key
 
 
@@ -176,7 +176,7 @@ def circle_in_circle(c1: tuple[float, float], r1: float, c2: tuple[float, float]
 
 	# if the distance between the centerpoints plus the radius of circle #1 is less than or equal to the radius of the circle #2,
 	# then circle #1 is inside circle #2
-	d = np.linalg.norm(np.subtract(c1, c2))
+	d = calc_distance(c1, c2)
 	if r1 >= (d + r2) or r2 >= (d + r1):
 		return True
 	
@@ -238,15 +238,34 @@ def sort_directional(points: list[tuple[float, float]], ccw: bool = True) -> Non
 		if det != 0:
 			return np.sign(det)
 		
-		d1 = np.linalg.norm(np.subtract(a, center))
-		d2 = np.linalg.norm(np.subtract(b, center))
+		d1 = calc_distance(a, center)
+		d2 = calc_distance(b, center)
 		return np.sign(d2 - d1)
 	
 	points.sort(key=cmp_to_key(compare_points), reverse=ccw)
 
 
-def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
+def lisl(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
+	r"""Checks if the line passing through ``a`` and ``b`` intersects the line pasing through ``c`` and ``d``
+
+	``lisl`` translates to "line intersects line".
+
+	:param tuple[float, float] a: a 2D coordinate point
+	:param tuple[float, float] b: a 2D coordinate point
+	:param tuple[float, float] c: a 2D coordinate point
+	:param tuple[float, float] d: a 2D coordinate point
+	:return list[Point2D]: a list of every intersection point
+	"""
+
+	line1 = Line2D(Point2D(a), Point2D(b))
+	line2 = Line2D(Point2D(c), Point2D(d))
+	return line1.intersection(line2)
+
+
+def lis_4p(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
 	r"""Checks if the line passing through ``a`` and ``b`` intersects the line segment defined by ``c`` and ``d``
+
+	``list_4p`` translates to "line intersects segment 4 points".
 	
 	:param (tuple[float, float]) a: a 2D coordinate point
 	:param (tuple[float, float]) b: a 2D coordinate point
@@ -259,6 +278,22 @@ def line_intersects_segment(a: tuple[float, float], b: tuple[float, float], c: t
 	segment = Segment2D(Point2D(c), Point2D(d))
 	return line.intersection(segment)
 
+
+def lis_3p(a: tuple[float, float], slope: float, c: tuple[float, float], d: tuple[float, float]) -> list[Point2D]:
+	r"""Checks if the line passing through ``a`` with ``slope`` intersects the line segment defined by ``c`` and ``d``
+
+	``list_3p`` translates to "line intersects segment 3 points".
+	
+	:param (tuple[float, float]) a: a 2D coordinate point
+	:param (tuple[float, float]) slope: the slope of a 2D line
+	:param (tuple[float, float]) c: a 2D coordinate point
+	:param (tuple[float, float]) d: a 2D coordinate point
+	:return (list[Point2D]): a list of every intersection point
+	"""
+
+	line = Line2D(a, slope)
+	segment = Segment2D(Point2D(c), Point2D(d))
+	return line.intersection(segment)
 
 def line_intersects_circle(a: float, b: float, c: float, p: tuple[float, float], r: float) -> list[tuple[float, float]]:
 	r"""Checks if a line intersects the circle centered at ``c`` with radius ``r``
@@ -346,7 +381,7 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 
 	dx = np.abs(a[0] - b[0])
 	dy = np.abs(a[1] - b[1])
-	l = float(np.linalg.norm(np.subtract(a, b)))
+	l = calc_distance(a, b)
 
 	if l == 0:
 		return []
@@ -357,3 +392,28 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 	c2 = (b[0] + (w * dy) / l, b[1] - (w * dx) / l)
 
 	return [c1, c2]
+
+
+def calc_dist_for_height(slope: float, height: float) -> float:
+	"""Calculates the distance required in the 2D plane to reach a z-value of ``height`` with ``slope``
+
+	:param float slope: the slope of the line in the xz-plane and yz-plane
+	:param float height: the desired z-value
+	:return float: the distance in the 2D plane required to reach ``height`` with ``slope``
+	"""
+
+	if slope == 0 or height == 0:
+		return 0
+
+	return (height / slope) * np.sqrt(2)
+
+
+def calc_distance(p1: tuple[float, float], p2: tuple[float, float]) -> float:
+	"""Calculates the distance between two 2D coordinate points
+
+	:param tuple[float, float] p1: a 2D coordinate point
+	:param tuple[float, float] p2: a 2D coordinate point
+	:return float: the distance between ``p1`` and ``p2``
+	"""
+	
+	return float(np.linalg.norm(np.subtract(p1, p2)))

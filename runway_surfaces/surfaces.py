@@ -57,6 +57,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	next_point = -1
 	i = 0
 
+	# TODO: optimize this
 	while i < len(endpoints):
 		prev_edge = edges[-1] if len(edges) > 0 else None
 		c1 = endpoints[i] if next_point < 0 else endpoints[next_point]
@@ -85,7 +86,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 
 				# if the tangent line intersects any perimeter segment,
 				# then it isn't valid
-				if len(line_intersects_segment(p1, p2, t1, t2)) > 0:
+				if len(lis_4p(p1, p2, t1, t2)) > 0:
 					p1 = None
 					p2 = None
 					break
@@ -167,47 +168,43 @@ def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[f
 	return vertices
 
 
-def get_approach_surface_lines(end_infos: dict[RunwayEnd, dict[str, float]], psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]]) -> dict[RunwayEnd, list[Line3D]]:
-	"""Generates 3D lines that are the bounds for each approach surface
+def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]]) -> dict[RunwayEnd, list[tuple[float, float]]]:
+	"""Gets the vertices of the 2D projection of the approach surface
 
 	For each ``RunwayEnd`` in ``end_infos``,
-	a list of 3 (or 4 if the approach is classified as Precision Instrument) ``Line3D``s is generated that create bounds for the approach surface.
+	a list of 4 2D coordinate points is generated that create bounds for the approach surface.
 
 	:param dict[RunwayEnd, dict[str, float]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway#calc_approach_dimensions``
-	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway on the end's respective side
-	:return dict[RunwayEnd, list[Line3D]]: a mapping of each runway end of one runway to a list of ``Line3D``s that are the bounds of the respective approach surface
+	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
+	:return dict[RunwayEnd, list[tuple[float, float]]]: a mapping of each runway end of one runway to a list of 2D vertices that are the bounds of the respective approach surface
 	"""
 	
-	lines: dict[RunwayEnd, list[Line3D]] = {}
+	vertices: dict[RunwayEnd, list[tuple[float, float]]] = {}
 	
 	entries = list(end_infos.items())
 	end1_dimensions = entries[0][1]
 	end2_dimensions = entries[1][1]
-	end1_vertices = psurface_vertices.get(entries[0][0])
-	end2_vertices = psurface_vertices.get(entries[1][0])
+	end1_vertices = psurface_vertices[entries[0][0]]
+	end2_vertices = psurface_vertices[entries[1][0]]
 
-	lines[entries[0][0]] = []
-	lines[entries[1][0]] = []
+	vertices[entries[0][0]] = []
+	vertices[entries[1][0]] = []
 
 	assert end1_vertices
 	assert end2_vertices
 
-	type = end1_dimensions["type"]
-	width = end1_dimensions["width"]
-	length = end1_dimensions["length"]
-	slope = 0
-	primary_slope = 0
-	secondary_slope = 0
-
-	if (type == ApproachTypes.PRECISION_INSTRUMENT):
-		primary_slope = end1_dimensions["primary_slope"]
-		secondary_slope = end1_dimensions["secondary_slope"]
-	else:
-		slope = end1_dimensions["slope"]
-
 	# get midpoints of each end
 	end1_midpoint = ((end1_vertices[0][0] + end1_vertices[1][0]) / 2, (end1_vertices[0][1] + end1_vertices[1][1]) / 2)
 	end2_midpoint = ((end2_vertices[0][0] + end2_vertices[1][0]) / 2, (end2_vertices[0][1] + end2_vertices[1][1]) / 2)
+
+	type = end1_dimensions["type"]
+	width = end1_dimensions["width"]
+	length = 0
+
+	if (type == ApproachTypes.PRECISION_INSTRUMENT):
+		length = end1_dimensions["primary_length"] + end1_dimensions["secondary_length"]
+	else:
+		length = end1_dimensions["length"]
 
 	# extend the center line to the length of the approach surface
 	cl = extend_point_in_one_direction(end2_midpoint, end1_midpoint, length)
@@ -215,41 +212,74 @@ def get_approach_surface_lines(end_infos: dict[RunwayEnd, dict[str, float]], psu
 
 	# create a right triangle so that the hypotenuse is the desired line
 	triangle = create_right_triangle(end1_midpoint, cl, float(w))
-
-	lines[entries[0][0]].append(Line3D((end1_vertices[0][0], end1_vertices[0][1], 0), (triangle[0][0], triangle[0][1], 0)))
-	lines[entries[0][0]].append(Line3D((end1_vertices[1][0], end1_vertices[1][1], 0), (triangle[1][0], triangle[1][1], 0)))
-
-	if slope == 0:
-		p = extend_point_in_one_direction(end2_midpoint, end1_midpoint, 10000)
-		lines[entries[0][0]].append(Line3D((end1_midpoint[0], end1_midpoint[1], 0), (p[0], p[1], primary_slope * 10000)))
-		lines[entries[0][0]].append(Line3D((p[0], p[1], primary_slope * 10000), (cl[0], cl[1], primary_slope * 10000 + secondary_slope * 40000)))
-	else:
-		lines[entries[0][0]].append(Line3D((end1_midpoint[0], end1_midpoint[1], 0), (cl[0], cl[1], slope * length)))
+	
+	# ccw direction
+	vertices[entries[0][0]].append(end1_vertices[0])
+	vertices[entries[0][0]].append(end1_vertices[1])
+	vertices[entries[0][0]].append(triangle[1])
+	vertices[entries[0][0]].append(triangle[0])
 
 	type = end2_dimensions["type"]
 	width = end2_dimensions["width"]
-	length = end2_dimensions["length"]
-	slope = 0
-	primary_slope = 0
-	secondary_slope = 0
+	length = 0
 
 	if (type == ApproachTypes.PRECISION_INSTRUMENT):
-		primary_slope = end2_dimensions["primary_slope"]
-		secondary_slope = end2_dimensions["secondary_slope"]
+		length = end1_dimensions["primary_length"] + end1_dimensions["secondary_length"]
 	else:
-		slope = end2_dimensions["slope"]
+		length = end1_dimensions["length"]
 
 	cl = extend_point_in_one_direction(end1_midpoint, end2_midpoint, length)
-
 	triangle = create_right_triangle(end2_midpoint, cl, float(w))
-	lines[entries[1][0]].append(Line3D((end2_vertices[0][0], end2_vertices[0][1], 0), (triangle[0][0], triangle[0][1], 0)))
-	lines[entries[1][0]].append(Line3D((end2_vertices[1][0], end2_vertices[1][1], 0), (triangle[1][0], triangle[1][1], 0)))
 
-	if slope == 0:
-		p = extend_point_in_one_direction(end1_midpoint, end2_midpoint, 10000)
-		lines[entries[1][0]].append(Line3D((end2_midpoint[0], end2_midpoint[1], 0), (p[0], p[1], primary_slope * 10000)))
-		lines[entries[1][0]].append(Line3D((p[0], p[1], primary_slope * 10000), (cl[0], cl[1], primary_slope * 10000 + secondary_slope * 40000)))
-	else:
-		lines[entries[1][0]].append(Line3D((end2_midpoint[0], end2_midpoint[1], 0), (cl[0], cl[1], slope * length)))
+	vertices[entries[0][0]].append(end2_vertices[0])
+	vertices[entries[0][0]].append(end2_vertices[1])
+	vertices[entries[0][0]].append(triangle[1])
+	vertices[entries[0][0]].append(triangle[0])
 
-	return lines
+	return vertices
+
+
+def get_transitional_surface_lines(psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]], asurfaces: dict[RunwayEnd, list[tuple[float, float]]]) -> list[list[tuple[float, float]]]:
+	"""Gets the vertices of the 2D projection of the transitional surface
+
+	A 2x4 list is returned where the the first row contains all the vertices for the transitional surface on one side of the runway,
+	while the second row contains all the vertices for the transitional surface on the other side of the runway.
+
+	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
+	:param dict[RunwayEnd, list[tuple[float, float]]] asurfaces: a mapping of one runway's ends to the vertices of the approach surface of that runway's end
+	:return list[list[tuple[float, float]]]: a list containing lists of the vertices of the transitional surface for either side of the runway
+	"""
+
+	s1 = []
+	s2 = []
+	entries = list(psurface_vertices.items())
+	end1 = entries[0][0]
+	end2 = entries[1][0]
+	end1_vertices = psurface_vertices[end1]
+	end2_vertices = psurface_vertices[end2]
+
+	# calculate distance from runway centerline to straight edge of transitional surface
+	d = calc_dist_for_height(1.0 / 7.0, 150)
+	v1, v2 = zip(*extend_points_in_both_directions(end1_vertices[0], end1_vertices[1], d))
+	v3, v4 = zip(*extend_points_in_both_directions(end2_vertices[0], end2_vertices[1], d))
+
+	# calculate intersection points between the edge of the transitional surface and the bounds of the approach surfaces for the first side
+	i1 = lisl(asurfaces[end1][0], asurfaces[end1][3], v1, v4)
+	i2 = lisl(asurfaces[end2][1], asurfaces[end2][2], v1, v4)
+
+	# ccw direction
+	s1.append(end1_vertices[0])
+	s1.append(tuple(i1[0]))
+	s1.append(tuple(i2[0]))
+	s1.append(end2_vertices[1])
+
+	# do the same for the second side
+	i2 = lisl(asurfaces[end1][1], asurfaces[end1][2], v2, v3)
+	i1 = lisl(asurfaces[end2][0], asurfaces[end2][3], v2, v3)
+
+	s1.append(end2_vertices[0])
+	s1.append(tuple(i1[0]))
+	s1.append(tuple(i2[0]))
+	s1.append(end1_vertices[1])
+
+	return [s1, s2]

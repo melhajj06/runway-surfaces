@@ -119,7 +119,8 @@ class Runway:
 					dim[self.end2]["width"] = 4000
 		elif end2_type == ApproachTypes.PRECISION_INSTRUMENT:
 			dim[self.end2]["width"] = dim[self.end2]["width"] = 16000
-			dim[self.end2]["length"] = 50000
+			dim[self.end2]["primary_length"] = 10000
+			dim[self.end2]["secondary_length"] = 40000
 			dim[self.end2]["primary_slope"] = 0.02
 			dim[self.end2]["secondary_slope"] = 0.025
 		
