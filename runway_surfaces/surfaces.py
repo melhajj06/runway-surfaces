@@ -53,28 +53,28 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	sort_directional(endpoints, ccw=True)
 	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
 	
-	# if the order is not preserved
-	next_point = -1
-	i = 0
-
-	# TODO: optimize this
-	while i < len(endpoints):
+	current_circle = 0
+	for i in range(len(endpoints)):
 		prev_edge = edges[-1] if len(edges) > 0 else None
-		c1 = endpoints[i] if next_point < 0 else endpoints[next_point]
+		c1 = endpoints[current_circle]
 		p1 = None
 		p2 = None
 		
+		secondary_circle = i
+		c2 = tuple()
 		for j in range(len(endpoints)):
-			c2 = endpoints[j]
+			c2 = endpoints[secondary_circle]
 
 			# avoid trying to connect a circle to itself
-			# avoid trying to connect circles inside of circles
-			if (next_point >= 0 and next_point == j) or i == j or circle_in_circle(c1, psurface_vertices[c1], c2, psurface_vertices[c2]):
+			# avoid trying to connect circles inside of circles // (next_point >= 0 and next_point == j)
+			if secondary_circle == current_circle or circle_in_circle(c1, psurface_vertices[c1], c2, psurface_vertices[c2]):
+				secondary_circle = (secondary_circle + 1) % len(endpoints)
 				continue
 
 			tangent_line = cet2cr(c1, psurface_vertices[c1], c2, psurface_vertices[c2])
 			
 			if len(tangent_line) == 0:
+				secondary_circle = (secondary_circle + 1) % len(endpoints)
 				continue
 
 			p1 = tangent_line[0]
@@ -93,7 +93,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 				
 				# if the tangent line intersects any other circle than those that it's tangent to,
 				# then it isn't valid
-				if u != i and u != j:
+				if u != current_circle and u != secondary_circle:
 					a = 0
 					b = 0
 					c = 0
@@ -121,12 +121,10 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 			# if the tangent line does not intersect any perimeter segments nor any other circles,
 			# it is valid
 			if p1 and p2:
-				if j != (i + 1) % len(endpoints):
-					next_point = j
-					i = i - 1
-				else:
-					next_point = -1
+				current_circle = secondary_circle
 				break
+
+			secondary_circle = (secondary_circle + 1) % len(endpoints)
 
 		# if no tangent line that doesn't have an invalid intersection is found,
 		# then this point would either create a concavity or a self intersection in the final surface
@@ -134,8 +132,6 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 			if prev_edge:
 				edges.append(Edge(prev_edge.p2, p1, center=c1))
 			edges.append(Edge(p1, p2))
-		
-		i += 1
 
 	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
 	edges.append(Edge(edges[-1].p2, edges[0].p1, center=endpoints[0]))

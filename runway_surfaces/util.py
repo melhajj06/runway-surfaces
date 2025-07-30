@@ -103,35 +103,56 @@ def cet2cr(c1: tuple[float, float], r1: float, c2: tuple[float, float], r2: floa
 	# arcsin is odd, so negating it is equivalent to negating c which just changes the side of the circles the common tangent line is on
 	theta = -np.arctan(a/b) - np.arcsin(c/m)
 
-	# signs on conditionals need to be flipped if r2 is greater than r1
+	# if r1 > r2, the inequalities need to be flipped
 	f = 1
-	if r2 > r1:
+	if r1 > r2:
 		f = -1
 
 	# the comments with colors correspond to color coded lines on desmos when i was constructing these points
 	# see: https://desmos.com/calculator
 	if c1[1] >= c2[1]:
-		if c1[0] >= c2[0]:
-			if c1[0] < c2[0] - (f * r2) + (f * r1):
-				# blue
-				return [(c1[0] - r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
-			else:
+		if r1 < r2:
+			if c1[0] >= c2[0]:
 				# green
 				return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
-		else:
-			# orange
-			return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
-	else:
-		if c1[0] < c2[0]:
-			if c1[0] > c2[0] + (f * r2) - (f * r1):
+			elif c1[0] >= c2[0] - r2 + r1:
 				# red
 				return [(c1[0] + r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 			else:
 				# orange
 				return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 		else:
-			# green
-			return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+			if c1[0] < c2[0]:
+				# orange
+				return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+			elif c1[0] <= c2[0] - r2 + r1:
+				# blue
+				return [(c1[0] - r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]		
+			else:
+				# green
+				return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+	else:
+		if r1 < r2:
+			if c1[0] < c2[0]:
+				# orange
+				return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+			elif c1[0] <= c2[0] + r2 - r1:
+				# blue
+				return [(c1[0] - f * r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - f * r2 * np.sin(theta), c2[1] - f * np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+			else:
+				# green
+				return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]	
+		else:
+			if c1[0] >= c2[0]:
+				# green
+				return [(c1[0] - r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] - r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]	
+
+			elif c1[0] >= c2[0] + r2 - r1:
+				# red
+				return [(c1[0] + r1 * np.sin(theta), c1[1] + np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] + np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
+			else:
+				# orange
+				return [(c1[0] + r1 * np.sin(theta), c1[1] - np.sqrt(-(r1**2) * ((np.sin(theta))**2 - 1))), (c2[0] + r2 * np.sin(theta), c2[1] - np.sqrt(-(r2**2) * ((np.sin(theta))**2 - 1)))]
 
 
 def get_higher_point(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:

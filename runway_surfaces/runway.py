@@ -22,9 +22,8 @@ class RunwayEnd:
 
 
 class Runway:
-	def __init__(self, runway_type: RunwayTypes, approach_type: ApproachTypes, end1: RunwayEnd, end2: RunwayEnd, width: float, elevation, special_surface=False, visibility_minimums=0):
+	def __init__(self, runway_type: RunwayTypes, end1: RunwayEnd, end2: RunwayEnd, width: float, elevation, special_surface=False, visibility_minimums=0):
 		self.runway_type = runway_type
-		self.approach_type = approach_type
 		self.end1 = end1
 		self.end2 = end2
 		# TODO: is length and width really necessary?
