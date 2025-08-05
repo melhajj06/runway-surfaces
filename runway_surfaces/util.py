@@ -399,8 +399,8 @@ def create_right_triangle(a: tuple[float, float], b: tuple[float, float], w: flo
 
 	# $$ \triangle ABC $$ is created such that $$ \overrightarrow{AB} \perp \overrightarrow{BC} $$ and $$ |\overrightarrow{BC}| = w $$ where w = ``w``.
 
-	dx = np.abs(a[0] - b[0])
-	dy = np.abs(a[1] - b[1])
+	dx = b[0] - a[0]
+	dy = b[1] - a[1]
 	l = calc_distance(a, b)
 
 	if l == 0:
