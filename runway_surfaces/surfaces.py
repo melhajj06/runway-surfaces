@@ -227,10 +227,10 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 	cl = extend_point_in_one_direction(end1_midpoint, end2_midpoint, length)
 	triangle = create_right_triangle(end2_midpoint, cl, float(w))
 
-	vertices[entries[0][0]].append(end2_vertices[0])
-	vertices[entries[0][0]].append(end2_vertices[1])
-	vertices[entries[0][0]].append(triangle[1])
-	vertices[entries[0][0]].append(triangle[0])
+	vertices[entries[1][0]].append(end2_vertices[0])
+	vertices[entries[1][0]].append(end2_vertices[1])
+	vertices[entries[1][0]].append(triangle[1])
+	vertices[entries[1][0]].append(triangle[0])
 
 	return vertices
 
