@@ -235,7 +235,7 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 	return vertices
 
 
-def get_transitional_surface_lines(psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]], asurfaces: dict[RunwayEnd, list[tuple[float, float]]]) -> list[list[tuple[float, float]]]:
+def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]], asurfaces: dict[RunwayEnd, list[tuple[float, float]]]) -> list[list[tuple[float, float]]]:
 	"""Gets the vertices of the 2D projection of the transitional surface
 
 	A 2x4 list is returned where the the first row contains all the vertices for the transitional surface on one side of the runway,
@@ -256,8 +256,10 @@ def get_transitional_surface_lines(psurface_vertices: dict[RunwayEnd, list[tuple
 
 	# calculate distance from runway centerline to straight edge of transitional surface
 	d = calc_dist_for_height(1.0 / 7.0, 150)
-	v1, v2 = zip(*extend_points_in_both_directions(end1_vertices[0], end1_vertices[1], d))
-	v3, v4 = zip(*extend_points_in_both_directions(end2_vertices[0], end2_vertices[1], d))
+	extended1 = extend_points_in_both_directions(end1_vertices[0], end1_vertices[1], d)
+	extended2 = extend_points_in_both_directions(end2_vertices[0], end2_vertices[1], d)
+	v1, v2 = extended1[0], extended1[1]
+	v3, v4 = extended2[0], extended2[1]
 
 	# calculate intersection points between the edge of the transitional surface and the bounds of the approach surfaces for the first side
 	i1 = lisl(asurfaces[end1][0], asurfaces[end1][3], v1, v4)
@@ -273,9 +275,9 @@ def get_transitional_surface_lines(psurface_vertices: dict[RunwayEnd, list[tuple
 	i2 = lisl(asurfaces[end1][1], asurfaces[end1][2], v2, v3)
 	i1 = lisl(asurfaces[end2][0], asurfaces[end2][3], v2, v3)
 
-	s1.append(end2_vertices[0])
-	s1.append(tuple(i1[0]))
-	s1.append(tuple(i2[0]))
-	s1.append(end1_vertices[1])
+	s2.append(end2_vertices[0])
+	s2.append(tuple(i1[0]))
+	s2.append(tuple(i2[0]))
+	s2.append(end1_vertices[1])
 
 	return [s1, s2]
