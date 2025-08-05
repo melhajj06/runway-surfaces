@@ -1,8 +1,10 @@
 from enum import Enum
-import numpy as np
 
 
 class RunwayTypes(Enum):
+	"""An enumeration of all the types of runways
+	"""
+
 	UTILITY = 0
 	VISUAL = 1
 	NON_PRECISION_INSTRUMENT = 2
@@ -10,31 +12,55 @@ class RunwayTypes(Enum):
 
 
 class ApproachTypes(Enum):
+	"""An enumeration of all the types of approaches found at the ends of runways
+	"""
+
 	VISUAL = 0
 	NON_PRECISION_INSTRUMENT = 1
 	PRECISION_INSTRUMENT = 2
 
 
 class RunwayEnd:
+	"""Represents the end of a runway
+	"""
+
 	def __init__(self, point: tuple, approach_type: ApproachTypes):
+		r"""Creates a new ``RunwayEnd`` object
+
+		:param tuple point: the coordinate point of this endpoint of the runway
+		:param ApproachTypes approach_type: the type of approach found at this end of the runway
+		"""
 		self.point = point
 		self.approach_type = approach_type
 
 
 class Runway:
-	def __init__(self, runway_type: RunwayTypes, end1: RunwayEnd, end2: RunwayEnd, width: float, elevation, special_surface=False, visibility_minimums=0):
+	"""Represents an airport's runway
+	"""
+
+	def __init__(self, runway_type: RunwayTypes, end1: RunwayEnd, end2: RunwayEnd, special_surface: bool = False, visibility_minimums: int = 0):
+		"""Creates a new ``Runway`` object
+
+		:param RunwayTypes runway_type: the type of runway
+		:param RunwayEnd end1: one endpoint of the runway
+		:param RunwayEnd end2: the opposite endpoint of the runway
+		:param bool special_surface: whether this runway is prepared with a special hard surface, defaults to False
+		:param int visibility_minimums: the visibility minimums of the runway, defaults to 0
+		"""
+
 		self.runway_type = runway_type
 		self.end1 = end1
 		self.end2 = end2
-		# TODO: is length and width really necessary?
-		self.length = np.linalg.norm(np.subtract(end1.point, end2.point))
-		self.width = width
-		self.elevation = elevation
 		self.special_surface = special_surface
 		self.visiblity_minimums = visibility_minimums
 	
 	
 	def calc_psurface_width(self) -> int:
+		"""Calculates the width of the primary surface given the information about this runway
+
+		:return int: the width of the primary surface
+		"""
+
 		visual_only = self.end1.approach_type == ApproachTypes.VISUAL and self.end2.approach_type == ApproachTypes.VISUAL
 		has_npia = self.end1.approach_type == ApproachTypes.NON_PRECISION_INSTRUMENT or self.end2.approach_type == ApproachTypes.NON_PRECISION_INSTRUMENT
 
@@ -57,14 +83,25 @@ class Runway:
 		# primary surface width was not specificied at this point
 		return 0
 	
-	def calc_hsurface_radius(self):
+
+	def calc_hsurface_radius(self) -> int:
+		"""Calculates the radius from the runway's endpoints to the horizontal surface
+
+		:return int: the radius of the runway to the horizontal surface
+		"""
 		if self.runway_type == RunwayTypes.UTILITY or self.runway_type == RunwayTypes.VISUAL:
 			return 5000
 		
 		return 10000
 	
+
 	# regulations on approach surfaces dimensions are all over the fucking place
-	def calc_approach_dimensions(self):
+	def calc_approach_dimensions(self) -> dict[RunwayEnd, dict[str, float]]:
+		"""Calculates the dimensions of the approaches at either end of the runway
+
+		:return dict[RunwayEnd, dict[str, float]]: a mapping of the runway's end to its dimensions
+		"""
+
 		dim = {self.end1: {}, self.end2: {}}
 		end1_type = self.end1.approach_type
 		end2_type = self.end2.approach_type
@@ -124,4 +161,3 @@ class Runway:
 			dim[self.end2]["secondary_slope"] = 0.025
 		
 		return dim
-		

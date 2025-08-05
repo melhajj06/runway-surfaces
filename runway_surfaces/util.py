@@ -1,5 +1,5 @@
 import numpy as np
-from sympy.geometry import Point2D, Line2D, Line3D, Segment2D, Line
+from sympy.geometry import Point2D, Line2D, Segment2D
 from functools import cmp_to_key
 
 
