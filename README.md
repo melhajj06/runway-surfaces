@@ -5,4 +5,7 @@ In the USA, airports and aviation are regulated by the [Federal Aviation Adminis
 - Create a `Runway` from `runway` containing all the necessary data such as runway type, approaches, endpoints as coordinates, etc...
 - Use the functions in `surfaces` to obtain the vertices or edges of all the surfaces
 
+## Docs
+Check `docs` in the project
+
 #### Please note that all internal calculation is done in feet

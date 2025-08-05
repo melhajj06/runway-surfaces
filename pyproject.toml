@@ -1,6 +1,6 @@
 [project]
 name = "runway-surfaces"
-version = "0.0.1"
+version = "1.0.0"
 authors = [
 	{name = "melhajj06"},
 ]
@@ -17,5 +17,6 @@ build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 PDF = [
-	"pytest"
+	"pytest",
+	"sphinx"
 ]

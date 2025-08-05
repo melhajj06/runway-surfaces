@@ -170,7 +170,7 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 	For each ``RunwayEnd`` in ``end_infos``,
 	a list of 4 2D coordinate points is generated that create bounds for the approach surface.
 
-	:param dict[RunwayEnd, dict[str, float]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway#calc_approach_dimensions``
+	:param dict[RunwayEnd, dict[str, float]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway.calc_approach_dimensions``
 	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
 	:return dict[RunwayEnd, list[tuple[float, float]]]: a mapping of each runway end of one runway to a list of 2D vertices that are the bounds of the respective approach surface
 	"""
