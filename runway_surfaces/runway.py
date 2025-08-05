@@ -72,7 +72,7 @@ class Runway:
 		dim[self.end1]["type"] = end1_type
 		dim[self.end2]["type"] = end2_type
 		
-		if end1_type == RunwayTypes.VISUAL:
+		if end1_type == ApproachTypes.VISUAL:
 			if self.runway_type == RunwayTypes.UTILITY:
 				dim[self.end1]["width"] = 1250
 			else:
@@ -97,7 +97,7 @@ class Runway:
 			dim[self.end1]["primary_slope"] = 0.02
 			dim[self.end1]["secondary_slope"] = 0.025
 			
-		if end2_type == RunwayTypes.VISUAL:
+		if end2_type == ApproachTypes.VISUAL:
 			if self.runway_type == RunwayTypes.UTILITY:
 				dim[self.end2]["width"] = 1250
 			else:
