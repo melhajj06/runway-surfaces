@@ -1,5 +1,5 @@
 import numpy as np
-from sympy.geometry import Point2D, Line2D, Segment2D
+from sympy.geometry import Point2D, Line2D, Segment2D, Polygon, Point
 from functools import cmp_to_key
 
 
@@ -437,3 +437,87 @@ def calc_distance(p1: tuple[float, float], p2: tuple[float, float]) -> float:
 	"""
 	
 	return float(np.linalg.norm(np.subtract(p1, p2)))
+
+
+def get_polygon_direction(vertices: list[tuple[float, float]]) -> int:
+	r"""Gets the orientation of the polygon defined by ``vertices``
+
+	If ``vertices`` are ordered clockwise, then ``1`` is returned.
+	If ``vertices`` are ordered counterclockwise, then ``-1`` is returned.
+	If ``vertices`` are collinear, then ``0`` is returned.
+
+	:param list[tuple[float, float]] vertices: a list of 2D coordinates representing vertices of a polygon
+	:return int: the orientation of ``vertices``
+	"""
+
+	a = 0
+	for i in range(len(vertices)):
+		v1 = vertices[i]
+		v2 = vertices[(i + 1) % len(vertices)]
+		a += (v2[0] - v1[0]) * (v2[1] + v1[1])
+	
+	return np.sign(a)
+
+
+def get_side_of_line(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float]) -> int:
+	"""Gets which side point ``c`` is relative to the line going from ``a`` to ``b``
+
+	If ``c`` is on the left, then ``1`` is returned.
+	If ``c`` is on the right, then ``-1`` is returned.
+	If ``c`` is collinear, then ``0`` is returned.
+
+	:param tuple[float, float] a: a 2D coordinate
+	:param tuple[float, float] b: a 2D coordinate
+	:param tuple[float, float] c: a 2D coordinate
+	:return int: what side ``c`` is on relative to the line from ``a`` to ``b``
+	"""
+
+	return np.sign(np.linalg.det([[b[0] - a[0], c[0] - a[0]], [b[1] - a[1], c[1] - a[1]]]))
+
+
+def is_in_polygon(point: tuple[float, float], vertices: list[tuple[float, float]], force_ccw: bool = False, force_cw: bool = False) -> bool:
+	r"""Checks if ``point`` is inside or on the boundary of the polygon defined by ``vertices``
+
+	:param tuple[float, float] point: a 2D coordinate point
+	:param list[tuple[float, float]] vertices: a list of 2D coordinate points representing vertices of a polygon
+	:return bool: whether or not ``point`` is in the polygon
+	:param bool force_ccw: whether to force the function to treat ``vertices`` as already sorted in counterclockwise direction, defaults to False
+	:param bool force_cw: whether to force the function to treat ``vertices`` as already sorted in clockwise direction, defaults to False
+	:return bool: whether ``point`` is inside or on the boundary of the polygon
+	"""
+	
+	if len(vertices) < 3:
+		return False
+
+	direction = 0
+	if force_ccw:
+		direction = -1
+	elif force_cw:
+		direction = 1
+	else:
+		direction = get_polygon_direction(vertices)
+
+	if direction == 0:
+		return point[1] == ((vertices[1][0] - vertices[0][0])/(vertices[1][1] - vertices[0][1])) * (point[0] - vertices[0][0]) + vertices[0][1]
+
+	for i in range(len(vertices)):
+		if direction == 1:
+			if get_side_of_line(vertices[i], vertices[(i + 1) % len(vertices)], point) > -1:
+				return False
+		else:
+			if get_side_of_line(vertices[i], vertices[(i + 1) % len(vertices)], point) < 1:
+				return False
+
+	return True
+
+
+def is_in_circle(point: tuple[float, float], c: tuple[float, float], r: float) -> bool:
+	r"""Checks if ``point`` is inside or on the boundary of the circle centered at ``c`` with radius ``r``
+
+	:param tuple[float, float] point: a 2D coordinate point
+	:param tuple[float, float] c: a 2D coordinate point
+	:param float r: the radius of the circle centered at ``c``
+	:return bool: whether ``point`` is inside or on the boundary of the circle
+	"""
+
+	return calc_distance(point, c) <= r
