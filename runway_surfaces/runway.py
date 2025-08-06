@@ -24,12 +24,15 @@ class RunwayEnd:
 	"""Represents the end of a runway
 	"""
 
-	def __init__(self, point: tuple, approach_type: ApproachTypes):
+	def __init__(self, name: str, point: tuple, approach_type: ApproachTypes):
 		r"""Creates a new ``RunwayEnd`` object
 
+		:param str name: the name of this end of the runway
 		:param tuple point: the coordinate point of this endpoint of the runway
 		:param ApproachTypes approach_type: the type of approach found at this end of the runway
 		"""
+
+		self.name = name
 		self.point = point
 		self.approach_type = approach_type
 
@@ -38,9 +41,10 @@ class Runway:
 	"""Represents an airport's runway
 	"""
 
-	def __init__(self, runway_type: RunwayTypes, end1: RunwayEnd, end2: RunwayEnd, special_surface: bool = False, visibility_minimums: int = 0):
+	def __init__(self, name: str, runway_type: RunwayTypes, end1: RunwayEnd, end2: RunwayEnd, special_surface: bool = False, visibility_minimums: int = 0):
 		"""Creates a new ``Runway`` object
 
+		:param str name: the name of the runway
 		:param RunwayTypes runway_type: the type of runway
 		:param RunwayEnd end1: one endpoint of the runway
 		:param RunwayEnd end2: the opposite endpoint of the runway
@@ -48,6 +52,7 @@ class Runway:
 		:param int visibility_minimums: the visibility minimums of the runway, defaults to 0
 		"""
 
+		self.name = name
 		self.runway_type = runway_type
 		self.end1 = end1
 		self.end2 = end2
