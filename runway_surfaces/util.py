@@ -1,7 +1,7 @@
 import numpy as np
 from sympy.geometry import Point2D, Line2D, Segment2D, Polygon, Point
 from functools import cmp_to_key
-
+from typing import Callable
 
 def extend_point_in_one_direction(p1: tuple[float, float], p2: tuple[float, float], amount: float) -> tuple[float, float]:
 	r"""Extends ``p2`` in the direction of ``p1`` to ``p2`` by ``amount``
@@ -523,20 +523,16 @@ def is_in_circle(point: tuple[float, float], c: tuple[float, float], r: float) -
 	return calc_distance(point, c) <= r
 
 
-def is_between_cones(point: tuple[float, float, float], c: tuple[float, float, float], r1: float, h1: float, r2: float, h2: float) -> bool:
-	r"""Checks if ``point`` is bound between two cones centered at the same point
+def get_cone(c: tuple[float, float, float], r: float, h: float) -> Callable[[float, float], float]:
+	r"""Gets the equation for a cone that is centered at ``c`` and reaches a radius of ``r`` at ``h``
 
 	Given a cone centered at ``c``,
-	the circle created by slicing the cone with the plane ``z = h1`` will have a radius ``r1``.
-	Similarly, the circle will have radius ``r2`` at ``z = h1``
+	the circle created by slicing the cone with the plane ``z = h1`` will have a radius ``r1``
 
-	:param tuple[float, float, float] point: a 3D coordinate point
 	:param tuple[float, float, float] c: a 3D coordinate point
 	:param float r1: the radius of the cone at ``z = h1``
 	:param float h1: a z-value
-	:param float r2: the radius of the cone at ``z = h2``
-	:param float h2: a z-value
-	:return bool: whether ``point`` is between the two cones on the z-axis
+	:return Callable[[float, float, float, float], float]: the 3D equation of the cone as a lambda
 	"""
 
 	# a cone can be described with the equation: $$ (x - a)^2 + (y - b)^2 = d(z - c)^2 $$
@@ -551,17 +547,7 @@ def is_between_cones(point: tuple[float, float, float], c: tuple[float, float, f
 	#
 	#
 
-	z = lambda x, y, r, h: np.sqrt(((x - c[0])**2 + (y - c[1])**2)) / (r / (h - c[2])) + c[2]
-
-	z1 = z(point[0], point[1], r1, h1)
-	z2 = z(point[0], point[1], r2, h2)
-
-	if z1 == z2:
-		return point[2] == z1
-	elif z1 > z2:
-		return z2 <= point[2] and point[2] <= z1
-	else:
-		return z1 <= point[2] and point[2] <= z2
+	return lambda x, y: np.sqrt(((x - c[0])**2 + (y - c[1])**2)) / (r / (h - c[2])) + c[2]
 	
 
 def distance_to_line(point: tuple[float, float], a: tuple[float, float], b: tuple[float, float]) -> float:
@@ -604,30 +590,17 @@ def cross(v1: tuple[float, float, float], v2: tuple[float, float, float]) -> tup
 	return (np.linalg.det([[v1[1], v1[2]], [v2[1], v2[2]]]), np.linalg.det([[v1[0], v1[2]], [v2[0], v2[2]]]), np.linalg.det([[v1[0], v1[1]], [v2[0], v2[1]]]))
 
 
-def get_plane_normal_vector(a: tuple[float, float, float], b: tuple[float, float, float], c: tuple[float, float, float]) -> tuple[float, float, float]:
-	r"""Gets the normal vector for a plane containing ``a``, ``b``, and ``c``
+def get_plane(a: tuple[float, float, float], b: tuple[float, float, float], c: tuple[float, float, float]) -> Callable[[float, float], float]:
+	r"""Gets the equation for the plane containing ``a``, ``b``, and ``c``
 
 	:param tuple[float, float, float] a: a 3D coordinate point
 	:param tuple[float, float, float] b: a 3D coordinate point
 	:param tuple[float, float, float] c: a 3D coordinate point
-	:return tuple[float, float, float]: a vector that is normal to the plane containing ``a``, ``b``, and ``c``
+	:return tuple[float, float, float]: the 3D equation of the plane containing ``a``, ``b``, and ``c``
 	"""
 
-	return cross((b[0] - a[0], b[1] - a[1], b[2] - a[2]), (c[0] - a[0], c[1] - a[1], c[2] - a[2]))
-
-
-def is_below_plane(point: tuple[float, float, float], p: tuple[float, float, float], v: tuple[float, float, float]) -> bool:
-	r"""Checks if ``point`` is below or on the plane defined by the point ``p`` and normal vector ``v``
-
-	:param tuple[float, float, float] point: a 3D coordinate point
-	:param tuple[float, float, float] p: a 3D coordinate point
-	:param tuple[float, float, float] v: a normal vector to the plane containing ``p``
-	:return bool: whether ``point`` is below the plane
-	"""
-
-	z = lambda x, y: p[2] - ((v[0] * (x - p[0]) + v[1] * (y - p[1])) / v[2])
-
-	return z(point[0], point[1]) >= point[2]
+	v = cross((b[0] - a[0], b[1] - a[1], b[2] - a[2]), (c[0] - a[0], c[1] - a[1], c[2] - a[2]))
+	return lambda x, y: a[2] - ((v[0] * (x - a[0]) + v[1] * (y - a[1])) / v[2])
 
 
 def t3d(p: tuple[float, float], z: float) -> tuple[float, float, float]:
@@ -673,3 +646,14 @@ def is_within_segment(p: tuple[float, float], a: tuple[float, float], b: tuple[f
 	c = np.dot(t1, t2) / (np.linalg.norm(t1) * np.linalg.norm(t2))
 
 	return 0 <= c and c <= 1
+
+
+def proj(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
+	"""Project the vector ``a`` onto the vector ``b``
+
+	:param tuple[float, float] a: a 2D vector
+	:param tuple[float, float] b: a 2D vector
+	:return tuple[float, float]: the projection of ``a`` onto ``b``
+	"""
+
+	return (np.dot(a, b) / np.linalg.norm(b)**2) * b
