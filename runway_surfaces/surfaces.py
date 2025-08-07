@@ -1,6 +1,6 @@
 from .runway import *
 from .util import *
-
+from typing import Optional
 
 class Edge():
 	"""Represents a straight or curved edge of a horizontal surface around a series of runways
@@ -20,6 +20,15 @@ class Edge():
 		self.p1 = p1
 		self.p2 = p2
 		self.center = center
+
+
+class Arc(Edge):
+
+	def __init__(self, center: tuple[float, float], radius: float):
+		self.center = center
+		self.radius = radius
+
+
 
 # TODO: optimize this. since it's already in ccw order, no need to check every possible common tangent at first
 def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
@@ -130,7 +139,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 		# then this point would either create a concavity or a self intersection in the final surface
 		if p1 and p2:
 			if prev_edge:
-				edges.append(Edge(prev_edge.p2, p1, center=c1))
+				edges.append(Arc(c1, calc_distance(c1, p1)))
 			edges.append(Edge(p1, p2))
 
 	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
@@ -261,23 +270,217 @@ def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tu
 	v1, v2 = extended1[0], extended1[1]
 	v3, v4 = extended2[0], extended2[1]
 
-	# calculate intersection points between the edge of the transitional surface and the bounds of the approach surfaces for the first side
-	i1 = lisl(asurfaces[end1][0], asurfaces[end1][3], v1, v4)
-	i2 = lisl(asurfaces[end2][1], asurfaces[end2][2], v1, v4)
-
 	# ccw direction
 	s1.append(end1_vertices[0])
-	s1.append(tuple(i1[0]))
-	s1.append(tuple(i2[0]))
+	s1.append(asurfaces[end1][3])
+	s1.append(v1)
+	s1.append(v4)
+	s1.append(asurfaces[end2][2])
 	s1.append(end2_vertices[1])
 
-	# do the same for the second side
-	i2 = lisl(asurfaces[end1][1], asurfaces[end1][2], v2, v3)
-	i1 = lisl(asurfaces[end2][0], asurfaces[end2][3], v2, v3)
-
+	# ccw direction
 	s2.append(end2_vertices[0])
-	s2.append(tuple(i1[0]))
-	s2.append(tuple(i2[0]))
+	s2.append(asurfaces[end2][3])
+	s2.append(v3)
+	s2.append(v2)
+	s2.append(asurfaces[end1][2])
 	s2.append(end1_vertices[1])
 
 	return [s1, s2]
+
+
+def is_in_horizontal_surface(position: tuple[float, float], hsurface: list[Edge]) -> bool:
+	r"""Checks if ``position`` is in or on the boundary of a horizontal surface defined by ``hsurface``
+
+	:param tuple[float, float] position: a 2D coordinate point
+	:param list[Edge] hsurface: a list of ``Edges`` defining a horizontal surface
+	:return bool: whether ``position`` is in or on the boundary of the horizontal surface
+	"""
+	
+	for edge in hsurface:
+		if type(edge) is Arc:
+			if not is_in_circle(position, edge.center, edge.radius):
+				return False
+			continue
+		
+		if get_side_of_line(position, edge.p1, edge.p2) < 1:
+			return False
+		
+	return True
+
+
+def is_in_conical_surface(position: tuple[float, float, float], hsurface: list[Edge], eae: float) -> Optional[Callable[[float, float], float]]:
+	r"""Checks if ``position`` is in or on the boundary of a conical surface around the horizontal surface defined by ``hsurface``
+
+	:param tuple[float, float, float] position: a 3D coordinate point
+	:param list[Edge] hsurface: a list of ``Edges`` defining a horizontal surface
+	:param float eae: the established airport elevation
+	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
+	"""
+
+	if position[2] < 150:
+		return None
+
+	for edge in hsurface:
+		if type(edge) is Arc:
+			cone1 = get_cone(t3d(edge.center, eae + 150), edge.radius, eae + 150)
+			cone2 = get_cone(t3d(edge.center, eae + 150), edge.radius + 4000, eae + 350)
+			z1 = cone1(position[0], position[1])
+			z2 = cone2(position[0], position[1])
+			if z2 <= position[2] <= z1:
+				return cone1
+			continue
+		
+		distance = distance_to_line(t2d(position), edge.p1, edge.p2)
+		t = create_right_triangle(edge.p1, edge.p2, 4000)[0]
+		t = t3d(t, eae + 350)
+
+		p13d = t3d(edge.p1, eae + 150)
+		p23d = t3d(edge.p2, eae + 150)
+
+		plane = get_plane(p13d, p23d, t)
+
+		if distance <= 4000 and is_within_segment(t2d(position), edge.p1, edge.p2) and position[2] <= plane(position[0], position[1]):
+			return plane
+		
+	return None
+
+
+def is_in_approach_surface(position: tuple[float, float, float], asurface: list[tuple[float, float]], approach_dimensions: dict[str, float], eae: float) -> Optional[Callable[[float, float], float]]:
+	r"""Checks if ``position`` is in or on the boundary of an approach surface defined by ``asurface``
+
+	:param tuple[float, float, float] position: a 3D coordinate point
+	:param list[tuple[float, float]] asurface: a list of 2D vertices bounding the approach surface
+	:param dict[str, float] approach_dimensions: the dimensions of the approach surface as returned by ``Runway.calc_approach_dimensions``
+	:param float eae: the established airport elevation
+	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
+	"""
+
+	p1 = t3d(asurface[0], eae)
+	p2 = t3d(asurface[1], eae)
+
+	if approach_dimensions["type"] == ApproachTypes.PRECISION_INSTRUMENT:
+		if not is_in_polygon(t2d(position), asurface, force_ccw=True):
+			return None
+
+		h = eae + approach_dimensions["primary_slope"] * approach_dimensions["primary_length"]
+		p31 = t3d(asurface[3], h)
+		h += approach_dimensions["secondary_slope"] * approach_dimensions["secondary_length"]
+		p32 = t3d(asurface[3], h)
+
+		midpoint = ((asurface[0][0] + asurface[1][0]) / 2, (asurface[0][1] + asurface[1][1]) / 2)
+		t = create_right_triangle(asurface[0], midpoint, approach_dimensions["primary_length"])[0]
+		projection = proj((position[0] - midpoint[0], position[1] - midpoint[1]), (t[0] - midpoint[0], t[1] - midpoint[1]))
+		projection = (projection[0] + midpoint[0], projection[1] + midpoint[1])
+		if calc_distance(projection, midpoint) <= approach_dimensions["primary_length"]:
+			plane = get_plane(p1, p2, p31)
+			if position[2] <= plane(position[0], position[1]):
+				return plane
+		else:
+			plane = get_plane(p1, p2, p32)
+			if position[2] <= plane(position[0], position[1]):
+				return plane
+	else:
+		h = eae + approach_dimensions["slope"] * approach_dimensions["length"]
+		p3 = t3d(asurface[3], h)
+		plane = get_plane(p1, p2, p3)
+		
+		if is_in_polygon(t2d(position), asurface, force_ccw=True) and position[2] <= plane(position[0], position[1]):
+			return plane
+	
+	return None
+
+
+def is_in_transitional_surface(position: tuple[float, float, float], tsurface: list[tuple[float, float]], eae: float) -> Optional[Callable[[float, float], float]]:
+	r"""Checks if ``position`` is in or on the boundary of a transitional surface defined by ``tsurface`` 
+
+	:param tuple[float, float, float] position: a 3D coordinate point
+	:param list[tuple[float, float]] tsurface: a list of 2D vertices bounding the transitional surface
+	:param float eae: the established airport elevation
+	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form ``z = f(x,y)`` bounding ``position`` from above
+	"""
+
+	p1 = t3d(tsurface[0], eae)
+	p2 = t3d(tsurface[-1], eae)
+	p3 = t3d(tsurface[2], eae + 150)
+
+	if is_in_polygon(t2d(position), tsurface, force_ccw=True):
+		return get_plane(p1, p2, p3)
+
+	return None
+
+
+def get_zone_information(position: tuple[float, float, float], runways: list[Runway], eae: float) -> dict[str, str]:
+	r"""Gets the information about the imaginary zone that ``position`` is in
+
+	:param list[Runway] runways: a list of runways
+	:param tuple[float, float, float] position: a 3D coordinate
+	:param float eae: the established airport elevation of the airport containing ``runways``
+	:return dict[str, str]: a mapping of info to its value (e.g. ``"zone": "Transitional Surface"``)
+	"""
+	
+	info = {}
+	build_limit = eae
+	info["zone"] = "N/A"
+
+	hsurface = get_horizontal_surface_edges(runways)
+	flag = True
+	if not is_in_horizontal_surface(t2d(position), hsurface):
+		flag = False
+
+	if not flag:
+		func = is_in_conical_surface(position, hsurface, eae)
+		
+		if not func is None:
+			z = func(position[0], position[1])
+			build_limit = z
+			info["zone"] = "Conical"
+			info["build_limit"] = z
+	else:
+		info["zone"] = "Horizontal"
+		info["build_limit"] = build_limit
+
+	for runway in runways:
+		approach_dimensions = runway.calc_approach_dimensions()
+		psurface = get_primary_surface_vertices(runway)
+		asurfaces = get_approach_surface_vertices(approach_dimensions, psurface)
+		tsurfaces = get_transitional_surface_vertices(psurface, asurfaces)
+		
+		if flag:
+			t = list(psurface.values())
+			v = []
+			v.append(*t[0])
+			v.append(*t[1])
+			if is_in_polygon(t2d(position), v):
+				info["runway"] = runway.name
+				info["zone"] = "Primary"
+				info["build_limit"] = eae
+				return info
+			
+			for tsurface in tsurfaces:
+				func = is_in_transitional_surface(position, tsurface, eae)
+				if func is None:
+					continue
+				
+				z = func(position[0], position[1])
+				if z > build_limit:
+					build_limit = z
+					info["runway"] = runway.name
+					info["zone"] = "Transitional"
+					info["build_limit"] = build_limit
+		
+		for end, asurface in list(asurfaces.items()):
+			ainfo = approach_dimensions[end]
+			func = is_in_approach_surface(position, asurface, ainfo, eae)
+			if func is None:
+				continue
+			
+			z = func(position[0], position[1])
+			if z > build_limit:
+				build_limit = z
+				info["runway"] = runway.name
+				info["zone"] = "Approach"
+				info["end"] = end.name
+				info["build_limit"] = build_limit
+
+	return info
