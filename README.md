@@ -19,7 +19,7 @@ The command is as follows:\
 
 | name | type | approaches | coords | end names | special surface |
 | ----- | ----- | ----- | ----- | ----- | ----- |
-| This is the name of the runway | This is the type of the runway. Acceptable values are `utility`, `visual`, `non_precision_instrument`, and `precision_instrument` | This is the type of approaches at either end of the runway. E.g if runway `10-3` has approach types `visual` at one end and `non_precision_instrument` at the other, a value of `visual non_precision_instrument` is accepted. Acceptable values are `visual`, `non_precision_instrument`, and `precision_instrument` | The coordinates of both ends of the runway go here in the form `(x y) (x y)` | The ends of the runway should be named here in the form `end1 end2` | Per regulation, runways with specially prepared hard surfaces need to be treated differently. This value is either `true` or `false` |
+| `(name)` | `utility`, `visual`, `non_precision_instrument`, `precision_instrument` `(type)` | `visual`, `non_precision_instrument`,  `precision_instrument` `(approach) (approach)` | `(x y) (x y)` | `(name) (name`) | `true`,`false` |
 
 ## Docs
 
