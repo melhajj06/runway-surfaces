@@ -43,8 +43,8 @@ def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.
     else:
         if "runway" in info:
             if "end" in info:
-                click.echo(f"{position} was found in the {zone} Surface for runway {info["runway"]} at end {info["end"]}. The maximum build limit is {info["build_limit"]} feet")
+                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]} at end {info["end"]}. The maximum build limit is {info["build_limit"]} feet")
             else:
-                click.echo(f"{position} was found in the {zone} Surface for runway {info["runway"]}. The maximum build limit is {info["build_limit"]} feet")
+                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]}. The maximum build limit is {info["build_limit"]} feet")
         else:
-            click.echo(f"{position} was found in the {zone} Surface. The maximum build limit is {info["build_limit"]} feet")
+            click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface. The maximum build limit is {info["build_limit"]} feet")
