@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>runway_surfaces package &#8212; runway-surfaces  documentation</title>
+    <title>runway_surfaces package &#8212; runway-surfaces 1.0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
-    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,6 +38,9 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
+<section id="runway-surfaces-cli-module">
+<h2>runway_surfaces.cli module<a class="headerlink" href="#runway-surfaces-cli-module" title="Link to this heading">¶</a></h2>
+</section>
 <section id="module-runway_surfaces.runway">
 <span id="runway-surfaces-runway-module"></span><h2>runway_surfaces.runway module<a class="headerlink" href="#module-runway_surfaces.runway" title="Link to this heading">¶</a></h2>
 <dl class="py class">
@@ -64,38 +67,47 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">Runway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runway_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes" title="runway_surfaces.runway.RunwayTypes"><span class="pre">RunwayTypes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">end1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">end2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_surface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility_minimums</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">Runway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runway_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility_minimums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents an airport’s runway</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_approach_dimensions">
-<span class="sig-name descname"><span class="pre">calc_approach_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_approach_dimensions" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_approach_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_approach_dimensions" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the dimensions of the approaches at either end of the runway</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return dict[RunwayEnd, dict[str, float]]<span class="colon">:</span></dt>
 <dd class="field-odd"><p>a mapping of the runway’s end to its dimensions</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunwayEnd</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_hsurface_radius">
-<span class="sig-name descname"><span class="pre">calc_hsurface_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_hsurface_radius" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_hsurface_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_hsurface_radius" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the radius from the runway’s endpoints to the horizontal surface</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return int<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the radius of the runway to the horizontal surface</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_psurface_width">
-<span class="sig-name descname"><span class="pre">calc_psurface_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_psurface_width" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_psurface_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_psurface_width" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the width of the primary surface given the information about this runway</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return int<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the width of the primary surface</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -104,7 +116,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayEnd">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#runway_surfaces.runway.ApproachTypes" title="runway_surfaces.runway.ApproachTypes"><span class="pre">ApproachTypes</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayEnd" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayEnd" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents the end of a runway</p>
 </dd></dl>
@@ -140,15 +152,21 @@
 <section id="module-runway_surfaces.surfaces">
 <span id="runway-surfaces-surfaces-module"></span><h2>runway_surfaces.surfaces module<a class="headerlink" href="#module-runway_surfaces.surfaces" title="Link to this heading">¶</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.Arc">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Arc" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Edge</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.Edge">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Edge" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Edge" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a straight or curved edge of a horizontal surface around a series of runways</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_approach_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_approach_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end_infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.surfaces.get_approach_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_approach_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_approach_surface_vertices" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the vertices of the 2D projection of the approach surface</p>
 <p>For each <code class="docutils literal notranslate"><span class="pre">RunwayEnd</span></code> in <code class="docutils literal notranslate"><span class="pre">end_infos</span></code>,
 a list of 4 2D coordinate points is generated that create bounds for the approach surface.</p>
@@ -162,12 +180,15 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 <dt class="field-even">Return dict[RunwayEnd, list[tuple[float, float]]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a mapping of each runway end of one runway to a list of 2D vertices that are the bounds of the respective approach surface</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunwayEnd</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_horizontal_surface_edges">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_horizontal_surface_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runways</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.Runway" title="runway_surfaces.runway.Runway"><span class="pre">Runway</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><span class="pre">Edge</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.surfaces.get_horizontal_surface_edges" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_horizontal_surface_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runways</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_horizontal_surface_edges" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the outline of the horizontal surface encompassing every runway in <code class="docutils literal notranslate"><span class="pre">runways</span></code></p>
 <p>See <a class="reference external" href="https://www.ecfr.gov/current/title-14/part-77/section-77.19#p-77.19(a)">FAR Part-77</a></p>
 <dl class="field-list simple">
@@ -177,12 +198,15 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 <dt class="field-even">Return list[Edge]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of <a href="#id3"><span class="problematic" id="id4">``</span></a>Edge``s defining the outline of the horizontal surface</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Edge</span></code></a>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_primary_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_primary_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runway</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#runway_surfaces.runway.Runway" title="runway_surfaces.runway.Runway"><span class="pre">Runway</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.surfaces.get_primary_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_primary_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runway</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_primary_surface_vertices" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the 2D coordinate points of the vertices of the primary surface for <code class="docutils literal notranslate"><span class="pre">runway</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -191,12 +215,15 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 <dt class="field-even">Return dict[RunwayEnd, list[tuple[float, float]]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>the ends of <code class="docutils literal notranslate"><span class="pre">runway</span></code> mapped to their respective primary surface vertices</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunwayEnd</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_transitional_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_transitional_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd" title="runway_surfaces.runway.RunwayEnd"><span class="pre">RunwayEnd</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.surfaces.get_transitional_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_transitional_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurfaces</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_transitional_surface_vertices" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the vertices of the 2D projection of the transitional surface</p>
 <p>A 2x4 list is returned where the the first row contains all the vertices for the transitional surface on one side of the runway,
 while the second row contains all the vertices for the transitional surface on the other side of the runway.</p>
@@ -210,6 +237,114 @@ while the second row contains all the vertices for the transitional surface on t
 <dt class="field-even">Return list[list[tuple[float, float]]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list containing lists of the vertices of the transitional surface for either side of the runway</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.get_zone_information">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_zone_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runways</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_zone_information" title="Link to this definition">¶</a></dt>
+<dd><p>Gets the information about the imaginary zone that <code class="docutils literal notranslate"><span class="pre">position</span></code> is in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runways</strong> (<em>list</em><em>[</em><a class="reference internal" href="#runway_surfaces.runway.Runway" title="runway_surfaces.runway.Runway"><em>Runway</em></a><em>]</em>) – a list of runways</p></li>
+<li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate</p></li>
+<li><p><strong>eae</strong> (<em>float</em>) – the established airport elevation of the airport containing <code class="docutils literal notranslate"><span class="pre">runways</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return dict[str, str]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a mapping of info to its value (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;zone&quot;:</span> <span class="pre">&quot;Transitional</span> <span class="pre">Surface&quot;</span></code>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_approach_surface">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_approach_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_approach_surface" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of an approach surface defined by <code class="docutils literal notranslate"><span class="pre">asurface</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>asurface</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – a list of 2D vertices bounding the approach surface</p></li>
+<li><p><strong>approach_dimensions</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>float</em><em>]</em>) – the dimensions of the approach surface as returned by <code class="docutils literal notranslate"><span class="pre">Runway.calc_approach_dimensions</span></code></p></li>
+<li><p><strong>eae</strong> (<em>float</em>) – the established airport elevation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Optional[Callable[[float, float], float]]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a function that is the equation of a 3D surface in the form of <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">f(x,y)</span></code> bounding <code class="docutils literal notranslate"><span class="pre">position</span></code> from above</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_conical_surface">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_conical_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_conical_surface" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a conical surface around the horizontal surface defined by <code class="docutils literal notranslate"><span class="pre">hsurface</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>hsurface</strong> (<em>list</em><em>[</em><a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><em>Edge</em></a><em>]</em>) – a list of <code class="docutils literal notranslate"><span class="pre">Edges</span></code> defining a horizontal surface</p></li>
+<li><p><strong>eae</strong> (<em>float</em>) – the established airport elevation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Optional[Callable[[float, float], float]]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a function that is the equation of a 3D surface in the form of <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">f(x,y)</span></code> bounding <code class="docutils literal notranslate"><span class="pre">position</span></code> from above</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_horizontal_surface">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_horizontal_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_horizontal_surface" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a horizontal surface defined by <code class="docutils literal notranslate"><span class="pre">hsurface</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>hsurface</strong> (<em>list</em><em>[</em><a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><em>Edge</em></a><em>]</em>) – a list of <code class="docutils literal notranslate"><span class="pre">Edges</span></code> defining a horizontal surface</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of the horizontal surface</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_transitional_surface">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_transitional_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_transitional_surface" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a transitional surface defined by <code class="docutils literal notranslate"><span class="pre">tsurface</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>tsurface</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – a list of 2D vertices bounding the transitional surface</p></li>
+<li><p><strong>eae</strong> (<em>float</em>) – the established airport elevation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Optional[Callable[[float, float], float]]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a function that is the equation of a 3D surface in the form <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">f(x,y)</span></code> bounding <code class="docutils literal notranslate"><span class="pre">position</span></code> from above</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -218,7 +353,7 @@ while the second row contains all the vertices for the transitional surface on t
 <span id="runway-surfaces-util-module"></span><h2>runway_surfaces.util module<a class="headerlink" href="#module-runway_surfaces.util" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.calc_dist_for_height">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_dist_for_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#runway_surfaces.util.calc_dist_for_height" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_dist_for_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_dist_for_height" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the distance required in the 2D plane to reach a z-value of <code class="docutils literal notranslate"><span class="pre">height</span></code> with <code class="docutils literal notranslate"><span class="pre">slope</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -230,12 +365,15 @@ while the second row contains all the vertices for the transitional surface on t
 <dt class="field-even">Return float<span class="colon">:</span></dt>
 <dd class="field-even"><p>the distance in the 2D plane required to reach <code class="docutils literal notranslate"><span class="pre">height</span></code> with <code class="docutils literal notranslate"><span class="pre">slope</span></code></p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.calc_distance">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#runway_surfaces.util.calc_distance" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_distance" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the distance between two 2D coordinate points</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -247,12 +385,15 @@ while the second row contains all the vertices for the transitional surface on t
 <dt class="field-even">Return float<span class="colon">:</span></dt>
 <dd class="field-even"><p>the distance between <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code></p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.cet2cr">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cet2cr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.cet2cr" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cet2cr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cet2cr" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the common external tangent line on the right side of two circles</p>
 <p>Two non-overlapping circles have 4 common tangent lines: 2 external and 2 internal.
 The external tangent lines do not cross the line passing through each circle’s center,
@@ -271,12 +412,15 @@ When creating a vector going from <code class="docutils literal notranslate"><sp
 <dt class="field-even">Return list[tuple[float, float]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a 2D coordinate point on each circle the common tangent line passes through</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.circle_in_circle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">circle_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#runway_surfaces.util.circle_in_circle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">circle_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.circle_in_circle" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if either circle is completely inside the other</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -290,12 +434,15 @@ When creating a vector going from <code class="docutils literal notranslate"><sp
 <dt class="field-even">Return bool<span class="colon">:</span></dt>
 <dd class="field-even"><p>whether either circle is completely inside the other</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.compute_centerpoint">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">compute_centerpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.compute_centerpoint" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">compute_centerpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.compute_centerpoint" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the center of a list of coordinate points</p>
 <p>The center or average point of a list of points has an x-value of the average of all the x-values,
 and a y-value of the average of all the y-values.</p>
@@ -306,12 +453,15 @@ and a y-value of the average of all the y-values.</p>
 <dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
 <dd class="field-even"><p>the average point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.create_right_triangle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">create_right_triangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.create_right_triangle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">create_right_triangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.create_right_triangle" title="Link to this definition">¶</a></dt>
 <dd><p>Creates a right triangle given two coordinate points</p>
 <p>Given two coordinate points <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> where A = <code class="docutils literal notranslate"><span class="pre">a</span></code> and B = <code class="docutils literal notranslate"><span class="pre">b</span></code>,
 a right triangle, ABC, is created such that the vector AB is orthogonal to the vector BC,
@@ -328,12 +478,73 @@ The coordinate point C is returned.</p>
 <dt class="field-even">Return list[tuple[float, float]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of 2D coordinates that can be the third point in the triangle defined by <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.cross">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cross</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cross" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the cross product of two 3D vectors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v1</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D vector</p></li>
+<li><p><strong>v2</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return tuple<span class="colon">:</span></dt>
+<dd class="field-even"><p>a 3D vector that is perpendicular to <code class="docutils literal notranslate"><span class="pre">v1</span></code> and <code class="docutils literal notranslate"><span class="pre">v2</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.degrees_to_feet">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">degrees_to_feet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.degrees_to_feet" title="Link to this definition">¶</a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">coordinate</span></code> from degrees to feet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coordinate</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a coordinate point on Earth in degrees</p>
+</dd>
+<dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>the coordinate point with units in feet</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.distance_to_line">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">distance_to_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.distance_to_line" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the distance from <code class="docutils literal notranslate"><span class="pre">point</span></code> to the closest point on the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>a</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>b</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return float<span class="colon">:</span></dt>
+<dd class="field-even"><p>the distance to the closest point on the line from <code class="docutils literal notranslate"><span class="pre">point</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.extend_point_in_one_direction">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_point_in_one_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.extend_point_in_one_direction" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_point_in_one_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_point_in_one_direction" title="Link to this definition">¶</a></dt>
 <dd><p>Extends <code class="docutils literal notranslate"><span class="pre">p2</span></code> in the direction of <code class="docutils literal notranslate"><span class="pre">p1</span></code> to <code class="docutils literal notranslate"><span class="pre">p2</span></code> by <code class="docutils literal notranslate"><span class="pre">amount</span></code></p>
 <p>Scales a vector going from <code class="docutils literal notranslate"><span class="pre">p1</span></code> to <code class="docutils literal notranslate"><span class="pre">p2</span></code> such that the scaled vector’s magnitude is the magnitude of the original vector
 plus <code class="docutils literal notranslate"><span class="pre">amount</span></code> and is in the same direction of the original vector.
@@ -349,12 +560,15 @@ The coordinate point at the head of this scaled vector is returned.</p>
 <dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a 2D coordinate point that is <code class="docutils literal notranslate"><span class="pre">amount</span></code> away from <code class="docutils literal notranslate"><span class="pre">p2</span></code> in the direction of <code class="docutils literal notranslate"><span class="pre">p1</span></code> to <code class="docutils literal notranslate"><span class="pre">p2</span></code></p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.extend_points_in_both_directions">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_points_in_both_directions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.extend_points_in_both_directions" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_points_in_both_directions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_points_in_both_directions" title="Link to this definition">¶</a></dt>
 <dd><p>Extends a line segment</p>
 <p>Extends a line segment defined by <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code> by <code class="docutils literal notranslate"><span class="pre">amount</span></code> (i.e. away from each other).
 Consider a vector, v, going from <code class="docutils literal notranslate"><span class="pre">p1</span></code> to the returned extension of p1. Then, the magnitude/length of v is <code class="docutils literal notranslate"><span class="pre">amount</span></code>.</p>
@@ -369,12 +583,38 @@ Consider a vector, v, going from <code class="docutils literal notranslate"><spa
 <dt class="field-even">Return list[tuple[float, float]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>the endpoints of the extended line segment</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.get_cone">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_cone" title="Link to this definition">¶</a></dt>
+<dd><p>Gets the equation for a cone that is centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> and reaches a radius of <code class="docutils literal notranslate"><span class="pre">r</span></code> at <code class="docutils literal notranslate"><span class="pre">h</span></code></p>
+<p>Given a cone centered at <code class="docutils literal notranslate"><span class="pre">c</span></code>,
+the circle created by slicing the cone with the plane <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">h1</span></code> will have a radius <code class="docutils literal notranslate"><span class="pre">r1</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>r1</strong> (<em>float</em>) – the radius of the cone at <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">h1</span></code></p></li>
+<li><p><strong>h1</strong> (<em>float</em>) – a z-value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Callable[[float, float, float, float], float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>the 3D equation of the cone as a lambda</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_higher_point">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_higher_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.get_higher_point" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_higher_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_higher_point" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the point with the larger y-value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -386,12 +626,15 @@ Consider a vector, v, going from <code class="docutils literal notranslate"><spa
 <dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
 <dd class="field-even"><p>the higher point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_lower_point">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_lower_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.get_lower_point" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_lower_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_lower_point" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the point with the smaller y-value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -403,12 +646,149 @@ Consider a vector, v, going from <code class="docutils literal notranslate"><spa
 <dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
 <dd class="field-even"><p>the lower point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.get_plane">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_plane" title="Link to this definition">¶</a></dt>
+<dd><p>Gets the equation for the plane containing <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>b</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+<li><p><strong>c</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return tuple[float, float, float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>the 3D equation of the plane containing <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.get_polygon_direction">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_polygon_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_polygon_direction" title="Link to this definition">¶</a></dt>
+<dd><p>Gets the orientation of the polygon defined by <code class="docutils literal notranslate"><span class="pre">vertices</span></code></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">vertices</span></code> are ordered clockwise, then <code class="docutils literal notranslate"><span class="pre">1</span></code> is returned.
+If <code class="docutils literal notranslate"><span class="pre">vertices</span></code> are ordered counterclockwise, then <code class="docutils literal notranslate"><span class="pre">-1</span></code> is returned.
+If <code class="docutils literal notranslate"><span class="pre">vertices</span></code> are collinear, then <code class="docutils literal notranslate"><span class="pre">0</span></code> is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vertices</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – a list of 2D coordinates representing vertices of a polygon</p>
+</dd>
+<dt class="field-even">Return int<span class="colon">:</span></dt>
+<dd class="field-even"><p>the orientation of <code class="docutils literal notranslate"><span class="pre">vertices</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.get_side_of_line">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_side_of_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_side_of_line" title="Link to this definition">¶</a></dt>
+<dd><p>Gets which side point <code class="docutils literal notranslate"><span class="pre">c</span></code> is relative to the line going from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">c</span></code> is on the left, then <code class="docutils literal notranslate"><span class="pre">1</span></code> is returned.
+If <code class="docutils literal notranslate"><span class="pre">c</span></code> is on the right, then <code class="docutils literal notranslate"><span class="pre">-1</span></code> is returned.
+If <code class="docutils literal notranslate"><span class="pre">c</span></code> is collinear, then <code class="docutils literal notranslate"><span class="pre">0</span></code> is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate</p></li>
+<li><p><strong>b</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate</p></li>
+<li><p><strong>c</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return int<span class="colon">:</span></dt>
+<dd class="field-even"><p>what side <code class="docutils literal notranslate"><span class="pre">c</span></code> is on relative to the line from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.is_in_circle">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_circle" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the circle centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> with radius <code class="docutils literal notranslate"><span class="pre">r</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>c</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – the radius of the circle centered at <code class="docutils literal notranslate"><span class="pre">c</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the circle</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.is_in_polygon">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_polygon" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the polygon defined by <code class="docutils literal notranslate"><span class="pre">vertices</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>vertices</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – a list of 2D coordinate points representing vertices of a polygon</p></li>
+<li><p><strong>force_ccw</strong> (<em>bool</em>) – whether to force the function to treat <code class="docutils literal notranslate"><span class="pre">vertices</span></code> as already sorted in counterclockwise direction, defaults to False</p></li>
+<li><p><strong>force_cw</strong> (<em>bool</em>) – whether to force the function to treat <code class="docutils literal notranslate"><span class="pre">vertices</span></code> as already sorted in clockwise direction, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether or not <code class="docutils literal notranslate"><span class="pre">point</span></code> is in the polygon</p>
+</dd>
+<dt class="field-odd">Return bool<span class="colon">:</span></dt>
+<dd class="field-odd"><p>whether <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the polygon</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.is_within_segment">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_within_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_within_segment" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">p</span></code> is contained by endpoints of <code class="docutils literal notranslate"><span class="pre">segment</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">p</span></code> is contained by the endpoints of <code class="docutils literal notranslate"><span class="pre">segment</span></code> iff <code class="docutils literal notranslate"><span class="pre">p</span></code> is between the lines perpendicular to <code class="docutils literal notranslate"><span class="pre">segment</span></code>
+passing through either endpoint of <code class="docutils literal notranslate"><span class="pre">segment</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>a</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>b</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether <code class="docutils literal notranslate"><span class="pre">p</span></code> is contained by the endpoints of <code class="docutils literal notranslate"><span class="pre">segment</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.line_intersects_circle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">line_intersects_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.line_intersects_circle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">line_intersects_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.line_intersects_circle" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if a line intersects the circle centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> with radius <code class="docutils literal notranslate"><span class="pre">r</span></code></p>
 <p>The line in question is a line in standard form <span class="math notranslate nohighlight">\(ax + by + c = 0\)</span> where a = <code class="docutils literal notranslate"><span class="pre">a</span></code>, b = <code class="docutils literal notranslate"><span class="pre">b</span></code>, and c = <code class="docutils literal notranslate"><span class="pre">c</span></code>.
 When solving the system of equations, a quadratic is solved using the quadratic formula.
@@ -427,12 +807,15 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 <dt class="field-even">Return list[tuple[float, float]]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of every intersection point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lis_3p">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_3p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Point2D</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.lis_3p" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_3p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_3p" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> with <code class="docutils literal notranslate"><span class="pre">slope</span></code> intersects the line segment defined by <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">list_3p</span></code> translates to “line intersects segment 3 points”.</p>
 <dl class="field-list simple">
@@ -447,12 +830,15 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 <dt class="field-even">Return list[Point2D]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of every intersection point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Point2D</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lis_4p">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_4p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Point2D</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.lis_4p" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_4p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_4p" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> intersects the line segment defined by <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">list_4p</span></code> translates to “line intersects segment 4 points”.</p>
 <dl class="field-list simple">
@@ -467,12 +853,15 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 <dt class="field-even">Return list[Point2D]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of every intersection point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Point2D</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lisl">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lisl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Point2D</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#runway_surfaces.util.lisl" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lisl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lisl" title="Link to this definition">¶</a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> intersects the line pasing through <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code>
 <code class="docutils literal notranslate"><span class="pre">lisl</span></code> translates to “line intersects line”.</p>
 <dl class="field-list simple">
@@ -487,12 +876,35 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 <dt class="field-even">Return list[Point2D]<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list of every intersection point</p>
 </dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Point2D</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.proj">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">proj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.proj" title="Link to this definition">¶</a></dt>
+<dd><p>Project the vector <code class="docutils literal notranslate"><span class="pre">a</span></code> onto the vector <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D vector</p></li>
+<li><p><strong>b</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>the projection of <code class="docutils literal notranslate"><span class="pre">a</span></code> onto <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.sort_directional">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">sort_directional</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#runway_surfaces.util.sort_directional" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">sort_directional</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.sort_directional" title="Link to this definition">¶</a></dt>
 <dd><p>Sorts a list of 2D coordinate points either clockwise or counter-clockwise</p>
 <p>A set of 2D coordinate points can be in any order and are usually random.
 But, they can be ordered so that they’re in clockwise or counter-clockwise order about their center or average point.</p>
@@ -502,6 +914,48 @@ But, they can be ordered so that they’re in clockwise or counter-clockwise ord
 <li><p><strong>points</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – a list of 2D coordinate points</p></li>
 <li><p><strong>ccw</strong> (<em>bool</em>) – whether to set the direction to counter-clockwise, defaults to True</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.t2d">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t2d" title="Link to this definition">¶</a></dt>
+<dd><p>Projects <code class="docutils literal notranslate"><span class="pre">p</span></code> onto the 2D plane</p>
+<p>“t2d” translates to “to 2D”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 3D coordinate point</p>
+</dd>
+<dt class="field-even">Return tuple[float, float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a 2D coordinate point</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="runway_surfaces.util.t3d">
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t3d" title="Link to this definition">¶</a></dt>
+<dd><p>Extends the 2D coordinate <code class="docutils literal notranslate"><span class="pre">p</span></code> into a 3D coordinate with z-value <code class="docutils literal notranslate"><span class="pre">z</span></code></p>
+<p>“t3d” translates to “to 3D”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – a 2D coordinate point</p></li>
+<li><p><strong>z</strong> (<em>float</em>) – a z-value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return tuple[float, float, float]<span class="colon">:</span></dt>
+<dd class="field-even"><p>a 3D coordinate point with z = <code class="docutils literal notranslate"><span class="pre">z</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -542,6 +996,7 @@ But, they can be ordered so that they’re in clockwise or counter-clockwise ord
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">runway_surfaces package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#runway-surfaces-cli-module">runway_surfaces.cli module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.runway">runway_surfaces.runway module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.surfaces">runway_surfaces.surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.util">runway_surfaces.util module</a></li>

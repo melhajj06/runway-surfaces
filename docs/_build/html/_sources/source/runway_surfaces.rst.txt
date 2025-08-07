@@ -4,6 +4,14 @@ runway\_surfaces package
 Submodules
 ----------
 
+runway\_surfaces.cli module
+---------------------------
+
+.. automodule:: runway_surfaces.cli
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 runway\_surfaces.runway module
 ------------------------------
 
