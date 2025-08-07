@@ -36,7 +36,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	
 	See `FAR Part-77 <https://www.ecfr.gov/current/title-14/part-77/section-77.19#p-77.19(a)>`_
 	
-	:param list[Runway] runways: a list of ``Runway``s
+	:param list[Runway] runways: a list of ``Runway``\s
 	:return list[Edge]: a list of ``Edge``s defining the outline of the horizontal surface
 	"""
 

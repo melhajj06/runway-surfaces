@@ -6,8 +6,3 @@ tests/
 .vscode/
 .pytest_cache/
 build/
-!docs/
-docs/*
-!docs/_build/
-docs/_build/*
-!docs/_build/html/

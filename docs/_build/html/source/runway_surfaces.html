@@ -1,78 +1,190 @@
+
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>runway_surfaces package &mdash; runway-surfaces 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/ctheme.css?v=547657ed" />
 
-    <title>runway_surfaces package &#8212; runway-surfaces 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
-    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
-    <script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="runway-surfaces documentation" href="../index.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
+    <link rel="prev" title="runway-surfaces documentation" href="../index.html" /> 
+</head>
 
-  
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="../index.html" class="icon icon-home">
+            runway-surfaces
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">runway_surfaces package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#runway-surfaces-cli-module">runway_surfaces.cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.runway">runway_surfaces.runway module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.runway.ApproachTypes"><code class="docutils literal notranslate"><span class="pre">ApproachTypes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.ApproachTypes.NON_PRECISION_INSTRUMENT"><code class="docutils literal notranslate"><span class="pre">ApproachTypes.NON_PRECISION_INSTRUMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.ApproachTypes.PRECISION_INSTRUMENT"><code class="docutils literal notranslate"><span class="pre">ApproachTypes.PRECISION_INSTRUMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.ApproachTypes.VISUAL"><code class="docutils literal notranslate"><span class="pre">ApproachTypes.VISUAL</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.runway.Runway"><code class="docutils literal notranslate"><span class="pre">Runway</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.Runway.calc_approach_dimensions"><code class="docutils literal notranslate"><span class="pre">Runway.calc_approach_dimensions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.Runway.calc_hsurface_radius"><code class="docutils literal notranslate"><span class="pre">Runway.calc_hsurface_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.Runway.calc_psurface_width"><code class="docutils literal notranslate"><span class="pre">Runway.calc_psurface_width()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.runway.RunwayEnd"><code class="docutils literal notranslate"><span class="pre">RunwayEnd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes"><code class="docutils literal notranslate"><span class="pre">RunwayTypes</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes.NON_PRECISION_INSTRUMENT"><code class="docutils literal notranslate"><span class="pre">RunwayTypes.NON_PRECISION_INSTRUMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes.PRECISION_INSTRUMENT"><code class="docutils literal notranslate"><span class="pre">RunwayTypes.PRECISION_INSTRUMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes.UTILITY"><code class="docutils literal notranslate"><span class="pre">RunwayTypes.UTILITY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#runway_surfaces.runway.RunwayTypes.VISUAL"><code class="docutils literal notranslate"><span class="pre">RunwayTypes.VISUAL</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.surfaces">runway_surfaces.surfaces module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.Arc"><code class="docutils literal notranslate"><span class="pre">Arc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.get_approach_surface_vertices"><code class="docutils literal notranslate"><span class="pre">get_approach_surface_vertices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.get_horizontal_surface_edges"><code class="docutils literal notranslate"><span class="pre">get_horizontal_surface_edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.get_primary_surface_vertices"><code class="docutils literal notranslate"><span class="pre">get_primary_surface_vertices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.get_transitional_surface_vertices"><code class="docutils literal notranslate"><span class="pre">get_transitional_surface_vertices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.get_zone_information"><code class="docutils literal notranslate"><span class="pre">get_zone_information()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.is_in_approach_surface"><code class="docutils literal notranslate"><span class="pre">is_in_approach_surface()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.is_in_conical_surface"><code class="docutils literal notranslate"><span class="pre">is_in_conical_surface()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.is_in_horizontal_surface"><code class="docutils literal notranslate"><span class="pre">is_in_horizontal_surface()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.surfaces.is_in_transitional_surface"><code class="docutils literal notranslate"><span class="pre">is_in_transitional_surface()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.util">runway_surfaces.util module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.calc_dist_for_height"><code class="docutils literal notranslate"><span class="pre">calc_dist_for_height()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.calc_distance"><code class="docutils literal notranslate"><span class="pre">calc_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.cet2cr"><code class="docutils literal notranslate"><span class="pre">cet2cr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.circle_in_circle"><code class="docutils literal notranslate"><span class="pre">circle_in_circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.compute_centerpoint"><code class="docutils literal notranslate"><span class="pre">compute_centerpoint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.create_right_triangle"><code class="docutils literal notranslate"><span class="pre">create_right_triangle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.cross"><code class="docutils literal notranslate"><span class="pre">cross()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.degrees_to_feet"><code class="docutils literal notranslate"><span class="pre">degrees_to_feet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.distance_to_line"><code class="docutils literal notranslate"><span class="pre">distance_to_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.extend_point_in_one_direction"><code class="docutils literal notranslate"><span class="pre">extend_point_in_one_direction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.extend_points_in_both_directions"><code class="docutils literal notranslate"><span class="pre">extend_points_in_both_directions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_cone"><code class="docutils literal notranslate"><span class="pre">get_cone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_higher_point"><code class="docutils literal notranslate"><span class="pre">get_higher_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_lower_point"><code class="docutils literal notranslate"><span class="pre">get_lower_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_plane"><code class="docutils literal notranslate"><span class="pre">get_plane()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_polygon_direction"><code class="docutils literal notranslate"><span class="pre">get_polygon_direction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.get_side_of_line"><code class="docutils literal notranslate"><span class="pre">get_side_of_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.is_in_circle"><code class="docutils literal notranslate"><span class="pre">is_in_circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.is_in_polygon"><code class="docutils literal notranslate"><span class="pre">is_in_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.is_within_segment"><code class="docutils literal notranslate"><span class="pre">is_within_segment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.line_intersects_circle"><code class="docutils literal notranslate"><span class="pre">line_intersects_circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.lis_3p"><code class="docutils literal notranslate"><span class="pre">lis_3p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.lis_4p"><code class="docutils literal notranslate"><span class="pre">lis_4p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.lisl"><code class="docutils literal notranslate"><span class="pre">lisl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.proj"><code class="docutils literal notranslate"><span class="pre">proj()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.sort_directional"><code class="docutils literal notranslate"><span class="pre">sort_directional()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.t2d"><code class="docutils literal notranslate"><span class="pre">t2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runway_surfaces.util.t3d"><code class="docutils literal notranslate"><span class="pre">t3d()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces">Module contents</a></li>
+</ul>
+</li>
+</ul>
 
-          <div class="body" role="main">
-            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">runway-surfaces</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">runway_surfaces package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/runway_surfaces.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="runway-surfaces-package">
-<h1>runway_surfaces package<a class="headerlink" href="#runway-surfaces-package" title="Link to this heading">¶</a></h1>
+<h1>runway_surfaces package<a class="headerlink" href="#runway-surfaces-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
 <section id="runway-surfaces-cli-module">
-<h2>runway_surfaces.cli module<a class="headerlink" href="#runway-surfaces-cli-module" title="Link to this heading">¶</a></h2>
+<h2>runway_surfaces.cli module<a class="headerlink" href="#runway-surfaces-cli-module" title="Link to this heading"></a></h2>
 </section>
 <section id="module-runway_surfaces.runway">
-<span id="runway-surfaces-runway-module"></span><h2>runway_surfaces.runway module<a class="headerlink" href="#module-runway_surfaces.runway" title="Link to this heading">¶</a></h2>
+<span id="runway-surfaces-runway-module"></span><h2>runway_surfaces.runway module<a class="headerlink" href="#module-runway_surfaces.runway" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.ApproachTypes">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">ApproachTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">ApproachTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>An enumeration of all the types of approaches found at the ends of runways</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.ApproachTypes.NON_PRECISION_INSTRUMENT">
-<span class="sig-name descname"><span class="pre">NON_PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.NON_PRECISION_INSTRUMENT" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NON_PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.NON_PRECISION_INSTRUMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.ApproachTypes.PRECISION_INSTRUMENT">
-<span class="sig-name descname"><span class="pre">PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.PRECISION_INSTRUMENT" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.PRECISION_INSTRUMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.ApproachTypes.VISUAL">
-<span class="sig-name descname"><span class="pre">VISUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.VISUAL" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">VISUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#runway_surfaces.runway.ApproachTypes.VISUAL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">Runway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runway_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility_minimums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">Runway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runway_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">special_surface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility_minimums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents an airport’s runway</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_approach_dimensions">
-<span class="sig-name descname"><span class="pre">calc_approach_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_approach_dimensions" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_approach_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_approach_dimensions" title="Link to this definition"></a></dt>
 <dd><p>Calculates the dimensions of the approaches at either end of the runway</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return dict[RunwayEnd, dict[str, float]]<span class="colon">:</span></dt>
@@ -86,7 +198,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_hsurface_radius">
-<span class="sig-name descname"><span class="pre">calc_hsurface_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_hsurface_radius" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_hsurface_radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_hsurface_radius" title="Link to this definition"></a></dt>
 <dd><p>Calculates the radius from the runway’s endpoints to the horizontal surface</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return int<span class="colon">:</span></dt>
@@ -100,7 +212,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="runway_surfaces.runway.Runway.calc_psurface_width">
-<span class="sig-name descname"><span class="pre">calc_psurface_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_psurface_width" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calc_psurface_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.Runway.calc_psurface_width" title="Link to this definition"></a></dt>
 <dd><p>Calculates the width of the primary surface given the information about this runway</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return int<span class="colon">:</span></dt>
@@ -116,57 +228,57 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayEnd">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayEnd" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayEnd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayEnd" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents the end of a runway</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayTypes">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.runway.</span></span><span class="sig-name descname"><span class="pre">RunwayTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>An enumeration of all the types of runways</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayTypes.NON_PRECISION_INSTRUMENT">
-<span class="sig-name descname"><span class="pre">NON_PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.NON_PRECISION_INSTRUMENT" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NON_PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.NON_PRECISION_INSTRUMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayTypes.PRECISION_INSTRUMENT">
-<span class="sig-name descname"><span class="pre">PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.PRECISION_INSTRUMENT" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">PRECISION_INSTRUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.PRECISION_INSTRUMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayTypes.UTILITY">
-<span class="sig-name descname"><span class="pre">UTILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.UTILITY" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">UTILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.UTILITY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="runway_surfaces.runway.RunwayTypes.VISUAL">
-<span class="sig-name descname"><span class="pre">VISUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.VISUAL" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">VISUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#runway_surfaces.runway.RunwayTypes.VISUAL" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="module-runway_surfaces.surfaces">
-<span id="runway-surfaces-surfaces-module"></span><h2>runway_surfaces.surfaces module<a class="headerlink" href="#module-runway_surfaces.surfaces" title="Link to this heading">¶</a></h2>
+<span id="runway-surfaces-surfaces-module"></span><h2>runway_surfaces.surfaces module<a class="headerlink" href="#module-runway_surfaces.surfaces" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.Arc">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Arc" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Arc" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Edge</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.Edge">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Edge" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.Edge" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents a straight or curved edge of a horizontal surface around a series of runways</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_approach_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_approach_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_approach_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_approach_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">end_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_approach_surface_vertices" title="Link to this definition"></a></dt>
 <dd><p>Gets the vertices of the 2D projection of the approach surface</p>
 <p>For each <code class="docutils literal notranslate"><span class="pre">RunwayEnd</span></code> in <code class="docutils literal notranslate"><span class="pre">end_infos</span></code>,
 a list of 4 2D coordinate points is generated that create bounds for the approach surface.</p>
@@ -188,15 +300,15 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_horizontal_surface_edges">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_horizontal_surface_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runways</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_horizontal_surface_edges" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_horizontal_surface_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runways</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_horizontal_surface_edges" title="Link to this definition"></a></dt>
 <dd><p>Gets the outline of the horizontal surface encompassing every runway in <code class="docutils literal notranslate"><span class="pre">runways</span></code></p>
 <p>See <a class="reference external" href="https://www.ecfr.gov/current/title-14/part-77/section-77.19#p-77.19(a)">FAR Part-77</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>runways</strong> (<em>list</em><em>[</em><a class="reference internal" href="#runway_surfaces.runway.Runway" title="runway_surfaces.runway.Runway"><em>Runway</em></a><em>]</em>) – a list of <a href="#id1"><span class="problematic" id="id2">``</span></a>Runway``s</p>
+<dd class="field-odd"><p><strong>runways</strong> (<em>list</em><em>[</em><a class="reference internal" href="#runway_surfaces.runway.Runway" title="runway_surfaces.runway.Runway"><em>Runway</em></a><em>]</em>) – a list of <code class="docutils literal notranslate"><span class="pre">Runway</span></code>s</p>
 </dd>
 <dt class="field-even">Return list[Edge]<span class="colon">:</span></dt>
-<dd class="field-even"><p>a list of <a href="#id3"><span class="problematic" id="id4">``</span></a>Edge``s defining the outline of the horizontal surface</p>
+<dd class="field-even"><p>a list of <a href="#id1"><span class="problematic" id="id2">``</span></a>Edge``s defining the outline of the horizontal surface</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="#runway_surfaces.surfaces.Edge" title="runway_surfaces.surfaces.Edge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Edge</span></code></a>]</span></p>
@@ -206,7 +318,7 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_primary_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_primary_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runway</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_primary_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_primary_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runway</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_primary_surface_vertices" title="Link to this definition"></a></dt>
 <dd><p>Gets the 2D coordinate points of the vertices of the primary surface for <code class="docutils literal notranslate"><span class="pre">runway</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -223,7 +335,7 @@ a list of 4 2D coordinate points is generated that create bounds for the approac
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_transitional_surface_vertices">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_transitional_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurfaces</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_transitional_surface_vertices" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_transitional_surface_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psurface_vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurfaces</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_transitional_surface_vertices" title="Link to this definition"></a></dt>
 <dd><p>Gets the vertices of the 2D projection of the transitional surface</p>
 <p>A 2x4 list is returned where the the first row contains all the vertices for the transitional surface on one side of the runway,
 while the second row contains all the vertices for the transitional surface on the other side of the runway.</p>
@@ -245,7 +357,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.get_zone_information">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_zone_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runways</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_zone_information" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">get_zone_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runways</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.get_zone_information" title="Link to this definition"></a></dt>
 <dd><p>Gets the information about the imaginary zone that <code class="docutils literal notranslate"><span class="pre">position</span></code> is in</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -266,7 +378,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_approach_surface">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_approach_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_approach_surface" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_approach_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approach_dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_approach_surface" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of an approach surface defined by <code class="docutils literal notranslate"><span class="pre">asurface</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -288,7 +400,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_conical_surface">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_conical_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_conical_surface" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_conical_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_conical_surface" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a conical surface around the horizontal surface defined by <code class="docutils literal notranslate"><span class="pre">hsurface</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -309,7 +421,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_horizontal_surface">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_horizontal_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_horizontal_surface" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_horizontal_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hsurface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_horizontal_surface" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a horizontal surface defined by <code class="docutils literal notranslate"><span class="pre">hsurface</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -329,7 +441,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.surfaces.is_in_transitional_surface">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_transitional_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_transitional_surface" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.surfaces.</span></span><span class="sig-name descname"><span class="pre">is_in_transitional_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tsurface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eae</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.surfaces.is_in_transitional_surface" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">position</span></code> is in or on the boundary of a transitional surface defined by <code class="docutils literal notranslate"><span class="pre">tsurface</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -350,10 +462,10 @@ while the second row contains all the vertices for the transitional surface on t
 
 </section>
 <section id="module-runway_surfaces.util">
-<span id="runway-surfaces-util-module"></span><h2>runway_surfaces.util module<a class="headerlink" href="#module-runway_surfaces.util" title="Link to this heading">¶</a></h2>
+<span id="runway-surfaces-util-module"></span><h2>runway_surfaces.util module<a class="headerlink" href="#module-runway_surfaces.util" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.calc_dist_for_height">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_dist_for_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_dist_for_height" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_dist_for_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_dist_for_height" title="Link to this definition"></a></dt>
 <dd><p>Calculates the distance required in the 2D plane to reach a z-value of <code class="docutils literal notranslate"><span class="pre">height</span></code> with <code class="docutils literal notranslate"><span class="pre">slope</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -373,7 +485,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.calc_distance">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_distance" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">calc_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.calc_distance" title="Link to this definition"></a></dt>
 <dd><p>Calculates the distance between two 2D coordinate points</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -393,7 +505,7 @@ while the second row contains all the vertices for the transitional surface on t
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.cet2cr">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cet2cr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cet2cr" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cet2cr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cet2cr" title="Link to this definition"></a></dt>
 <dd><p>Gets the common external tangent line on the right side of two circles</p>
 <p>Two non-overlapping circles have 4 common tangent lines: 2 external and 2 internal.
 The external tangent lines do not cross the line passing through each circle’s center,
@@ -420,7 +532,7 @@ When creating a vector going from <code class="docutils literal notranslate"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.circle_in_circle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">circle_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.circle_in_circle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">circle_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.circle_in_circle" title="Link to this definition"></a></dt>
 <dd><p>Checks if either circle is completely inside the other</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -442,7 +554,7 @@ When creating a vector going from <code class="docutils literal notranslate"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.compute_centerpoint">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">compute_centerpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.compute_centerpoint" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">compute_centerpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.compute_centerpoint" title="Link to this definition"></a></dt>
 <dd><p>Gets the center of a list of coordinate points</p>
 <p>The center or average point of a list of points has an x-value of the average of all the x-values,
 and a y-value of the average of all the y-values.</p>
@@ -461,7 +573,7 @@ and a y-value of the average of all the y-values.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.create_right_triangle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">create_right_triangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.create_right_triangle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">create_right_triangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.create_right_triangle" title="Link to this definition"></a></dt>
 <dd><p>Creates a right triangle given two coordinate points</p>
 <p>Given two coordinate points <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> where A = <code class="docutils literal notranslate"><span class="pre">a</span></code> and B = <code class="docutils literal notranslate"><span class="pre">b</span></code>,
 a right triangle, ABC, is created such that the vector AB is orthogonal to the vector BC,
@@ -486,7 +598,7 @@ The coordinate point C is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.cross">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cross</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cross" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">cross</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.cross" title="Link to this definition"></a></dt>
 <dd><p>Calculates the cross product of two 3D vectors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -506,7 +618,7 @@ The coordinate point C is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.degrees_to_feet">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">degrees_to_feet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.degrees_to_feet" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">degrees_to_feet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.degrees_to_feet" title="Link to this definition"></a></dt>
 <dd><p>Converts <code class="docutils literal notranslate"><span class="pre">coordinate</span></code> from degrees to feet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -523,7 +635,7 @@ The coordinate point C is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.distance_to_line">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">distance_to_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.distance_to_line" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">distance_to_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.distance_to_line" title="Link to this definition"></a></dt>
 <dd><p>Calculates the distance from <code class="docutils literal notranslate"><span class="pre">point</span></code> to the closest point on the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -544,7 +656,7 @@ The coordinate point C is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.extend_point_in_one_direction">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_point_in_one_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_point_in_one_direction" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_point_in_one_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_point_in_one_direction" title="Link to this definition"></a></dt>
 <dd><p>Extends <code class="docutils literal notranslate"><span class="pre">p2</span></code> in the direction of <code class="docutils literal notranslate"><span class="pre">p1</span></code> to <code class="docutils literal notranslate"><span class="pre">p2</span></code> by <code class="docutils literal notranslate"><span class="pre">amount</span></code></p>
 <p>Scales a vector going from <code class="docutils literal notranslate"><span class="pre">p1</span></code> to <code class="docutils literal notranslate"><span class="pre">p2</span></code> such that the scaled vector’s magnitude is the magnitude of the original vector
 plus <code class="docutils literal notranslate"><span class="pre">amount</span></code> and is in the same direction of the original vector.
@@ -568,7 +680,7 @@ The coordinate point at the head of this scaled vector is returned.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.extend_points_in_both_directions">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_points_in_both_directions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_points_in_both_directions" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">extend_points_in_both_directions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.extend_points_in_both_directions" title="Link to this definition"></a></dt>
 <dd><p>Extends a line segment</p>
 <p>Extends a line segment defined by <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code> by <code class="docutils literal notranslate"><span class="pre">amount</span></code> (i.e. away from each other).
 Consider a vector, v, going from <code class="docutils literal notranslate"><span class="pre">p1</span></code> to the returned extension of p1. Then, the magnitude/length of v is <code class="docutils literal notranslate"><span class="pre">amount</span></code>.</p>
@@ -591,7 +703,7 @@ Consider a vector, v, going from <code class="docutils literal notranslate"><spa
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_cone">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_cone" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_cone" title="Link to this definition"></a></dt>
 <dd><p>Gets the equation for a cone that is centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> and reaches a radius of <code class="docutils literal notranslate"><span class="pre">r</span></code> at <code class="docutils literal notranslate"><span class="pre">h</span></code></p>
 <p>Given a cone centered at <code class="docutils literal notranslate"><span class="pre">c</span></code>,
 the circle created by slicing the cone with the plane <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">h1</span></code> will have a radius <code class="docutils literal notranslate"><span class="pre">r1</span></code></p>
@@ -614,7 +726,7 @@ the circle created by slicing the cone with the plane <code class="docutils lite
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_higher_point">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_higher_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_higher_point" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_higher_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_higher_point" title="Link to this definition"></a></dt>
 <dd><p>Gets the point with the larger y-value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -634,7 +746,7 @@ the circle created by slicing the cone with the plane <code class="docutils lite
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_lower_point">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_lower_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_lower_point" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_lower_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_lower_point" title="Link to this definition"></a></dt>
 <dd><p>Gets the point with the smaller y-value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -654,7 +766,7 @@ the circle created by slicing the cone with the plane <code class="docutils lite
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_plane">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_plane" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_plane" title="Link to this definition"></a></dt>
 <dd><p>Gets the equation for the plane containing <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -675,7 +787,7 @@ the circle created by slicing the cone with the plane <code class="docutils lite
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_polygon_direction">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_polygon_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_polygon_direction" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_polygon_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_polygon_direction" title="Link to this definition"></a></dt>
 <dd><p>Gets the orientation of the polygon defined by <code class="docutils literal notranslate"><span class="pre">vertices</span></code></p>
 <p>If <code class="docutils literal notranslate"><span class="pre">vertices</span></code> are ordered clockwise, then <code class="docutils literal notranslate"><span class="pre">1</span></code> is returned.
 If <code class="docutils literal notranslate"><span class="pre">vertices</span></code> are ordered counterclockwise, then <code class="docutils literal notranslate"><span class="pre">-1</span></code> is returned.
@@ -695,7 +807,7 @@ If <code class="docutils literal notranslate"><span class="pre">vertices</span><
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.get_side_of_line">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_side_of_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_side_of_line" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">get_side_of_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.get_side_of_line" title="Link to this definition"></a></dt>
 <dd><p>Gets which side point <code class="docutils literal notranslate"><span class="pre">c</span></code> is relative to the line going from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
 <p>If <code class="docutils literal notranslate"><span class="pre">c</span></code> is on the left, then <code class="docutils literal notranslate"><span class="pre">1</span></code> is returned.
 If <code class="docutils literal notranslate"><span class="pre">c</span></code> is on the right, then <code class="docutils literal notranslate"><span class="pre">-1</span></code> is returned.
@@ -719,7 +831,7 @@ If <code class="docutils literal notranslate"><span class="pre">c</span></code> 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.is_in_circle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_circle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_circle" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the circle centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> with radius <code class="docutils literal notranslate"><span class="pre">r</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -740,7 +852,7 @@ If <code class="docutils literal notranslate"><span class="pre">c</span></code> 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.is_in_polygon">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_polygon" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_in_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_in_polygon" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">point</span></code> is inside or on the boundary of the polygon defined by <code class="docutils literal notranslate"><span class="pre">vertices</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -765,7 +877,7 @@ If <code class="docutils literal notranslate"><span class="pre">c</span></code> 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.is_within_segment">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_within_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_within_segment" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">is_within_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.is_within_segment" title="Link to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">p</span></code> is contained by endpoints of <code class="docutils literal notranslate"><span class="pre">segment</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">p</span></code> is contained by the endpoints of <code class="docutils literal notranslate"><span class="pre">segment</span></code> iff <code class="docutils literal notranslate"><span class="pre">p</span></code> is between the lines perpendicular to <code class="docutils literal notranslate"><span class="pre">segment</span></code>
 passing through either endpoint of <code class="docutils literal notranslate"><span class="pre">segment</span></code></p>
@@ -788,7 +900,7 @@ passing through either endpoint of <code class="docutils literal notranslate"><s
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.line_intersects_circle">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">line_intersects_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.line_intersects_circle" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">line_intersects_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.line_intersects_circle" title="Link to this definition"></a></dt>
 <dd><p>Checks if a line intersects the circle centered at <code class="docutils literal notranslate"><span class="pre">c</span></code> with radius <code class="docutils literal notranslate"><span class="pre">r</span></code></p>
 <p>The line in question is a line in standard form <span class="math notranslate nohighlight">\(ax + by + c = 0\)</span> where a = <code class="docutils literal notranslate"><span class="pre">a</span></code>, b = <code class="docutils literal notranslate"><span class="pre">b</span></code>, and c = <code class="docutils literal notranslate"><span class="pre">c</span></code>.
 When solving the system of equations, a quadratic is solved using the quadratic formula.
@@ -815,7 +927,7 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lis_3p">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_3p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_3p" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_3p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_3p" title="Link to this definition"></a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> with <code class="docutils literal notranslate"><span class="pre">slope</span></code> intersects the line segment defined by <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">list_3p</span></code> translates to “line intersects segment 3 points”.</p>
 <dl class="field-list simple">
@@ -838,7 +950,7 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lis_4p">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_4p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_4p" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lis_4p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lis_4p" title="Link to this definition"></a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> intersects the line segment defined by <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">list_4p</span></code> translates to “line intersects segment 4 points”.</p>
 <dl class="field-list simple">
@@ -861,7 +973,7 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.lisl">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lisl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lisl" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">lisl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.lisl" title="Link to this definition"></a></dt>
 <dd><p>Checks if the line passing through <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> intersects the line pasing through <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code>
 <code class="docutils literal notranslate"><span class="pre">lisl</span></code> translates to “line intersects line”.</p>
 <dl class="field-list simple">
@@ -884,7 +996,7 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.proj">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">proj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.proj" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">proj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.proj" title="Link to this definition"></a></dt>
 <dd><p>Project the vector <code class="docutils literal notranslate"><span class="pre">a</span></code> onto the vector <code class="docutils literal notranslate"><span class="pre">b</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -904,7 +1016,7 @@ Subsequently, the line and circle will intersect (ignoring edge cases).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.sort_directional">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">sort_directional</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.sort_directional" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">sort_directional</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.sort_directional" title="Link to this definition"></a></dt>
 <dd><p>Sorts a list of 2D coordinate points either clockwise or counter-clockwise</p>
 <p>A set of 2D coordinate points can be in any order and are usually random.
 But, they can be ordered so that they’re in clockwise or counter-clockwise order about their center or average point.</p>
@@ -923,7 +1035,7 @@ But, they can be ordered so that they’re in clockwise or counter-clockwise ord
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.t2d">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t2d" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t2d" title="Link to this definition"></a></dt>
 <dd><p>Projects <code class="docutils literal notranslate"><span class="pre">p</span></code> onto the 2D plane</p>
 <p>“t2d” translates to “to 2D”</p>
 <dl class="field-list simple">
@@ -941,7 +1053,7 @@ But, they can be ordered so that they’re in clockwise or counter-clockwise ord
 
 <dl class="py function">
 <dt class="sig sig-object py" id="runway_surfaces.util.t3d">
-<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t3d" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">runway_surfaces.util.</span></span><span class="sig-name descname"><span class="pre">t3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#runway_surfaces.util.t3d" title="Link to this definition"></a></dt>
 <dd><p>Extends the 2D coordinate <code class="docutils literal notranslate"><span class="pre">p</span></code> into a 3D coordinate with z-value <code class="docutils literal notranslate"><span class="pre">z</span></code></p>
 <p>“t3d” translates to “to 3D”</p>
 <dl class="field-list simple">
@@ -962,83 +1074,38 @@ But, they can be ordered so that they’re in clockwise or counter-clockwise ord
 
 </section>
 <section id="module-runway_surfaces">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-runway_surfaces" title="Link to this heading">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-runway_surfaces" title="Link to this heading"></a></h2>
 </section>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="runway-surfaces documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, melhajj06.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">runway-surfaces</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-
-<search id="searchbox" style="display: none" role="search">
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">runway_surfaces package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#runway-surfaces-cli-module">runway_surfaces.cli module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.runway">runway_surfaces.runway module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.surfaces">runway_surfaces.surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces.util">runway_surfaces.util module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-runway_surfaces">Module contents</a></li>
-</ul>
-</li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">runway-surfaces documentation</a></li>
-  </ul></li>
-</ul>
-</div>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2025, melhajj06.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
-      
-      |
-      <a href="../_sources/source/runway_surfaces.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>
