@@ -19,7 +19,7 @@ The command is as follows:\
 
 | name | type | approaches | coords | end_names | special_surface |
 | ----- | ----- | ----- | ----- | ----- | ----- |
-| `(name)` | `utility`, `visual`, `non_precision_instrument`, `precision_instrument` `(type)` | `visual`, `non_precision_instrument`,  `precision_instrument` `(approach)-(approach)` | `(x)-(y)-(x)-(y)` | `(name)-(name)` | `true\|TRUE`,`false\|FALSE` |
+| `(name)` | `utility`, `visual`, `non_precision_instrument`, `precision_instrument` `(type)` | `visual`, `non_precision_instrument`,  `precision_instrument` `(approach)-(approach)` | `(x)_(y)_(x)_(y)` | `(name)-(name)` | `true\|TRUE`,`false\|FALSE` |
 
 ## Docs
 Documentation for the module can be found in `docs/_build/html`

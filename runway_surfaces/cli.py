@@ -26,7 +26,7 @@ def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.
         name = row["name"]
         type = row["type"].upper()
         approaches = row["approaches"].upper().split('-')
-        coords = row["coords"].split('-')
+        coords = row["coords"].split('_')
         coords = [degrees_to_feet((np.float64(coords[0]), np.float64(coords[1])), position), degrees_to_feet((np.float64(coords[2]), np.float64(coords[3])), position)]
         end_names = row["end_names"].split('-')
         special_surface = True if row["special_surface"].lower() == "true" else False
