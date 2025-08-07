@@ -21,3 +21,8 @@ PDF = [
 	"pytest",
 	"sphinx"
 ]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "runway_surfaces"
+]

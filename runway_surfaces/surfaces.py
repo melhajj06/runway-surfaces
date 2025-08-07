@@ -6,15 +6,15 @@ class Edge():
 	"""Represents a straight or curved edge of a horizontal surface around a series of runways
 	"""
 
-	def __init__(self, p1: tuple[float, float], p2: tuple[float, float], center: tuple[float, float] = tuple()):
+	def __init__(self, p1: tuple[np.float64, np.float64], p2: tuple[np.float64, np.float64], center: tuple[np.float64, np.float64] = tuple()):
 		r"""Creates a new ``Edge`` object
 
 		If ``center`` is not empty, then this edge is to be interpreted as an arc from ``p1`` to ``p2`` centered at ``center``.
 		Otherwise, this edge is a straight line segment from ``p1`` to ``p2``
 		
-		:param tuple[float, float] p1: a 2D coordinate point
-		:param tuple[float, float] p2: a 2D coordinate point
-		:param tuple[float, float] center: the centerpoint of the arc from ``p1`` to ``p2``, defaults to tuple()
+		:param tuple[np.float64, np.float64] p1: a 2D coordinate point
+		:param tuple[np.float64, np.float64] p2: a 2D coordinate point
+		:param tuple[np.float64, np.float64] center: the centerpoint of the arc from ``p1`` to ``p2``, defaults to tuple()
 		"""
 
 		self.p1 = p1
@@ -24,7 +24,7 @@ class Edge():
 
 class Arc(Edge):
 
-	def __init__(self, center: tuple[float, float], radius: float):
+	def __init__(self, center: tuple[np.float64, np.float64], radius: np.float64):
 		self.center = center
 		self.radius = radius
 
@@ -51,7 +51,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 		extended_endpoints = (runway.end1.point, runway.end2.point)
 
 		if (runway.special_surface):
-			extended_endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
+			extended_endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, np.float64(200))
 
 		r = runway.calc_hsurface_radius()
 		psurface_vertices[tuple(extended_endpoints[0])] = r
@@ -61,14 +61,15 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 	endpoints = list(psurface_vertices.keys())
 	sort_directional(endpoints, ccw=True)
 	psurface_vertices = {point: psurface_vertices[point] for point in endpoints}
-	
+
 	current_circle = 0
 	for i in range(len(endpoints)):
+		current_circle = i
 		prev_edge = edges[-1] if len(edges) > 0 else None
 		c1 = endpoints[current_circle]
 		p1 = None
 		p2 = None
-		
+
 		secondary_circle = i
 		c2 = tuple()
 		for j in range(len(endpoints)):
@@ -103,9 +104,9 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 				# if the tangent line intersects any other circle than those that it's tangent to,
 				# then it isn't valid
 				if u != current_circle and u != secondary_circle:
-					a = 0
-					b = 0
-					c = 0
+					a = np.float64(0)
+					b = np.float64(0)
+					c = np.float64(0)
 					if p2[0] - p1[0] == 0:
 						a = 1
 						c = -p1[0]
@@ -119,7 +120,7 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 					#
 					# no need to check the side of the 3rd circle's tangent point since,
 					# if it's on the wrong side, it will intersect a line segment as well
-					l = len(line_intersects_circle(a, b, c, t1, psurface_vertices[t1]))
+					l = len(line_intersects_circle(np.float64(a), np.float64(b), c, t1, psurface_vertices[t1]))
 					if l == 0 or l == 1:
 						continue
 					else:
@@ -141,26 +142,25 @@ def get_horizontal_surface_edges(runways: list[Runway]) -> list[Edge]:
 			if prev_edge:
 				edges.append(Arc(c1, calc_distance(c1, p1)))
 			edges.append(Edge(p1, p2))
-
 	# since runways aren't allowed to have differing radii at their endpoints, len(edges) will always be at least 3 at this point
 	edges.append(Edge(edges[-1].p2, edges[0].p1, center=endpoints[0]))
 	return edges
 
 
-def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[float, float]]]:
+def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[np.float64, np.float64]]]:
 	r"""Gets the 2D coordinate points of the vertices of the primary surface for ``runway``
 
 	:param Runway runway: a runway
-	:return dict[RunwayEnd, list[tuple[float, float]]]: the ends of ``runway`` mapped to their respective primary surface vertices
+	:return dict[RunwayEnd, list[tuple[np.float64, np.float64]]]: the ends of ``runway`` mapped to their respective primary surface vertices
 	"""
 
-	vertices: dict[RunwayEnd, list[tuple[float, float]]] = {}
+	vertices: dict[RunwayEnd, list[tuple[np.float64, np.float64]]] = {}
 
 	endpoints = [runway.end1.point, runway.end2.point]
 	if runway.special_surface:
-		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, 200)
+		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, np.float64(200))
 	
-	w = runway.calc_psurface_width() / 2.0
+	w = runway.calc_psurface_width() / np.float64(2.0)
 	side2 = create_right_triangle(endpoints[0], endpoints[1], w)
 	side1 = create_right_triangle(endpoints[1], endpoints[0], w)
 
@@ -173,18 +173,18 @@ def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[f
 	return vertices
 
 
-def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]]) -> dict[RunwayEnd, list[tuple[float, float]]]:
+def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, np.float64]], psurface_vertices: dict[RunwayEnd, list[tuple[np.float64, np.float64]]]) -> dict[RunwayEnd, list[tuple[np.float64, np.float64]]]:
 	r"""Gets the vertices of the 2D projection of the approach surface
 
 	For each ``RunwayEnd`` in ``end_infos``,
 	a list of 4 2D coordinate points is generated that create bounds for the approach surface.
 
-	:param dict[RunwayEnd, dict[str, float]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway.calc_approach_dimensions``
-	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
-	:return dict[RunwayEnd, list[tuple[float, float]]]: a mapping of each runway end of one runway to a list of 2D vertices that are the bounds of the respective approach surface
+	:param dict[RunwayEnd, dict[str, np.float64]] end_infos: a mapping of one runway's ends to their respective dimensions/infos as returned by ``Runway.calc_approach_dimensions``
+	:param dict[RunwayEnd, list[tuple[np.float64, np.float64]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
+	:return dict[RunwayEnd, list[tuple[np.float64, np.float64]]]: a mapping of each runway end of one runway to a list of 2D vertices that are the bounds of the respective approach surface
 	"""
 	
-	vertices: dict[RunwayEnd, list[tuple[float, float]]] = {}
+	vertices: dict[RunwayEnd, list[tuple[np.float64, np.float64]]] = {}
 	
 	entries = list(end_infos.items())
 	end1_dimensions = entries[0][1]
@@ -216,7 +216,7 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 	w =  width / 2
 
 	# create a right triangle so that the hypotenuse is the desired line
-	triangle = create_right_triangle(end1_midpoint, cl, float(w))
+	triangle = create_right_triangle(end1_midpoint, cl, np.float64(w))
 	
 	# ccw direction
 	vertices[entries[0][0]].append(end1_vertices[0])
@@ -234,7 +234,7 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 		length = end1_dimensions["length"]
 
 	cl = extend_point_in_one_direction(end1_midpoint, end2_midpoint, length)
-	triangle = create_right_triangle(end2_midpoint, cl, float(w))
+	triangle = create_right_triangle(end2_midpoint, cl, np.float64(w))
 
 	vertices[entries[1][0]].append(end2_vertices[0])
 	vertices[entries[1][0]].append(end2_vertices[1])
@@ -244,15 +244,15 @@ def get_approach_surface_vertices(end_infos: dict[RunwayEnd, dict[str, float]], 
 	return vertices
 
 
-def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tuple[float, float]]], asurfaces: dict[RunwayEnd, list[tuple[float, float]]]) -> list[list[tuple[float, float]]]:
+def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tuple[np.float64, np.float64]]], asurfaces: dict[RunwayEnd, list[tuple[np.float64, np.float64]]]) -> list[list[tuple[np.float64, np.float64]]]:
 	"""Gets the vertices of the 2D projection of the transitional surface
 
 	A 2x4 list is returned where the the first row contains all the vertices for the transitional surface on one side of the runway,
 	while the second row contains all the vertices for the transitional surface on the other side of the runway.
 
-	:param dict[RunwayEnd, list[tuple[float, float]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
-	:param dict[RunwayEnd, list[tuple[float, float]]] asurfaces: a mapping of one runway's ends to the vertices of the approach surface of that runway's end
-	:return list[list[tuple[float, float]]]: a list containing lists of the vertices of the transitional surface for either side of the runway
+	:param dict[RunwayEnd, list[tuple[np.float64, np.float64]]] psurface_vertices: a mapping of one runway's ends to the vertices of the primary surface of that runway's end
+	:param dict[RunwayEnd, list[tuple[np.float64, np.float64]]] asurfaces: a mapping of one runway's ends to the vertices of the approach surface of that runway's end
+	:return list[list[tuple[np.float64, np.float64]]]: a list containing lists of the vertices of the transitional surface for either side of the runway
 	"""
 
 	s1 = []
@@ -264,7 +264,7 @@ def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tu
 	end2_vertices = psurface_vertices[end2]
 
 	# calculate distance from runway centerline to straight edge of transitional surface
-	d = calc_dist_for_height(1.0 / 7.0, 150)
+	d = calc_dist_for_height(np.float64(1.0) / 7.0, (np.float64(150)))
 	extended1 = extend_points_in_both_directions(end1_vertices[0], end1_vertices[1], d)
 	extended2 = extend_points_in_both_directions(end2_vertices[0], end2_vertices[1], d)
 	v1, v2 = extended1[0], extended1[1]
@@ -289,10 +289,10 @@ def get_transitional_surface_vertices(psurface_vertices: dict[RunwayEnd, list[tu
 	return [s1, s2]
 
 
-def is_in_horizontal_surface(position: tuple[float, float], hsurface: list[Edge]) -> bool:
+def is_in_horizontal_surface(position: tuple[np.float64, np.float64], hsurface: list[Edge]) -> bool:
 	r"""Checks if ``position`` is in or on the boundary of a horizontal surface defined by ``hsurface``
 
-	:param tuple[float, float] position: a 2D coordinate point
+	:param tuple[np.float64, np.float64] position: a 2D coordinate point
 	:param list[Edge] hsurface: a list of ``Edges`` defining a horizontal surface
 	:return bool: whether ``position`` is in or on the boundary of the horizontal surface
 	"""
@@ -309,13 +309,13 @@ def is_in_horizontal_surface(position: tuple[float, float], hsurface: list[Edge]
 	return True
 
 
-def is_in_conical_surface(position: tuple[float, float, float], hsurface: list[Edge], eae: float) -> Optional[Callable[[float, float], float]]:
+def is_in_conical_surface(position: tuple[np.float64, np.float64, np.float64], hsurface: list[Edge], eae: np.float64) -> Optional[Callable[[np.float64, np.float64], np.float64]]:
 	r"""Checks if ``position`` is in or on the boundary of a conical surface around the horizontal surface defined by ``hsurface``
 
-	:param tuple[float, float, float] position: a 3D coordinate point
+	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate point
 	:param list[Edge] hsurface: a list of ``Edges`` defining a horizontal surface
-	:param float eae: the established airport elevation
-	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
+	:param np.float64 eae: the established airport elevation
+	:return Optional[Callable[[np.float64, np.float64], np.float64]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
 	"""
 
 	if position[2] < 150:
@@ -332,7 +332,7 @@ def is_in_conical_surface(position: tuple[float, float, float], hsurface: list[E
 			continue
 		
 		distance = distance_to_line(t2d(position), edge.p1, edge.p2)
-		t = create_right_triangle(edge.p1, edge.p2, 4000)[0]
+		t = create_right_triangle(edge.p1, edge.p2, np.float64(4000))[0]
 		t = t3d(t, eae + 350)
 
 		p13d = t3d(edge.p1, eae + 150)
@@ -346,14 +346,14 @@ def is_in_conical_surface(position: tuple[float, float, float], hsurface: list[E
 	return None
 
 
-def is_in_approach_surface(position: tuple[float, float, float], asurface: list[tuple[float, float]], approach_dimensions: dict[str, float], eae: float) -> Optional[Callable[[float, float], float]]:
+def is_in_approach_surface(position: tuple[np.float64, np.float64, np.float64], asurface: list[tuple[np.float64, np.float64]], approach_dimensions: dict[str, np.float64], eae: np.float64) -> Optional[Callable[[np.float64, np.float64], np.float64]]:
 	r"""Checks if ``position`` is in or on the boundary of an approach surface defined by ``asurface``
 
-	:param tuple[float, float, float] position: a 3D coordinate point
-	:param list[tuple[float, float]] asurface: a list of 2D vertices bounding the approach surface
-	:param dict[str, float] approach_dimensions: the dimensions of the approach surface as returned by ``Runway.calc_approach_dimensions``
-	:param float eae: the established airport elevation
-	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
+	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate point
+	:param list[tuple[np.float64, np.float64]] asurface: a list of 2D vertices bounding the approach surface
+	:param dict[str, np.float64] approach_dimensions: the dimensions of the approach surface as returned by ``Runway.calc_approach_dimensions``
+	:param np.float64 eae: the established airport elevation
+	:return Optional[Callable[[np.float64, np.float64], np.float64]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
 	"""
 
 	p1 = t3d(asurface[0], eae)
@@ -391,31 +391,32 @@ def is_in_approach_surface(position: tuple[float, float, float], asurface: list[
 	return None
 
 
-def is_in_transitional_surface(position: tuple[float, float, float], tsurface: list[tuple[float, float]], eae: float) -> Optional[Callable[[float, float], float]]:
+def is_in_transitional_surface(position: tuple[np.float64, np.float64, np.float64], tsurface: list[tuple[np.float64, np.float64]], eae: np.float64) -> Optional[Callable[[np.float64, np.float64], np.float64]]:
 	r"""Checks if ``position`` is in or on the boundary of a transitional surface defined by ``tsurface`` 
 
-	:param tuple[float, float, float] position: a 3D coordinate point
-	:param list[tuple[float, float]] tsurface: a list of 2D vertices bounding the transitional surface
-	:param float eae: the established airport elevation
-	:return Optional[Callable[[float, float], float]]: a function that is the equation of a 3D surface in the form ``z = f(x,y)`` bounding ``position`` from above
+	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate point
+	:param list[tuple[np.float64, np.float64]] tsurface: a list of 2D vertices bounding the transitional surface
+	:param np.float64 eae: the established airport elevation
+	:return Optional[Callable[[np.float64, np.float64], np.float64]]: a function that is the equation of a 3D surface in the form ``z = f(x,y)`` bounding ``position`` from above
 	"""
 
 	p1 = t3d(tsurface[0], eae)
 	p2 = t3d(tsurface[-1], eae)
 	p3 = t3d(tsurface[2], eae + 150)
-
-	if is_in_polygon(t2d(position), tsurface, force_ccw=True):
-		return get_plane(p1, p2, p3)
+	
+	plane = get_plane(p1, p2, p3)
+	if is_in_polygon(t2d(position), tsurface, force_ccw=True) and position[2] <= plane(position[0], position[1]):
+		return plane
 
 	return None
 
 
-def get_zone_information(position: tuple[float, float, float], runways: list[Runway], eae: float) -> dict[str, str]:
+def get_zone_information(position: tuple[np.float64, np.float64, np.float64], runways: list[Runway], eae: np.float64) -> dict[str, str]:
 	r"""Gets the information about the imaginary zone that ``position`` is in
 
 	:param list[Runway] runways: a list of runways
-	:param tuple[float, float, float] position: a 3D coordinate
-	:param float eae: the established airport elevation of the airport containing ``runways``
+	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate
+	:param np.float64 eae: the established airport elevation of the airport containing ``runways``
 	:return dict[str, str]: a mapping of info to its value (e.g. ``"zone": "Transitional Surface"``)
 	"""
 	
@@ -449,8 +450,10 @@ def get_zone_information(position: tuple[float, float, float], runways: list[Run
 		if flag:
 			t = list(psurface.values())
 			v = []
-			v.append(*t[0])
-			v.append(*t[1])
+			for i in t:
+				for j in i:
+					v.append(j)
+			
 			if is_in_polygon(t2d(position), v):
 				info["runway"] = runway.name
 				info["zone"] = "Primary"

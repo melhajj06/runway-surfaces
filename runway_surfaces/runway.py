@@ -1,5 +1,5 @@
 from enum import Enum
-
+import numpy as np
 
 class RunwayTypes(Enum):
 	"""An enumeration of all the types of runways
@@ -24,7 +24,7 @@ class RunwayEnd:
 	"""Represents the end of a runway
 	"""
 
-	def __init__(self, name: str, point: tuple, approach_type: ApproachTypes):
+	def __init__(self, name: str, point: tuple[np.float64, np.float64], approach_type: ApproachTypes):
 		r"""Creates a new ``RunwayEnd`` object
 
 		:param str name: the name of this end of the runway
@@ -101,10 +101,10 @@ class Runway:
 	
 
 	# regulations on approach surfaces dimensions are all over the fucking place
-	def calc_approach_dimensions(self) -> dict[RunwayEnd, dict[str, float]]:
+	def calc_approach_dimensions(self) -> dict[RunwayEnd, dict[str, np.float64]]:
 		"""Calculates the dimensions of the approaches at either end of the runway
 
-		:return dict[RunwayEnd, dict[str, float]]: a mapping of the runway's end to its dimensions
+		:return dict[RunwayEnd, dict[str, np.float64]]: a mapping of the runway's end to its dimensions
 		"""
 
 		dim = {self.end1: {}, self.end2: {}}
@@ -135,7 +135,8 @@ class Runway:
 					dim[self.end1]["width"] = 4000
 		elif end1_type == ApproachTypes.PRECISION_INSTRUMENT:
 			dim[self.end1]["width"] = dim[self.end2]["width"] = 16000
-			dim[self.end1]["length"] = 50000
+			dim[self.end1]["primary_length"] = 10000
+			dim[self.end1]["secondary_length"] = 40000
 			dim[self.end1]["primary_slope"] = 0.02
 			dim[self.end1]["secondary_slope"] = 0.025
 			
