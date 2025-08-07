@@ -1,6 +1,9 @@
 # Runway Surfaces
 In the USA, airports and aviation are regulated by the [Federal Aviation Administration (FAA)](https://www.faa.gov/). Per [Far Part 77](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-E/part-77), runways in an airport have "imaginary zones" which, in practice, are 3D surfaces that create zones around a runway. This module, following the regulations, generates mathematical models of the imaginary zones through lists of coordinates.
 
+## Installation
+`python -m pip install git+https://github.com/melhajj06/runway-surfaces`
+
 ## Usage
 Use the command `python -m runway_surfaces --help` for help with using the module
 

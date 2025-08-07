@@ -39,7 +39,6 @@ def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.
     info = get_zone_information(pos, runways, eae)
     
     zone = info["zone"]
-    breakpoint()
     if zone == "N/A":
         click.echo(f"{position} was not found in any imaginary zone")
     else:
