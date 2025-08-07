@@ -3,7 +3,6 @@ from .surfaces import *
 from .util import *
 
 from typing import TextIO
-from itertools import batched
 import click
 import csv
 
