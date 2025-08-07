@@ -8,7 +8,8 @@ readme = "README.md"
 license-files = ["LICENSE.txt"]
 dependencies = [
 	"numpy",
-	"sympy"
+	"sympy",
+	"click"
 ]
 
 [build-system]

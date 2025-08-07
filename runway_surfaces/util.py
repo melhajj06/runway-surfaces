@@ -649,7 +649,7 @@ def is_within_segment(p: tuple[float, float], a: tuple[float, float], b: tuple[f
 
 
 def proj(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
-	"""Project the vector ``a`` onto the vector ``b``
+	r"""Project the vector ``a`` onto the vector ``b``
 
 	:param tuple[float, float] a: a 2D vector
 	:param tuple[float, float] b: a 2D vector
@@ -657,3 +657,14 @@ def proj(a: tuple[float, float], b: tuple[float, float]) -> tuple[float, float]:
 	"""
 
 	return (np.dot(a, b) / np.linalg.norm(b)**2) * b
+
+
+def degrees_to_feet(coordinate: tuple[float, float]) -> tuple[float, float]:
+	r"""Converts ``coordinate`` from degrees to feet
+
+	:param tuple[float, float] coordinate: a coordinate point on Earth in degrees
+	:return tuple[float, float]: the coordinate point with units in feet
+	"""
+
+	c = 10000 / 90 * 3280.4
+	return (coordinate[0] * c, coordinate[1] * c)

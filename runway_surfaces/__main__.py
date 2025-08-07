@@ -1,10 +1,5 @@
-from .cli import *
-import sys
-
-
-def main():
-    cli_main(sys.argv)
+from .cli import cli
 
 
 if __name__ == "__main__":
-    main()
+    cli()
