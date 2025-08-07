@@ -22,5 +22,6 @@ The command is as follows:\
 | `(name)` | `utility`, `visual`, `non_precision_instrument`, `precision_instrument` `(type)` | `visual`, `non_precision_instrument`,  `precision_instrument` `(approach) (approach)` | `(x y) (x y)` | `(name) (name`) | `true`,`false` |
 
 ## Docs
+Documentation for the module can be found in `docs/_build/html`
 
 #### Please note that all internal calculation is done in feet
