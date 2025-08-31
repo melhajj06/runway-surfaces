@@ -2,17 +2,42 @@ from .runway import *
 from .surfaces import *
 from .util import *
 
-from typing import TextIO
 import click
 import csv
-
+from typing import TextIO
 
 @click.command()
-@click.argument("csvfile", type=click.File('r'))
-@click.argument("position", type=np.float64, nargs=2)
-@click.argument("elevation", type=np.float64, nargs=1)
-@click.argument("eae", type=np.float64, nargs=1)
-def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.float64, eae: np.float64):
+@click.argument(
+    "csvfile",
+    type=click.File('r'),
+    help=".csv file containing runway information"
+)
+@click.argument(
+    "position",
+    type=np.float64,
+    nargs=2,
+    help="A 2D coordinate given by the latitude and longitude of a desired position in degrees"
+)
+@click.argument(
+    "elevation",
+    type=np.float64,
+    nargs=1,
+    help="The elevation of the position measured above sea level"
+)
+@click.argument(
+    "eae",
+    type=np.float64,
+    nargs=1,
+    help="The established airport elevation measured above sea level"
+)
+@click.option(
+    "u", "units",
+    type=click.Choice(["feet", "meters"]),
+    case_sensitive=False,
+    default="feet",
+    help="Units of the elevation"
+)
+def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.float64, eae: np.float64, units):
     """Get imaginary zone info given a .csv file of runways, CSVFILE, a position, POSITION, and an established airport elevation, EAE
     """
 
@@ -35,7 +60,7 @@ def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.
         runways.append(Runway(name, RunwayTypes[type], end1, end2, special_surface=special_surface))
 
     pos = (np.float64(0), np.float64(0), np.float64(elevation))
-    info = get_zone_information(pos, runways, eae)
+    info = get_zone_information(pos, runways, eae, units)
     
     zone = info["zone"]
     if zone == "N/A":

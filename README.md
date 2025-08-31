@@ -18,6 +18,8 @@ The command is as follows:\
 | ELEVATION | `ELEVATION` is the elevation in feet of the position in the airport |
 | EAE | `EAE` is the Established Airport Elevation |
 
+Aditionally, the `units` option can be specified to indicate that the `ELEVATION` argument is in meters or feet (default is feet).
+
 ## CSV Format
 
 | name | type | approaches | coords | end_names | special_surface |
@@ -28,3 +30,4 @@ The command is as follows:\
 Documentation for the module can be found in `docs/_build/html`
 
 #### Please note that all internal calculation is done in feet
+#### This module assumes that all runways are perfectly flat and are at the established airport elevation

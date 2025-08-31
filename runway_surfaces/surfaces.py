@@ -156,10 +156,12 @@ def get_primary_surface_vertices(runway: Runway) -> dict[RunwayEnd, list[tuple[n
 
 	vertices: dict[RunwayEnd, list[tuple[np.float64, np.float64]]] = {}
 
+	# extend endpoints for special surface runways
 	endpoints = [runway.end1.point, runway.end2.point]
 	if runway.special_surface:
 		endpoints = extend_points_in_both_directions(runway.end1.point, runway.end2.point, np.float64(200))
 	
+	# get vertices along lines perpendicular to the line defined by the endpoints
 	w = runway.calc_psurface_width() / np.float64(2.0)
 	side2 = create_right_triangle(endpoints[0], endpoints[1], w)
 	side1 = create_right_triangle(endpoints[1], endpoints[0], w)
@@ -297,7 +299,9 @@ def is_in_horizontal_surface(position: tuple[np.float64, np.float64], hsurface: 
 	:return bool: whether ``position`` is in or on the boundary of the horizontal surface
 	"""
 	
+	# since all lists of vertices will be in counterclockwise direction, the left of the line is considered "inside"
 	for edge in hsurface:
+		# check if at a curve
 		if type(edge) is Arc:
 			if not is_in_circle(position, edge.center, edge.radius):
 				return False
@@ -318,19 +322,25 @@ def is_in_conical_surface(position: tuple[np.float64, np.float64, np.float64], h
 	:return Optional[Callable[[np.float64, np.float64], np.float64]]: a function that is the equation of a 3D surface in the form of ``z = f(x,y)`` bounding ``position`` from above
 	"""
 
-	if position[2] < 150:
+	# conical surface starts at 150 ft above the established airport elevation
+	if position[2] < eae + 150:
 		return None
 
+	# conical surface is generated from the perimeter of the horizontal surface
 	for edge in hsurface:
+		# at curved portions of the horizontal surface, the conical surface is actually conical
 		if type(edge) is Arc:
+			# this lower bound cone is technically just a flat circle at z = eae + 150
 			cone1 = get_cone(t3d(edge.center, eae + 150), edge.radius, eae + 150)
+
 			cone2 = get_cone(t3d(edge.center, eae + 150), edge.radius + 4000, eae + 350)
 			z1 = cone1(position[0], position[1])
 			z2 = cone2(position[0], position[1])
-			if z2 <= position[2] <= z1:
+			if z2 <= position[2] and position[2] <= z1:
 				return cone1
 			continue
 		
+		# for straight portions of the horizontal surface, the conical surface is just a wedge (i.e. a right triangular prism)
 		distance = distance_to_line(t2d(position), edge.p1, edge.p2)
 		t = create_right_triangle(edge.p1, edge.p2, np.float64(4000))[0]
 		t = t3d(t, eae + 350)
@@ -360,6 +370,7 @@ def is_in_approach_surface(position: tuple[np.float64, np.float64, np.float64], 
 	p2 = t3d(asurface[1], eae)
 
 	if approach_dimensions["type"] == ApproachTypes.PRECISION_INSTRUMENT:
+		# check if within the 2D projection of the approach surface first before checking height
 		if not is_in_polygon(t2d(position), asurface, force_ccw=True):
 			return None
 
@@ -411,12 +422,13 @@ def is_in_transitional_surface(position: tuple[np.float64, np.float64, np.float6
 	return None
 
 
-def get_zone_information(position: tuple[np.float64, np.float64, np.float64], runways: list[Runway], eae: np.float64) -> dict[str, str]:
+def get_zone_information(position: tuple[np.float64, np.float64, np.float64], runways: list[Runway], eae: np.float64, units: str) -> dict[str, str]:
 	r"""Gets the information about the imaginary zone that ``position`` is in
 
 	:param list[Runway] runways: a list of runways
 	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate
 	:param np.float64 eae: the established airport elevation of the airport containing ``runways``
+	:param str units: the units of the z-value of ``position``
 	:return dict[str, str]: a mapping of info to its value (e.g. ``"zone": "Transitional Surface"``)
 	"""
 	
@@ -424,12 +436,15 @@ def get_zone_information(position: tuple[np.float64, np.float64, np.float64], ru
 	build_limit = eae
 	info["zone"] = "N/A"
 
-	hsurface = get_horizontal_surface_edges(runways)
-	flag = True
-	if not is_in_horizontal_surface(t2d(position), hsurface):
-		flag = False
+	if units == "meters":
+		position[2] = position[2] / 0.3048
 
-	if not flag:
+	hsurface = get_horizontal_surface_edges(runways)
+	in_hsurface = True
+	if not is_in_horizontal_surface(t2d(position), hsurface):
+		in_hsurface = False
+
+	if not in_hsurface:
 		func = is_in_conical_surface(position, hsurface, eae)
 		
 		if not func is None:
@@ -447,7 +462,7 @@ def get_zone_information(position: tuple[np.float64, np.float64, np.float64], ru
 		asurfaces = get_approach_surface_vertices(approach_dimensions, psurface)
 		tsurfaces = get_transitional_surface_vertices(psurface, asurfaces)
 		
-		if flag:
+		if in_hsurface:
 			t = list(psurface.values())
 			v = []
 			for i in t:
