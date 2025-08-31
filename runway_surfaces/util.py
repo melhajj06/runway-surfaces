@@ -665,11 +665,11 @@ def proj(a: tuple[np.float64, np.float64], b: tuple[np.float64, np.float64]) -> 
 
 
 def degrees_to_feet(coord1: tuple[np.float64, np.float64], ref_coord: tuple[np.float64, np.float64]) -> tuple[np.float64, np.float64]:
-	r"""Converts ``coord1`` and ``ref_coord`` to feet
+	r"""Converts ``coord1`` to feet
 
-	:param tuple[np.float64, np.float64] coord1: _description_
-	:param tuple[np.float64, np.float64] ref_coord: _description_
-	:return tuple[np.float64, np.float64]: _description_
+	:param tuple[np.float64, np.float64] coord1: a coordinate in degrees
+	:param tuple[np.float64, np.float64] ref_coord: a coordinate in degrees that isn't ``coord``
+	:return tuple[np.float64, np.float64]: ``coord1`` converted to feet
 	"""
 
 	# Calculate the difference in degrees
