@@ -1,0 +1,6 @@
+name,type,approaches,coords,end_names,special_surface
+09L-27R,precision_instrument,precision_instrument-precision_instrument,33.6347_84.448_33.6347_84.4073,09L-27R,TRUE
+08R-26L,precision_instrument,precision_instrument-precision_instrument,33.6468_84.4383_33.6468_84.4055,08R-26L,TRUE
+08L-26R,precision_instrument,precision_instrument-precision_instrument,33.6495_84.439_33.6495_84.4095,08L-26R,TRUE
+09R-27L,precision_instrument,precision_instrument-precision_instrument,33.6318_84.448_33.6318_84.4183,09R-27L,TRUE
+10-28,precision_instrument,precision_instrument-precision_instrument,33.6203_84.4478_33.6203_84.4183,10-28,TRUE

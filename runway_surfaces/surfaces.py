@@ -422,22 +422,18 @@ def is_in_transitional_surface(position: tuple[np.float64, np.float64, np.float6
 	return None
 
 
-def get_zone_information(position: tuple[np.float64, np.float64, np.float64], runways: list[Runway], eae: np.float64, units: str) -> dict[str, str]:
+def get_zone_information(position: tuple[np.float64, np.float64, np.float64], runways: list[Runway], eae: np.float64) -> dict[str, str]:
 	r"""Gets the information about the imaginary zone that ``position`` is in
 
 	:param list[Runway] runways: a list of runways
 	:param tuple[np.float64, np.float64, np.float64] position: a 3D coordinate
 	:param np.float64 eae: the established airport elevation of the airport containing ``runways``
-	:param str units: the units of the z-value of ``position``
 	:return dict[str, str]: a mapping of info to its value (e.g. ``"zone": "Transitional Surface"``)
 	"""
 	
 	info = {}
 	build_limit = eae
 	info["zone"] = "N/A"
-
-	if units == "meters":
-		position[2] = position[2] / 0.3048
 
 	hsurface = get_horizontal_surface_edges(runways)
 	in_hsurface = True

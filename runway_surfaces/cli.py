@@ -35,7 +35,7 @@ from typing import TextIO
     type=click.Choice(["feet", "meters"]),
     case_sensitive=False,
     default="feet",
-    help="Units of the elevation"
+    help="Units of the elevation and output"
 )
 def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.float64, eae: np.float64, units):
     """Get imaginary zone info given a .csv file of runways, CSVFILE, a position, POSITION, and an established airport elevation, EAE
@@ -59,17 +59,19 @@ def cli(csvfile: TextIO, position: tuple[np.float64, np.float64], elevation: np.
         end2 = RunwayEnd(end_names[1], coords[1], ApproachTypes[approaches[1]])
         runways.append(Runway(name, RunwayTypes[type], end1, end2, special_surface=special_surface))
 
-    pos = (np.float64(0), np.float64(0), np.float64(elevation))
-    info = get_zone_information(pos, runways, eae, units)
+    pos = (0, 0, elevation / 0.3048) if units == "meters" else (0, 0, elevation)
+    info = get_zone_information(pos, runways, eae)
     
     zone = info["zone"]
     if zone == "N/A":
         click.echo(f"{position} was not found in any imaginary zone")
     else:
+        if units == "meters":
+            info["build_limit"] = info["build_limit"] * 0.3048
         if "runway" in info:
             if "end" in info:
-                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]} at end {info["end"]}. The maximum build limit is {info["build_limit"]} feet")
+                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]} at end {info["end"]}. The maximum build limit is {info["build_limit"]} {units}")
             else:
-                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]}. The maximum build limit is {info["build_limit"]} feet")
+                click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface for runway {info["runway"]}. The maximum build limit is {info["build_limit"]} {units}")
         else:
-            click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface. The maximum build limit is {info["build_limit"]} feet")
+            click.echo(f"({str(position[0])},{str(position[1])}) was found in the {zone} Surface. The maximum build limit is {info["build_limit"]} {units}")
